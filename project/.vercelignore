@@ -1,0 +1,18 @@
+# Documentos internos — no desplegar
+uploads/
+
+# Capturas de pantalla de desarrollo
+screenshots/
+
+# Código fuente de Google Apps Script (solo para el editor de GAS)
+apps-script/Code.gs
+apps-script/Setup.gs
+apps-script/Api.gs
+apps-script/appsscript.json
+apps-script/GUIA-IMPLEMENTACION.md
+
+# Archivos fuente originales de Claude Design (ya inlineados en index.html)
+SectionHeader.dc.html
+ActionCard.dc.html
+ImageSlot.dc.html
+RRHH UPES.dc.html
