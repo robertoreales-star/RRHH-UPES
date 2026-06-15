@@ -11,8 +11,5 @@ apps-script/Api.gs
 apps-script/appsscript.json
 apps-script/GUIA-IMPLEMENTACION.md
 
-# Archivos fuente originales de Claude Design (ya inlineados en index.html)
-SectionHeader.dc.html
-ActionCard.dc.html
-ImageSlot.dc.html
+# Archivo de diseño original (no es un componente web)
 RRHH UPES.dc.html
