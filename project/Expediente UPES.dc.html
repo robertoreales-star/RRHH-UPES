@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Open Sans',sans-serif;background:#eef1f6;color:#1C2D5E}
+  input,select,textarea{font-family:'Open Sans',sans-serif}
+  input:focus,select:focus,textarea:focus{border-color:#1A3A8F !important}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</helmet>
+<div data-screen-label="Expediente" style="min-height:100vh;font-family:'Open Sans',sans-serif">
+
+  <div style="position:sticky;top:0;z-index:50;background:#0D1B4B;color:#fff;box-shadow:0 3px 16px rgba(0,0,0,.22)">
+    <div style="max-width:1040px;margin:0 auto;padding:13px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <a href="RRHH UPES.dc.html" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff;flex:none">
+        <span style="width:38px;height:38px;border-radius:50%;border:2.5px solid #F5A800;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none"><img src="assets/logo-upes-mark.png" alt="UPES" style="width:56%;height:56%;object-fit:contain" /></span>
+        <span style="display:flex;flex-direction:column;line-height:1.3;gap:2px">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;white-space:nowrap">Ficha de Datos de Empleado</span>
+          <span style="font-size:11px;color:rgba(255,255,255,.6);white-space:nowrap">Mi Expediente · UPES</span>
+        </span>
+      </a>
+      <div style="flex:1"></div>
+      <span style="font-size:12px;color:rgba(255,255,255,.6);display:inline-flex;align-items:center;gap:7px"><i class="fa-solid fa-cloud-arrow-up" style="color:#F5A800"></i> Se guarda automáticamente</span>
+      <button onClick="{{ generatePDF }}" style="background:#F5A800;color:#0D1B4B;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;flex:none" style-hover="background:#ffc94d"><i class="fa-solid fa-file-arrow-down"></i> Descargar (Formato 06)</button>
+      <a href="RRHH UPES.dc.html" style="background:rgba(255,255,255,.12);color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 18px;border-radius:50px;border:1.5px solid rgba(255,255,255,.25);display:inline-flex;align-items:center;gap:8px;flex:none"><i class="fa-solid fa-arrow-left"></i> Portal</a>
+    </div>
+  </div>
+
+  <div style="max-width:1040px;margin:0 auto;padding:26px 22px 80px">
+
+    <div style="background:#fff;border:1px solid #e6ebf5;border-left:5px solid #00B4B4;border-radius:14px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:flex-start;gap:13px">
+      <i class="fa-solid fa-lock" style="color:#057a7a;font-size:18px;margin-top:2px"></i>
+      <div style="font-size:13.5px;line-height:1.6;color:#45506b">Este es <strong style="color:#1C2D5E">tu expediente personal</strong>. La información se guarda de forma privada en este dispositivo a medida que la completas. <span style="color:#7a86a8">La sincronización segura entre dispositivos y el acceso individual con usuario se habilitarán con el sistema institucional.</span></div>
+    </div>
+
+    <div style="background:linear-gradient(120deg,#0D1B4B,#1A3A8F);border-radius:18px;padding:26px 28px;margin-bottom:26px;color:#fff;display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <span style="width:58px;height:58px;border-radius:50%;background:rgba(245,168,0,.18);color:#F5A800;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none"><i class="fa-solid fa-id-card"></i></span>
+      <div style="flex:1;min-width:200px">
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(19px,3vw,26px)">{{ fullName }}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:3px">No. de expediente: {{ noExp }}</div>
+      </div>
+    </div>
+
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:24px 26px;margin-bottom:22px;box-shadow:0 10px 26px rgba(13,27,75,.06)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+          <span style="width:34px;height:34px;border-radius:9px;background:#0D1B4B;color:#F5A800;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;flex:none">{{ g.num }}</span>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:#1C2D5E;margin:0">{{ g.title }}</h3>
+        </div>
+        <div style="{{ g.gridStyle }}">
+          <sc-for list="{{ g.fields }}" as="f" hint-placeholder-count="8">
+            <div style="{{ f.wrapStyle }}">
+              <label style="font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#7a86a8">{{ f.label }}</label>
+              <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}"><input value="{{ f.value }}" onInput="{{ f.onInput }}" style="width:100%;border:1.5px solid #c7d2ea;border-radius:9px;padding:9px 11px;font-size:13.5px;outline:none;background:#fff;color:#1C2D5E" /></sc-if>
+              <sc-if value="{{ f.isNumber }}" hint-placeholder-val="{{ false }}"><input type="number" value="{{ f.value }}" onInput="{{ f.onInput }}" style="width:100%;border:1.5px solid #c7d2ea;border-radius:9px;padding:9px 11px;font-size:13.5px;outline:none;background:#fff;color:#1C2D5E" /></sc-if>
+              <sc-if value="{{ f.isDate }}" hint-placeholder-val="{{ false }}"><input type="date" value="{{ f.value }}" onInput="{{ f.onInput }}" style="width:100%;border:1.5px solid #c7d2ea;border-radius:9px;padding:9px 11px;font-size:13.5px;outline:none;background:#fff;color:#1C2D5E" /></sc-if>
+              <sc-if value="{{ f.isTextarea }}" hint-placeholder-val="{{ false }}"><textarea value="{{ f.value }}" onInput="{{ f.onInput }}" rows="2" style="width:100%;border:1.5px solid #c7d2ea;border-radius:9px;padding:9px 11px;font-size:13.5px;outline:none;background:#fff;color:#1C2D5E;resize:vertical"></textarea></sc-if>
+              <sc-if value="{{ f.isSelect }}" hint-placeholder-val="{{ false }}"><select value="{{ f.value }}" onChange="{{ f.onChange }}" style="width:100%;border:1.5px solid #c7d2ea;border-radius:9px;padding:9px 11px;font-size:13.5px;outline:none;background:#fff;color:#1C2D5E"><sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></sc-if>
+              <sc-if value="{{ f.isRadio }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:8px"><sc-for list="{{ f.radios }}" as="rd" hint-placeholder-count="2"><button onClick="{{ rd.onPick }}" style="{{ rd.style }}">{{ rd.label }}</button></sc-for></div></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+
+    <sc-for list="{{ tables }}" as="t" hint-placeholder-count="6">
+      <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:24px 26px;margin-bottom:22px;box-shadow:0 10px 26px rgba(13,27,75,.06)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+          <span style="{{ t.badgeStyle }}">{{ t.num }}</span>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:#1C2D5E;margin:0">{{ t.title }}</h3>
+        </div>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+          <div style="{{ t.minStyle }}">
+            <div style="{{ t.headStyle }}">
+              <sc-for list="{{ t.columns }}" as="col" hint-placeholder-count="5"><div style="font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#7a86a8;padding-bottom:3px">{{ col.label }}</div></sc-for>
+              <div></div>
+            </div>
+            <sc-for list="{{ t.rows }}" as="r" hint-placeholder-count="0">
+              <div style="{{ t.rowStyle }}">
+                <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="5">
+                  <div>
+                    <sc-if value="{{ c.isText }}" hint-placeholder-val="{{ true }}"><input value="{{ c.value }}" onInput="{{ c.onInput }}" style="width:100%;border:1.5px solid #d4ddee;border-radius:8px;padding:8px 10px;font-size:13px;outline:none;background:#fff;color:#1C2D5E" /></sc-if>
+                    <sc-if value="{{ c.isDate }}" hint-placeholder-val="{{ false }}"><input type="date" value="{{ c.value }}" onInput="{{ c.onInput }}" style="width:100%;border:1.5px solid #d4ddee;border-radius:8px;padding:8px 10px;font-size:13px;outline:none;background:#fff;color:#1C2D5E" /></sc-if>
+                    <sc-if value="{{ c.isSelect }}" hint-placeholder-val="{{ false }}"><select value="{{ c.value }}" onChange="{{ c.onChange }}" style="width:100%;border:1.5px solid #d4ddee;border-radius:8px;padding:8px 10px;font-size:13px;outline:none;background:#fff;color:#1C2D5E"><sc-for list="{{ c.options }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select></sc-if>
+                  </div>
+                </sc-for>
+                <button onClick="{{ r.onRemove }}" style="background:#fbeaea;border:none;color:#d6332b;width:36px;height:36px;border-radius:8px;cursor:pointer;flex:none" style-hover="background:#f6d6d6"><i class="fa-solid fa-trash-can"></i></button>
+              </div>
+            </sc-for>
+            <sc-if value="{{ t.empty }}" hint-placeholder-val="{{ true }}"><div style="font-size:13px;color:#9aa3bd;font-style:italic;padding:6px 2px">Aún no has agregado registros.</div></sc-if>
+          </div>
+        </div>
+        <sc-if value="{{ t.canAdd }}" hint-placeholder-val="{{ true }}"><button onClick="{{ t.onAdd }}" style="margin-top:14px;background:none;border:1.5px dashed #c7d2ea;color:#1A3A8F;font-family:'Open Sans',sans-serif;font-weight:600;font-size:13px;padding:10px 18px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="border-color:#1A3A8F"><i class="fa-solid fa-plus"></i> {{ t.addLabel }}</button></sc-if>
+      </div>
+    </sc-for>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+      <button onClick="{{ generatePDF }}" style="background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:10px" style-hover="background:#0D1B4B"><i class="fa-solid fa-file-arrow-down"></i> Descargar mi ficha (Formato 06)</button>
+      <a href="mailto:rrhh@upes.edu.sv?subject=Ficha%20de%20Datos%20de%20Empleado" style="background:#eef2fb;color:#1A3A8F;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 24px;border-radius:50px;display:inline-flex;align-items:center;gap:10px" style-hover="background:#e2e8f5"><i class="fa-solid fa-paper-plane"></i> Enviar a rrhh@upes.edu.sv</a>
+    </div>
+    <p style="font-size:12.5px;color:#9aa3bd;margin:16px 2px 0;line-height:1.6">Descarga tu ficha y compártela al correo de Recursos Humanos: <strong style="color:#566087">rrhh@upes.edu.sv</strong></p>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.store = 'upes_expediente_v1';
+    this.state = { data: this.load() };
+    this._cfg();
+  }
+
+  load() { try { const r = localStorage.getItem(this.store); if (r) return JSON.parse(r); } catch (e) {} return { dependientes: [], empleos: [], formacion: [], idiomas: [], referencias: [], experienciaUpes: [] }; }
+  persist() { try { localStorage.setItem(this.store, JSON.stringify(this.state.data)); } catch (e) {} }
+
+  setField(k, v) { this.setState((s) => { const d = Object.assign({}, s.data); d[k] = v; return { data: d }; }, () => this.persist()); }
+  addRow(tbl, max) { if (max && (this.state.data[tbl] || []).length >= max) return; this.setState((s) => { const d = Object.assign({}, s.data); d[tbl] = (d[tbl] || []).concat([{}]); return { data: d }; }, () => this.persist()); }
+  removeRow(tbl, i) { this.setState((s) => { const d = Object.assign({}, s.data); const rows = (d[tbl] || []).slice(); rows.splice(i, 1); d[tbl] = rows; return { data: d }; }, () => this.persist()); }
+  setCell(tbl, i, col, v) { this.setState((s) => { const d = Object.assign({}, s.data); const rows = (d[tbl] || []).slice(); rows[i] = Object.assign({}, rows[i]); rows[i][col] = v; d[tbl] = rows; return { data: d }; }, () => this.persist()); }
+
+  _cfg() {
+    this.groups = [
+      { num: 'I', title: 'Información general del empleado', fields: [
+        { k: 'apellido1', l: 'Primer apellido' }, { k: 'apellido2', l: 'Segundo apellido' },
+        { k: 'nombres', l: 'Nombres', wide: true },
+        { k: 'dui', l: 'No. DUI' }, { k: 'nit', l: 'No. NIT' },
+        { k: 'cargo', l: 'Cargo' }, { k: 'area', l: 'Área' },
+        { k: 'unidad', l: 'Unidad' }, { k: 'nivel', l: 'Nivel funcional (MOF)' },
+        { k: 'fnac', l: 'Fecha de nacimiento', t: 'date' }, { k: 'lugarNac', l: 'Lugar de nacimiento' },
+        { k: 'nacionalidad', l: 'Nacionalidad' }, { k: 'estadoFamiliar', l: 'Estado familiar', t: 'select', o: ['Soltero/a', 'Casado/a', 'Acompañado/a', 'Divorciado/a', 'Viudo/a'] },
+        { k: 'hijos', l: 'Cantidad de hijos', t: 'number' }, { k: 'celular', l: 'Teléfono celular' }
+      ] },
+      { num: 'II', title: 'Dirección y datos contractuales', fields: [
+        { k: 'direccion', l: 'Dirección de residencia', wide: true },
+        { k: 'fechaIngreso', l: 'Fecha de ingreso', t: 'date' }, { k: 'tipoContrato', l: 'Tipo de contrato', t: 'select', o: ['Indefinido', 'Plazo / Temporal', 'Servicios profesionales', 'Hora clase', 'Otro'] },
+        { k: 'salario', l: 'Salario' }, { k: 'correoPersonal', l: 'Correo personal' },
+        { k: 'afpNup', l: 'AFP / No. NUP' }, { k: 'correoInst', l: 'Correo institucional' },
+        { k: 'isss', l: 'No. ISSS' }, { k: 'telOficina', l: 'Teléfono de oficina' },
+        { k: 'noExpediente', l: 'No. de expediente' }, { k: 'telCasa', l: 'Teléfono de casa' }
+      ] },
+      { num: 'III', title: 'Información médica y de emergencia', fields: [
+        { k: 'medicamentos', l: 'Medicamentos que toma', wide: true, t: 'textarea' },
+        { k: 'discapacidad', l: '¿Padece alguna discapacidad?', t: 'radio' }, { k: 'discapacidadCual', l: '¿Cuál?' },
+        { k: 'alergico', l: '¿Es alérgico a algo?', t: 'radio' }, { k: 'alergicoQue', l: '¿A qué?' },
+        { k: 'contactoEmergencia', l: 'Contacto de emergencia' }, { k: 'parentescoEmergencia', l: 'Parentesco' },
+        { k: 'telContacto', l: 'Teléfono de contacto' }, { k: 'otro', l: 'Otro' }
+      ] }
+    ];
+    const lvl = ['No', 'Básico', 'Intermedio', 'Avanzado'];
+    this.tableDefs = [
+      { key: 'dependientes', num: 'IV', title: 'Dependientes económicos', add: 'Agregar dependiente', cols: [
+        { k: 'parentesco', l: 'Parentesco' }, { k: 'nombres', l: 'Nombres' }, { k: 'apellidos', l: 'Apellidos' }, { k: 'sexo', l: 'Sexo', t: 'select', o: ['F', 'M'] }, { k: 'fnac', l: 'Fecha nac.', t: 'date' }, { k: 'pct', l: '%' }
+      ] },
+      { key: 'empleos', num: 'V', title: 'Información laboral (últimos 2 empleos)', add: 'Agregar empleo', max: 2, cols: [
+        { k: 'empresa', l: 'Empresa' }, { k: 'cargo', l: 'Cargo' }, { k: 'rubro', l: 'Rubro' }, { k: 'inicio', l: 'Inicio', t: 'date' }, { k: 'final', l: 'Final', t: 'date' }
+      ] },
+      { key: 'formacion', num: 'VI', title: 'Formación académica', add: 'Agregar formación', cols: [
+        { k: 'institucion', l: 'Institución' }, { k: 'grado', l: 'Grado obtenido' }, { k: 'inicio', l: 'Inicio', t: 'date' }, { k: 'final', l: 'Final', t: 'date' }
+      ] },
+      { key: 'idiomas', num: '—', title: 'Idiomas que domina', add: 'Agregar idioma', cols: [
+        { k: 'idioma', l: 'Idioma' }, { k: 'habla', l: 'Habla', t: 'select', o: lvl }, { k: 'lee', l: 'Lee', t: 'select', o: lvl }, { k: 'escribe', l: 'Escribe', t: 'select', o: lvl }
+      ] },
+      { key: 'referencias', num: '—', title: 'Referencias personales', add: 'Agregar referencia', cols: [
+        { k: 'nombre', l: 'Nombre' }, { k: 'telefonos', l: 'No. teléfono(s)' }
+      ] },
+      { key: 'experienciaUpes', num: 'VII', title: 'Experiencia laboral dentro de la UPES', add: 'Agregar experiencia', cols: [
+        { k: 'puesto', l: 'Puesto' }, { k: 'unidad', l: 'Unidad / Facultad' }, { k: 'jefe', l: 'Jefe inmediato' }, { k: 'inicio', l: 'Inicio', t: 'date' }, { k: 'final', l: 'Final', t: 'date' }
+      ] }
+    ];
+  }
+
+  radioStyle(active) { return { flex: '1', padding: '9px 0', borderRadius: '9px', border: '1.5px solid ' + (active ? '#1A3A8F' : '#c7d2ea'), background: active ? '#1A3A8F' : '#fff', color: active ? '#fff' : '#45506b', fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '13px', cursor: 'pointer' }; }
+
+  fdate(v) { if (!v) return ''; const m = String(v).match(/(\d{4})-(\d{2})-(\d{2})/); return m ? (m[3] + '/' + m[2] + '/' + m[1]) : v; }
+
+  generatePDF() {
+    if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
+    const jsPDF = window.jspdf.jsPDF;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const d = this.state.data;
+    const NAVY = [13, 27, 75], GOLD = [245, 168, 0], INK = [28, 45, 94], GREY = [120, 130, 150], LINE = [205, 213, 232];
+    const W = 210, HH = 297, M = 14, CW = W - M * 2;
+    let y = 0;
+    const need = (h) => { if (y > HH - h) { doc.addPage(); y = 14; } };
+    const header = () => {
+      doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(0, 0, W, 26, 'F');
+      doc.setDrawColor(GOLD[0], GOLD[1], GOLD[2]); doc.setLineWidth(0.8); doc.circle(M + 6, 13, 6, 'S');
+      doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.text('U', M + 6, 15.3, { align: 'center' });
+      doc.setFontSize(10.5); doc.text('UNIVERSIDAD POLITÉCNICA DE EL SALVADOR', M + 15, 11);
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(12); doc.setTextColor(GOLD[0], GOLD[1], GOLD[2]); doc.text('FICHA DE DATOS DE EMPLEADO', M + 15, 18.5);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(210, 216, 232); doc.text('Cód. UPES-RH-DA-FOR-06', W - M, 12, { align: 'right' });
+      y = 32;
+    };
+    const bar = (t) => { need(16); doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(M, y, CW, 6, 'F'); doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.text(t, M + 2.5, y + 4.1); y += 6; };
+    const cell = (x, w, h, label, val) => {
+      doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.rect(x, y, w, h, 'S');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(6.3); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text(String(label).toUpperCase(), x + 2, y + 3.1);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8.8); doc.setTextColor(INK[0], INK[1], INK[2]); doc.text(doc.splitTextToSize(String(val || '—'), w - 4), x + 2, y + 7);
+    };
+    const pairs = (arr) => { for (let i = 0; i < arr.length; i += 2) { need(11); const a = arr[i], b = arr[i + 1]; const hw = CW / 2; cell(M, b ? hw : CW, 9, a[0], a[1]); if (b) cell(M + hw, hw, 9, b[0], b[1]); y += 9; } };
+    const full = (label, val, h) => { h = h || 9; need(h + 2); cell(M, CW, h, label, val); y += h; };
+    const table = (cols, rows) => {
+      need(14); const n = cols.length, cw = CW / n;
+      doc.setFillColor(238, 242, 251); doc.rect(M, y, CW, 6, 'F'); doc.setFont('helvetica', 'bold'); doc.setFontSize(6.1); doc.setTextColor(INK[0], INK[1], INK[2]);
+      cols.forEach((c, i) => doc.text(String(c.l).toUpperCase(), M + cw * i + 1.5, y + 4)); y += 6;
+      const rr = (rows && rows.length) ? rows : [{}];
+      rr.forEach((r) => { need(9); doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.25); cols.forEach((c, i) => { doc.rect(M + cw * i, y, cw, 7, 'S'); doc.setFont('helvetica', 'normal'); doc.setFontSize(7.8); doc.setTextColor(INK[0], INK[1], INK[2]); const val = (c.t === 'date') ? this.fdate(r[c.k]) : (r[c.k] || ''); doc.text(doc.splitTextToSize(String(val), cw - 3), M + cw * i + 1.5, y + 4.5); }); y += 7; });
+    };
+
+    header();
+    bar('I. INFORMACIÓN GENERAL DEL EMPLEADO');
+    pairs([['Cargo', d.cargo], ['No. DUI', d.dui], ['Área', d.area], ['No. NIT', d.nit], ['Unidad', d.unidad], ['Fecha nac.', this.fdate(d.fnac)], ['Nivel funcional (MOF)', d.nivel], ['Nacionalidad', d.nacionalidad], ['1° Apellido', d.apellido1], ['2° Apellido', d.apellido2]]);
+    full('Nombres', d.nombres);
+    pairs([['Estado familiar', d.estadoFamiliar], ['Cant. de hijos', d.hijos], ['Lugar de nacimiento', d.lugarNac], ['Tel. celular', d.celular]]);
+    y += 2;
+    bar('II. DIRECCIÓN Y DATOS CONTRACTUALES');
+    full('Dirección de residencia', d.direccion);
+    pairs([['Fecha de ingreso', this.fdate(d.fechaIngreso)], ['Tipo de contrato', d.tipoContrato], ['Salario', d.salario], ['Correo personal', d.correoPersonal], ['AFP / No. NUP', d.afpNup], ['Correo institucional', d.correoInst], ['No. ISSS', d.isss], ['Teléfono de oficina', d.telOficina], ['No. de expediente', d.noExpediente], ['Teléfono casa', d.telCasa]]);
+    y += 2;
+    bar('III. INFORMACIÓN MÉDICA Y DE EMERGENCIA');
+    full('Medicamentos que toma', d.medicamentos);
+    pairs([['¿Discapacidad?', d.discapacidad], ['¿Cuál?', d.discapacidadCual], ['¿Alérgico a algo?', d.alergico], ['¿A qué?', d.alergicoQue], ['Contacto de emergencia', d.contactoEmergencia], ['Parentesco', d.parentescoEmergencia], ['Teléfono de contacto', d.telContacto], ['Otro', d.otro]]);
+    y += 2;
+    bar('IV. DEPENDIENTES ECONÓMICOS');
+    table([{ k: 'parentesco', l: 'Parentesco' }, { k: 'nombres', l: 'Nombres' }, { k: 'apellidos', l: 'Apellidos' }, { k: 'sexo', l: 'Sexo' }, { k: 'fnac', l: 'Fecha nac.', t: 'date' }, { k: 'pct', l: '%' }], d.dependientes);
+    y += 2;
+    bar('V. INFORMACIÓN LABORAL (ÚLTIMOS 2 EMPLEOS)');
+    table([{ k: 'empresa', l: 'Empresa' }, { k: 'cargo', l: 'Cargo' }, { k: 'rubro', l: 'Rubro' }, { k: 'inicio', l: 'Inicio', t: 'date' }, { k: 'final', l: 'Final', t: 'date' }], d.empleos);
+    y += 2;
+    bar('VI. FORMACIÓN ACADÉMICA');
+    table([{ k: 'institucion', l: 'Institución' }, { k: 'grado', l: 'Grado obtenido' }, { k: 'inicio', l: 'Inicio', t: 'date' }, { k: 'final', l: 'Final', t: 'date' }], d.formacion);
+    y += 2;
+    bar('IDIOMAS QUE DOMINA');
+    table([{ k: 'idioma', l: 'Idioma' }, { k: 'habla', l: 'Habla' }, { k: 'lee', l: 'Lee' }, { k: 'escribe', l: 'Escribe' }], d.idiomas);
+    y += 2;
+    bar('REFERENCIAS PERSONALES');
+    table([{ k: 'nombre', l: 'Nombre' }, { k: 'telefonos', l: 'No. teléfono(s)' }], d.referencias);
+    y += 2;
+    bar('VII. EXPERIENCIA LABORAL DENTRO DE LA UPES');
+    table([{ k: 'puesto', l: 'Puesto' }, { k: 'unidad', l: 'Unidad / Facultad' }, { k: 'jefe', l: 'Jefe inmediato' }, { k: 'inicio', l: 'Inicio', t: 'date' }, { k: 'final', l: 'Final', t: 'date' }], d.experienciaUpes);
+    y += 5; need(8);
+    doc.setFont('helvetica', 'italic'); doc.setFontSize(7.5); doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+    doc.text('Compartir documento al correo de rrhh@upes.edu.sv', W / 2, y, { align: 'center' });
+
+    const nm = ((d.apellido1 || '') + '_' + (d.nombres || '')).replace(/\s+/g, '_').replace(/[^\wÁÉÍÓÚÑáéíóúñ_-]/g, '') || 'Empleado';
+    doc.save('Ficha-Empleado-UPES-' + nm + '.pdf');
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const mkField = (f) => {
+      const t = f.t || 'text';
+      const vm = {
+        label: f.l, value: d[f.k] != null ? d[f.k] : '',
+        wrapStyle: { gridColumn: f.wide ? '1 / -1' : 'auto', display: 'flex', flexDirection: 'column', gap: '6px' },
+        isText: t === 'text', isNumber: t === 'number', isDate: t === 'date', isTextarea: t === 'textarea', isSelect: t === 'select', isRadio: t === 'radio',
+        onInput: (e) => this.setField(f.k, e.target.value)
+      };
+      if (t === 'select') { vm.options = [{ value: '', label: '— Seleccionar —' }].concat((f.o || []).map((o) => ({ value: o, label: o }))); vm.onChange = (e) => this.setField(f.k, e.target.value); }
+      if (t === 'radio') { vm.radios = ['Sí', 'No'].map((v) => ({ label: v, onPick: () => this.setField(f.k, v), style: this.radioStyle(d[f.k] === v) })); }
+      return vm;
+    };
+    const groups = this.groups.map((g) => ({
+      num: g.num, title: g.title,
+      gridStyle: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: '16px' },
+      fields: g.fields.map(mkField)
+    }));
+    const badgeStyle = { width: '34px', height: '34px', borderRadius: '9px', background: '#00B4B4', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Montserrat',sans-serif", fontWeight: 800, fontSize: '13px', flex: 'none' };
+    const tables = this.tableDefs.map((t) => {
+      const cssCols = 'repeat(' + t.cols.length + ',minmax(96px,1fr)) 40px';
+      const rows = (d[t.key] || []).map((row, ri) => ({
+        cells: t.cols.map((c) => {
+          const ct = c.t || 'text';
+          const cell = { value: row[c.k] != null ? row[c.k] : '', isText: ct === 'text', isDate: ct === 'date', isSelect: ct === 'select', onInput: (e) => this.setCell(t.key, ri, c.k, e.target.value) };
+          if (ct === 'select') { cell.options = [{ value: '', label: '—' }].concat((c.o || []).map((o) => ({ value: o, label: o }))); cell.onChange = (e) => this.setCell(t.key, ri, c.k, e.target.value); }
+          return cell;
+        }),
+        onRemove: () => this.removeRow(t.key, ri)
+      }));
+      return {
+        num: t.num, title: t.title, addLabel: t.add, badgeStyle: Object.assign({}, badgeStyle, t.num === '—' ? { background: '#1A3A8F' } : {}),
+        minStyle: { minWidth: (t.cols.length * 110 + 40) + 'px' },
+        headStyle: { display: 'grid', gridTemplateColumns: cssCols, gap: '8px', marginBottom: '6px' },
+        rowStyle: { display: 'grid', gridTemplateColumns: cssCols, gap: '8px', alignItems: 'center', marginBottom: '8px' },
+        columns: t.cols.map((c) => ({ label: c.l })),
+        rows: rows,
+        onAdd: () => this.addRow(t.key, t.max),
+        canAdd: !t.max || (d[t.key] || []).length < t.max,
+        empty: !(d[t.key] || []).length
+      };
+    });
+    const fullName = ((d.nombres || '') + ' ' + (d.apellido1 || '') + ' ' + (d.apellido2 || '')).replace(/\s+/g, ' ').trim() || 'Tu expediente';
+    return { groups: groups, tables: tables, generatePDF: () => this.generatePDF(), fullName: fullName, noExp: d.noExpediente || '—' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Open Sans',sans-serif;color:#1C2D5E;background:#fff}
+  @keyframes upesBlink{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+  @keyframes upesFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</helmet>
+<div style="font-family:'Open Sans',sans-serif">
+
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:900;background:#0D1B4B;box-shadow:0 2px 18px rgba(0,0,0,.25)">
+    <div style="max-width:1200px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;position:relative">
+      <a href="#inicio" style="display:flex;align-items:center;gap:11px;text-decoration:none;flex:none">
+        <span style="width:40px;height:40px;border-radius:50%;border:2.5px solid #F5A800;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none"><img src="assets/logo-upes-mark.png" alt="UPES" style="width:56%;height:56%;object-fit:contain" /></span>
+        <span style="display:flex;flex-direction:column;line-height:1">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#fff;letter-spacing:.5px">RRHH<span style="color:#F5A800">UPES</span></span>
+          <span style="font-size:9px;color:rgba(255,255,255,.6);letter-spacing:1px;text-transform:uppercase;margin-top:2px">Recursos Humanos</span>
+        </span>
+      </a>
+      <div style="{{ navListStyle }}">
+        <sc-for list="{{ navLinks }}" as="lk" hint-placeholder-count="10">
+          <a href="{{ lk.href }}" onClick="{{ lk.onClick }}" style="{{ lk.style }}">{{ lk.label }}</a>
+        </sc-for>
+      </div>
+      <sc-if value="{{ hamburgerShow }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMenu }}" style="background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:6px 8px;flex:none"><i class="{{ hamburgerIcon }}"></i></button>
+      </sc-if>
+    </div>
+  </nav>
+
+  <section id="inicio" data-spy="inicio" data-screen-label="Inicio" style="scroll-margin-top:64px;position:relative;background:#0D1B4B;color:#fff;min-height:90vh;display:flex;align-items:center;overflow:hidden">
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(120deg,#0c1842,#0c1842 24px,#10204f 24px,#10204f 48px)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(13,27,75,.94) 30%,rgba(26,58,143,.72) 100%)"></div>
+    <div style="position:absolute;right:-60px;top:50%;transform:translateY(-50%);font-family:'Montserrat',sans-serif;font-weight:800;font-size:min(520px,60vw);color:rgba(255,255,255,.045);line-height:1;pointer-events:none;user-select:none">U</div>
+    <div style="position:absolute;top:90px;left:30px;width:130px;height:90px;background-image:radial-gradient(rgba(120,150,255,.4) 1.6px,transparent 1.6px);background-size:15px 15px;opacity:.5"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:96px 24px 64px;display:flex;gap:48px;align-items:center;flex-wrap:wrap;width:100%">
+      <div style="flex:1;min-width:300px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px">
+          <span style="width:44px;height:44px;border-radius:50%;border:2.5px solid #F5A800;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none"><img src="assets/logo-upes-mark.png" alt="UPES" style="width:56%;height:56%;object-fit:contain" /></span>
+          <span style="width:1px;height:34px;background:rgba(255,255,255,.3)"></span>
+          <span style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;line-height:1.4">UPES<br><span style="font-weight:500;color:rgba(255,255,255,.7);font-size:11px">Donde sucede el cambio</span></span>
+        </div>
+        <h1 style="margin:0;font-family:'Montserrat',sans-serif;font-weight:800;line-height:1.08;font-size:clamp(34px,5.4vw,60px)">
+          <span style="color:#00B4B4;display:block;font-size:.5em;font-weight:700;letter-spacing:.5px">Bienvenidos a</span>
+          Recursos Humanos UPES
+        </h1>
+        <div style="width:96px;height:5px;background:#F5A800;border-radius:3px;margin:24px 0 22px"></div>
+        <p style="font-family:'Open Sans',sans-serif;font-size:clamp(16px,2vw,20px);line-height:1.65;color:rgba(255,255,255,.86);max-width:540px;margin:0">Nuestro talento, el motor que impulsa el desarrollo y la excelencia institucional.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px">
+          <a href="#cultura" style="background:#F5A800;color:#0D1B4B;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Conoce más <i class="fa-solid fa-arrow-down"></i></a>
+          <a href="#repositorio" style="background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;border:1.5px solid rgba(255,255,255,.3);display:inline-flex;align-items:center;gap:9px">Repositorio <i class="fa-solid fa-folder-open"></i></a>
+        </div>
+      </div>
+      <div style="flex:none;width:min(400px,84vw);height:min(400px,84vw);border-radius:50%;position:relative;border:6px solid rgba(245,168,0,.7);box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden">
+        <img src="assets/edificio-upes.png" alt="Edificio institucional UPES" style="width:100%;height:100%;object-fit:cover;object-position:55% 45%" />
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,transparent 55%,rgba(13,27,75,.35))"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cultura" data-spy="cultura" data-screen-label="Cultura y Valores" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Cultura y Valores" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/CULTURA%20ORG.png" alt="Cultura organizacional UPES: liderazgo, innovación y servicio" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Filosofía organizacional</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Nuestra cultura se fundamenta en el <strong style="color:#00B4B4">liderazgo</strong>, la <strong style="color:#F5A800">innovación</strong> y el <strong style="color:#1A3A8F">servicio</strong> como pilares del crecimiento institucional.</p>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:26px">
+      <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:30px;box-shadow:0 12px 30px rgba(13,27,75,.06)">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <span style="width:52px;height:52px;border-radius:50%;background:#0D1B4B;display:flex;align-items:center;justify-content:center;color:#F5A800;font-size:22px"><i class="fa-solid fa-bullseye"></i></span>
+          <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;color:#1C2D5E;margin:0;letter-spacing:1px">MISIÓN</h4>
+        </div>
+        <p style="font-size:16px;line-height:1.75;color:#45506b;margin:0">Apoyar el desarrollo de <strong style="color:#1A3A8F">profesionales competentes</strong>, con conciencia social y medio ambiental, a través del uso de <strong style="color:#00B4B4">tecnología de vanguardia</strong>, <strong style="color:#F5A800">innovación</strong> y la investigación para nuestra población estudiantil, académica y administrativa.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:30px;box-shadow:0 12px 30px rgba(13,27,75,.06)">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <span style="width:52px;height:52px;border-radius:50%;background:#0D1B4B;display:flex;align-items:center;justify-content:center;color:#00B4B4;font-size:22px"><i class="fa-solid fa-globe"></i></span>
+          <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;color:#1C2D5E;margin:0;letter-spacing:1px">VISIÓN</h4>
+        </div>
+        <p style="font-size:16px;line-height:1.75;color:#45506b;margin:0">Internacionalizar por medio de <strong style="color:#F5A800">alianzas estratégicas</strong> a UPES en un lapso no mayor a <strong style="color:#1A3A8F">cinco años</strong>.</p>
+      </div>
+    </div>
+
+    <div style="max-width:1000px;margin:0 auto;padding:0 24px 60px">
+      <img src="assets/RECTOR.png" alt="Ing. Mauricio Bernal, Rector de UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" />
+    </div>
+
+    <div style="background:#F2F4F7;padding:58px 0">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+        <h3 style="text-align:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(28px,4vw,40px);color:#1C2D5E;margin:0;letter-spacing:2px">VALORES</h3>
+        <div style="width:74px;height:4px;background:#F5A800;border-radius:3px;margin:14px auto 40px"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+          <div style="background:#fff;border-radius:18px;padding:32px;text-align:center;box-shadow:0 12px 30px rgba(13,27,75,.07);border-top:5px solid #00B4B4">
+            <span style="width:64px;height:64px;border-radius:50%;background:rgba(0,180,180,.12);color:#00B4B4;display:inline-flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px"><i class="fa-solid fa-flag"></i></span>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:#1C2D5E;margin:0 0 10px;letter-spacing:1px">LIDERAZGO</h4>
+            <p style="font-size:15px;line-height:1.65;color:#566087;margin:0">Asumimos la responsabilidad de inspirar, guiar y motivar a otros para alcanzar nuestros objetivos con integridad y compromiso.</p>
+          </div>
+          <div style="background:#fff;border-radius:18px;padding:32px;text-align:center;box-shadow:0 12px 30px rgba(13,27,75,.07);border-top:5px solid #8a9a2b">
+            <span style="width:64px;height:64px;border-radius:50%;background:rgba(138,154,43,.14);color:#8a9a2b;display:inline-flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px"><i class="fa-solid fa-lightbulb"></i></span>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:#1C2D5E;margin:0 0 10px;letter-spacing:1px">INNOVACIÓN</h4>
+            <p style="font-size:15px;line-height:1.65;color:#566087;margin:0">Promovemos la creatividad, la mejora continua y el uso de nuevas ideas y tecnologías para generar soluciones que transformen realidades.</p>
+          </div>
+          <div style="background:#fff;border-radius:18px;padding:32px;text-align:center;box-shadow:0 12px 30px rgba(13,27,75,.07);border-top:5px solid #057a7a">
+            <span style="width:64px;height:64px;border-radius:50%;background:rgba(5,122,122,.13);color:#057a7a;display:inline-flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px"><i class="fa-solid fa-handshake"></i></span>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;color:#1C2D5E;margin:0 0 10px;letter-spacing:1px">SERVICIO</h4>
+            <p style="font-size:15px;line-height:1.65;color:#566087;margin:0">Actuamos con empatía, respeto y vocación de servicio, poniendo siempre a las personas en el centro de nuestras acciones.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="clima" data-spy="clima" data-screen-label="Clima Organizacional" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Clima Organizacional" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/CLIMA%20LABORAL.png" alt="Clima organizacional UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Clima organizacional</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Construimos un entorno laboral basado en la <strong style="color:#1A3A8F">confianza</strong>, el <strong style="color:#00B4B4">respeto</strong> y la <strong style="color:#F5A800">colaboración</strong>. Tu voz nos ayuda a mejorar — participa en nuestros canales.</p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
+      <dc-import name="ActionCard" icon="fa-solid fa-square-poll-vertical" accent="#00B4B4" title="Encuesta de Clima Organizacional" text="Comparte cómo percibes tu ambiente de trabajo. 100% anónima." onClick="{{ openClima }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-lightbulb" accent="#F5A800" title="Encuesta de Ideas de Mejora" text="¿Tienes una idea para mejorar UPES? Cuéntanos." onClick="{{ openIdeas }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-shield-halved" accent="#1A3A8F" title="Reporte de Denuncia" text="Canal seguro, anónimo y confidencial." onClick="{{ openDenuncia }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-comment-dots" accent="#057a7a" title="Reporte de Queja" text="Reporta una experiencia y te daremos seguimiento." onClick="{{ openQueja }}" hint-size="100%,92px"></dc-import>
+    </div>
+  </section>
+
+  <section id="salud" data-spy="salud" data-screen-label="Salud y Seguridad" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Salud y Seguridad Ocupacional" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/SSO.png" alt="Salud y seguridad ocupacional UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Seguridad Ocupacional</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0 0 12px">Fomentamos una cultura preventiva que protege la vida, la salud y el bienestar de todos nuestros colaboradores.</p>
+        <p style="font-size:16px;line-height:1.7;color:#1A3A8F;font-weight:600;margin:0">La seguridad no es una opción, es un compromiso permanente en la Universidad.</p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+      <dc-import name="ActionCard" icon="fa-solid fa-triangle-exclamation" accent="#F5A800" title="Reportar Condición Insegura" text="Registra una condición de riesgo en las instalaciones." onClick="{{ openCondicion }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-person-falling-burst" accent="#00B4B4" title="Reportar Acción Insegura" text="Reporta un comportamiento o práctica de riesgo." onClick="{{ openAccion }}" hint-size="100%,92px"></dc-import>
+    </div>
+  </section>
+
+  <section id="bienestar" data-spy="bienestar" data-screen-label="Bienestar" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Bienestar Organizacional" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/BIENESTAR.png" alt="Bienestar organizacional UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Bienestar organizacional</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Promovemos el <strong style="color:#00B4B4">bienestar integral</strong> de nuestro talento humano como base para un desempeño sostenible y una cultura organizacional saludable.</p>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 72px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px">
+        <span style="width:46px;height:46px;border-radius:13px;background:rgba(0,180,180,.13);color:#00B4B4;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none"><i class="fa-solid fa-person-walking"></i></span>
+        <div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,28px);color:#1C2D5E;margin:0">Pausas activas</h3>
+          <div style="width:54px;height:4px;background:#F5A800;border-radius:3px;margin-top:10px"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px">
+        <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.08);display:flex;flex-direction:column">
+          <div style="position:relative;width:100%;padding-top:56.25%;background:#0D1B4B">
+            <div ref="{{ setVid0 }}" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onEditVideo0 }}" style="position:absolute;top:10px;right:10px;z-index:4;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(13,27,75,.35)"><i class="fa-solid fa-pen"></i> Cambiar video</button></sc-if>
+          </div>
+          <div style="padding:18px 20px">
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1C2D5E;margin:0 0 5px;line-height:1.3">Pausa activa de movilidad y estiramientos</h4>
+            <p style="font-size:13.5px;line-height:1.55;color:#566087;margin:0">Rutina breve para liberar tensión y reactivar el cuerpo durante la jornada.</p>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.08);display:flex;flex-direction:column">
+          <div style="position:relative;width:100%;padding-top:56.25%;background:#0D1B4B">
+            <div ref="{{ setVid1 }}" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onEditVideo1 }}" style="position:absolute;top:10px;right:10px;z-index:4;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(13,27,75,.35)"><i class="fa-solid fa-pen"></i> Cambiar video</button></sc-if>
+          </div>
+          <div style="padding:18px 20px">
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1C2D5E;margin:0 0 5px;line-height:1.3">Pausa activa con ejercicios combinados</h4>
+            <p style="font-size:13.5px;line-height:1.55;color:#566087;margin:0">Secuencia para todo el cuerpo, ideal para realizar en el puesto de trabajo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="administracion" data-spy="administracion" data-screen-label="Administración" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Administración y Control Interno" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/CONTROL%20INTERNO%202.png" alt="Administración y Control Interno UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Gestión Administrativa</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Gestionamos con <strong style="color:#1A3A8F">orden</strong>, <strong style="color:#00B4B4">transparencia</strong> y <strong style="color:#F5A800">responsabilidad</strong> cada proceso que fortalece nuestra institución.</p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
+      <dc-import name="ActionCard" icon="fa-solid fa-calendar-check" accent="#00B4B4" title="Permisos" text="Solicita tu permiso con un asistente guiado y descarga tu solicitud oficial en PDF." onClick="{{ openPermisos }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-notes-medical" accent="#8a9a2b" title="Incapacidades" text="Registra tu incapacidad con un asistente guiado y adjunta el documento médico." onClick="{{ openIncapacidad }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-file-signature" accent="#1A3A8F" title="Constancias Laborales" text="Solicita tu constancia laboral con un asistente guiado y descárgala en PDF." onClick="{{ openConstancia }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-money-check-dollar" accent="#F5A800" title="Órdenes de Descuentos" text="Genera tu orden de descuento con un asistente guiado y descárgala en PDF." onClick="{{ openOrden }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-id-card-clip" accent="#057a7a" title="Licencias" text="Solicita tu licencia (maternidad, paternidad, duelo, matrimonio o lactancia) y adjunta tu respaldo." onClick="{{ openLicencia }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-folder-open" accent="#1A3A8F" title="Expediente" text="Completa y actualiza tu ficha de datos de empleado. Privada, solo para ti." href="Expediente%20UPES.dc.html" target="_blank" hint-size="100%,92px"></dc-import>
+    </div>
+  </section>
+
+  <section id="capacitacion" data-spy="capacitacion" data-screen-label="Capacitación" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Capacitación y Desarrollo" hint-size="100%,160px"></dc-import>
+
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/INDUCCION%20Y%20FORMACION.png" alt="Inducción y formación UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Inducción y Formación</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Formamos personas, fortalecemos competencias y construimos el futuro desde el conocimiento.</p>
+      </div>
+    </div>
+    <div data-dyn="1" style="max-width:1200px;margin:0 auto;padding:0 24px 56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+      <sc-for list="{{ courses }}" as="c" hint-placeholder-count="3">
+        <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.07);display:flex;flex-direction:column">
+          <div style="{{ c.imgStyle }}"></div>
+          <div style="padding:22px;display:flex;flex-direction:column;gap:10px;flex:1">
+            <span style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#00B4B4;font-weight:700">Curso Virtual</span>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:18px;color:#1C2D5E;margin:0;line-height:1.3;flex:1">{{ c.title }}</h4>
+            <a href="{{ c.href }}" style="margin-top:6px;align-self:flex-start;background:#1A3A8F;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 20px;border-radius:50px;display:inline-flex;align-items:center;gap:8px">Ver curso <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="background:#F2F4F7;padding:56px 0">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;gap:46px;align-items:center;flex-wrap:wrap;margin-bottom:40px">
+        <div style="flex:1;min-width:300px"><img src="assets/CAPACITACION.png" alt="Capacitación y desarrollo UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+        <div style="flex:1;min-width:300px">
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Capacitación y Desarrollo</h3>
+          <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+          <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Impulsamos el <strong style="color:#1A3A8F">aprendizaje continuo</strong> como base del crecimiento profesional y la excelencia institucional.</p>
+        </div>
+      </div>
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:30px">
+
+        <div>
+          <div style="display:flex;align-items:center;gap:13px;margin-bottom:22px">
+            <span style="width:46px;height:46px;border-radius:13px;background:#0D1B4B;color:#00B4B4;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none"><i class="fa-solid fa-circle-check"></i></span>
+            <div>
+              <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:21px;color:#1C2D5E;margin:0">Capacitaciones recibidas</h4>
+            </div>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddCapRec }}" style="margin-left:auto;align-self:center;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12.5px;padding:9px 15px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;flex:none" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+          </div>
+          <div data-dyn="1" style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ capRecibidas }}" as="c" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid #e6ebf5;border-left:5px solid #00B4B4;border-radius:16px;padding:20px 22px;box-shadow:0 10px 24px rgba(13,27,75,.06);display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:flex-start;gap:12px;justify-content:space-between;flex-wrap:wrap">
+                  <h5 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15.5px;color:#1C2D5E;margin:0;line-height:1.3;flex:1;min-width:160px">{{ c.name }}</h5>
+                  <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,180,180,.13);color:#057a7a;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:50px;white-space:nowrap"><i class="fa-solid fa-calendar-check"></i> {{ c.date }}</span>
+                </div>
+                <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">{{ c.desc }}</p>
+                <a href="{{ c.href }}" target="_blank" style="align-self:flex-start;color:#1A3A8F;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:7px">Material relacionado <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i></a>
+                <sc-if value="{{ c.editMode }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:8px;border-top:1px solid #eef2f8;padding-top:12px;margin-top:2px"><button onClick="{{ c.onEdit }}" style="background:#eef2fb;color:#1A3A8F;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12.5px;padding:8px 16px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px"><i class="fa-solid fa-pen"></i> Editar</button><button onClick="{{ c.onDelete }}" style="background:none;color:#a9b2c8;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12.5px;padding:8px 12px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="color:#d6332b"><i class="fa-solid fa-trash-can"></i> Eliminar</button></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:18px 0 0;font-size:12.5px;color:#9aa3bd;font-style:italic">Con apoyo de INCAF · Periodo: Febrero – Abril 2026</p>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:13px;margin-bottom:22px">
+            <span style="width:46px;height:46px;border-radius:13px;background:rgba(245,168,0,.16);color:#9a6b00;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none"><i class="fa-solid fa-calendar-plus"></i></span>
+            <div>
+              <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:21px;color:#1C2D5E;margin:0">Próximas capacitaciones</h4>
+            </div>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddCapProx }}" style="margin-left:auto;align-self:center;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12.5px;padding:9px 15px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;flex:none" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+          </div>
+          <div data-dyn="1" style="display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ capProximas }}" as="c" hint-placeholder-count="3">
+              <div style="background:#fff;border:1px solid #e6ebf5;border-left:5px solid #F5A800;border-radius:16px;padding:20px 22px;box-shadow:0 10px 24px rgba(13,27,75,.06);display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:flex-start;gap:12px;justify-content:space-between;flex-wrap:wrap">
+                  <h5 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15.5px;color:#1C2D5E;margin:0;line-height:1.3;flex:1;min-width:160px">{{ c.name }}</h5>
+                  <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,168,0,.16);color:#9a6b00;font-size:11.5px;font-weight:700;padding:5px 12px;border-radius:50px;white-space:nowrap"><i class="fa-solid fa-calendar-day"></i> {{ c.date }}</span>
+                </div>
+                <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">{{ c.desc }}</p>
+                <a href="{{ c.href }}" target="_blank" style="align-self:flex-start;color:#1A3A8F;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;display:inline-flex;align-items:center;gap:7px">Inscripción y detalle <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:11px"></i></a>
+                <sc-if value="{{ c.editMode }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:8px;border-top:1px solid #eef2f8;padding-top:12px;margin-top:2px"><button onClick="{{ c.onEdit }}" style="background:#eef2fb;color:#1A3A8F;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12.5px;padding:8px 16px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px"><i class="fa-solid fa-pen"></i> Editar</button><button onClick="{{ c.onDelete }}" style="background:none;color:#a9b2c8;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12.5px;padding:8px 12px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="color:#d6332b"><i class="fa-solid fa-trash-can"></i> Eliminar</button></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:56px 24px 30px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px">
+        <div style="background:linear-gradient(150deg,#057a7a,#00B4B4);color:#fff;border-radius:18px;padding:32px">
+          <span style="display:inline-block;background:rgba(255,255,255,.18);font-size:11px;font-weight:700;letter-spacing:1.5px;padding:6px 14px;border-radius:50px;text-transform:uppercase">En ejecución</span>
+          <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:22px;margin:16px 0 10px">Proyecto de Nivelación de Inglés</h4>
+          <p style="font-size:15px;line-height:1.65;color:rgba(255,255,255,.9);margin:0 0 18px">Fortaleciendo las competencias lingüísticas del personal para mejorar su desempeño y proyección académica.</p>
+          <div style="border-radius:14px;overflow:hidden;margin-bottom:18px"><img src="assets/proyecto-ingles.png" alt="Proyecto de Nivelación del idioma Inglés" style="width:100%;height:auto;display:block" /></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <span style="background:rgba(255,255,255,.16);font-size:12px;padding:7px 13px;border-radius:50px">Proyecto institucional</span>
+            <span style="background:rgba(255,255,255,.16);font-size:12px;padding:7px 13px;border-radius:50px">Participación activa</span>
+            <span style="background:rgba(255,255,255,.16);font-size:12px;padding:7px 13px;border-radius:50px">Impacto inmediato</span>
+          </div>
+        </div>
+        <div style="background:linear-gradient(150deg,#F5A800,#ffc94d);color:#0D1B4B;border-radius:18px;padding:32px">
+          <span style="display:inline-block;background:rgba(13,27,75,.14);font-size:11px;font-weight:700;letter-spacing:1.5px;padding:6px 14px;border-radius:50px;text-transform:uppercase">Proyección 2026–2027</span>
+          <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:22px;margin:16px 0 10px">Programa de Certificaciones Estratégicas</h4>
+          <p style="font-size:15px;line-height:1.65;margin:0 0 20px">Formación especializada orientada al desarrollo de competencias en liderazgo, toma de decisiones, innovación y gestión organizacional.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:22px">
+            <sc-for list="{{ certStats }}" as="s" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:10px"><i class="{{ s.icon }}" style="font-size:18px;color:#0D1B4B"></i><span style="font-size:13px;font-weight:600;line-height:1.3">{{ s.label }}</span></div>
+            </sc-for>
+          </div>
+          <a href="#PLACEHOLDER_URL_CERTIFICACIONES" style="background:#0D1B4B;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:12px 22px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Conoce más sobre las certificaciones <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+      <div style="background:#0D1B4B;color:#fff;border-radius:18px;padding:26px 32px;margin-top:24px;text-align:center">
+        <p style="margin:0;font-size:16px;line-height:1.6;color:rgba(255,255,255,.9)"><strong style="color:#F5A800;font-family:'Montserrat',sans-serif">Evolución del talento institucional</strong> — Del fortalecimiento de competencias actuales a la consolidación de un modelo de desarrollo profesional integral en UPES.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="talento" data-spy="talento" data-screen-label="Talento" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Gestión del Talento" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/SELECCION.png" alt="Proceso de selección UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Vacantes Disponibles</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0 0 22px">Buscamos talento que impulse el desarrollo institucional y contribuya a la formación de profesionales de alto nivel. Explora las plazas en concurso y postúlate enviando tu CV.</p>
+        <a href="#vacantes-lista" style="background:#1A3A8F;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ver vacantes disponibles <i class="fa-solid fa-arrow-down"></i></a>
+      </div>
+    </div>
+
+    <div id="vacantes-lista" data-dyn="1" style="scroll-margin-top:80px;max-width:1080px;margin:0 auto;padding:8px 24px 60px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px">
+        <span style="background:rgba(0,180,180,.13);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:9px 17px;border-radius:50px;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-briefcase"></i> {{ vacCount }} plazas en concurso</span>
+        <button onClick="{{ vacAdd }}" style="background:#F5A800;color:#0D1B4B;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#ffbe2e"><i class="fa-solid fa-plus"></i> Agregar plaza</button>
+      </div>
+
+      <sc-if value="{{ vacFormOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border:2px solid #F5A800;border-radius:18px;padding:24px;margin-bottom:22px;box-shadow:0 16px 40px rgba(13,27,75,.12)">
+          <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px;color:#1C2D5E;margin:0 0 18px">{{ vacFormTitle }}</h4>
+          <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:6px">Nombre de la plaza</label>
+          <input value="{{ draftTitle }}" onInput="{{ onDraftTitle }}" placeholder="Ej. Encargado(a) de Mercadeo" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;margin-bottom:16px" />
+          <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:6px">Descripción del puesto</label>
+          <textarea value="{{ draftDesc }}" onInput="{{ onDraftDesc }}" rows="3" placeholder="Describe las responsabilidades principales del puesto..." style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;resize:vertical;margin-bottom:16px"></textarea>
+          <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:8px">Requisitos del perfil</label>
+          <sc-for list="{{ draftReqs }}" as="r" hint-placeholder-count="2">
+            <div style="display:flex;gap:8px;margin-bottom:9px;align-items:center">
+              <i class="fa-solid fa-circle-check" style="color:#00B4B4;font-size:15px;flex:none"></i>
+              <input value="{{ r.value }}" onInput="{{ r.onInput }}" placeholder="Escribe un requisito..." style="flex:1;border:1.5px solid #c7d2ea;border-radius:10px;padding:10px 14px;font-family:'Open Sans',sans-serif;font-size:14px;outline:none;min-width:0" />
+              <button onClick="{{ r.onRemove }}" style="background:#fbeaea;border:none;color:#d6332b;width:36px;height:36px;border-radius:9px;cursor:pointer;flex:none" style-hover="background:#f6d6d6"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+          </sc-for>
+          <button onClick="{{ addReq }}" style="background:none;border:1.5px dashed #c7d2ea;color:#1A3A8F;font-family:'Open Sans',sans-serif;font-weight:600;font-size:13px;padding:9px 16px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;margin-bottom:6px" style-hover="border-color:#1A3A8F">+ Agregar requisito</button>
+          <sc-if value="{{ vacErrorShow }}" hint-placeholder-val="{{ false }}"><div style="color:#d6332b;font-size:13px;margin-top:8px"><i class="fa-solid fa-circle-exclamation"></i> {{ vacError }}</div></sc-if>
+          <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+            <button onClick="{{ saveDraft }}" style="background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:50px;cursor:pointer" style-hover="background:#0D1B4B"><i class="fa-solid fa-floppy-disk"></i> Guardar plaza</button>
+            <button onClick="{{ cancelDraft }}" style="background:#eef2fb;border:none;color:#45506b;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:50px;cursor:pointer" style-hover="background:#e2e8f5">Cancelar</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ vacList }}" as="v" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid #e6ebf5;border-left:5px solid #00B4B4;border-radius:16px;padding:24px 26px;box-shadow:0 10px 26px rgba(13,27,75,.06)">
+            <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,180,180,.13);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;padding:6px 13px;border-radius:50px;margin-bottom:12px"><i class="fa-solid fa-user-group"></i> Plaza en concurso</span>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:21px;color:#1C2D5E;margin:0 0 8px;line-height:1.25">{{ v.title }}</h4>
+            <p style="font-size:15px;line-height:1.7;color:#45506b;margin:0">{{ v.description }}</p>
+            <sc-if value="{{ v.hasReqs }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:16px">
+                <div style="font-size:11.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#1A3A8F;margin-bottom:9px">Requisitos del perfil</div>
+                <sc-for list="{{ v.requirements }}" as="req" hint-placeholder-count="3">
+                  <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:7px"><i class="fa-solid fa-circle-check" style="color:#00B4B4;font-size:15px;margin-top:3px;flex:none"></i><span style="font-size:14.5px;line-height:1.55;color:#45506b">{{ req }}</span></div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ v.noReqs }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:13px;font-style:italic;color:#9aa3bd;margin:14px 0 0">Sin requisitos definidos — usa “Editar” para agregarlos.</p>
+            </sc-if>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;border-top:1px solid #eef2f8;padding-top:17px">
+              <button onClick="{{ v.onApply }}" style="background:#F5A800;border:none;color:#0D1B4B;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 22px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#ffbe2e"><i class="fa-solid fa-paper-plane"></i> Aplicar — enviar CV</button>
+              <button onClick="{{ v.onEdit }}" style="background:#eef2fb;border:none;color:#1A3A8F;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#e2e8f5"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button onClick="{{ v.onDelete }}" style="background:none;border:none;color:#a9b2c8;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="color:#d6332b"><i class="fa-solid fa-trash-can"></i> Eliminar</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:flex;gap:46px;align-items:center;flex-wrap:wrap-reverse">
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Ascensos y Promociones</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Reconocemos el <strong style="color:#00B4B4">mérito</strong>, la <strong style="color:#1A3A8F">dedicación</strong> y el desempeño de quienes avanzan y crecen dentro de la universidad, reflejando nuestro compromiso con el desarrollo del talento.</p>
+      </div>
+      <div style="flex:1;min-width:300px"><img src="assets/PROMOCIONES%20Y%20ASCENSOS.png" alt="Ascensos y promociones UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+    </div>
+
+    <div style="background:#F2F4F7;padding:54px 0">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:30px">
+          <div>
+            <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,28px);color:#1C2D5E;margin:0">Ascensos activos del mes</h3>
+            <div style="width:54px;height:4px;background:#F5A800;border-radius:3px;margin-top:12px"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span style="background:rgba(0,180,180,.13);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:9px 17px;border-radius:50px;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-arrow-trend-up"></i> {{ ascensosCount }} ascensos</span>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddAscensos }}" style="background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+          </div>
+        </div>
+        <div data-dyn="1" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px">
+          <sc-for list="{{ ascensos }}" as="p" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px;box-shadow:0 12px 30px rgba(13,27,75,.07);display:flex;flex-direction:column;gap:16px;position:relative">
+              <sc-if value="{{ p.editMode }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:3"><button onClick="{{ p.onEdit }}" style="{{ p.editBtnStyle }}"><i class="fa-solid fa-pen"></i></button><button onClick="{{ p.onDelete }}" style="{{ p.delBtnStyle }}"><i class="fa-solid fa-trash-can"></i></button></div></sc-if>
+              <div style="display:flex;align-items:center;gap:14px">
+                {{ p.avatar }}
+                <div style="flex:1;min-width:0">
+                  <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#1C2D5E;margin:0 0 7px;line-height:1.25">{{ p.name }}</h4>
+                  <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(245,168,0,.16);color:#9a6b00;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:50px"><i class="fa-solid fa-calendar-check" style="font-size:11px"></i> {{ p.date }}</span>
+                </div>
+              </div>
+              <div style="background:#F7F9FC;border:1px solid #eef2f8;border-radius:14px;padding:15px 16px;display:flex;flex-direction:column;gap:10px">
+                <div>
+                  <div style="font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9aa3bd;margin-bottom:3px">Cargo anterior</div>
+                  <div style="font-size:14px;color:#7a86a8;line-height:1.35">{{ p.prev }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:9px"><span style="flex:none;width:26px;height:26px;border-radius:50%;background:#00B4B4;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px"><i class="fa-solid fa-arrow-down"></i></span><span style="height:1px;flex:1;background:#e2e8f2"></span></div>
+                <div>
+                  <div style="font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#1A3A8F;margin-bottom:3px">Nuevo cargo</div>
+                  <div style="font-size:15px;font-weight:700;color:#1C2D5E;line-height:1.35">{{ p.next }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="repositorio" data-spy="repositorio" data-screen-label="Repositorio" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Repositorio Documental" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/DOCUMENTAL.png" alt="Repositorio documental UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(22px,2.6vw,30px);color:#1C2D5E;margin:0 0 12px;line-height:1.25">Estatutos, Códigos, Políticas, Reglamentos, Instructivos, Manuales y más</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Centralizamos la información para garantizar <strong style="color:#1A3A8F">acceso</strong>, <strong style="color:#00B4B4">orden</strong> y <strong style="color:#F5A800">respaldo</strong> en cada proceso institucional.</p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px">
+      <dc-import name="ActionCard" icon="fa-solid fa-scroll" accent="#1A3A8F" title="Estatutos" text="Consulta los estatutos que rigen el funcionamiento de nuestra institución." href="#PLACEHOLDER_DRIVE_ESTATUTOS" target="_blank" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-book" accent="#00B4B4" title="Códigos" text="Consulta los códigos que establecen las normas y principios de nuestra institución." href="#PLACEHOLDER_DRIVE_CODIGOS" target="_blank" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-file-contract" accent="#F5A800" title="Políticas" text="Consulta las políticas institucionales que guían nuestras acciones." href="#PLACEHOLDER_DRIVE_POLITICAS" target="_blank" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-gavel" accent="#057a7a" title="Reglamentos" text="Consulta los reglamentos que regulan la convivencia y el funcionamiento institucional." href="#PLACEHOLDER_DRIVE_REGLAMENTOS" target="_blank" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-book-open" accent="#8a9a2b" title="Manuales" text="Consulta los manuales que describen los procesos y funciones de nuestra institución." href="#PLACEHOLDER_DRIVE_MANUALES" target="_blank" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-list-check" accent="#1A3A8F" title="Instructivos y Lineamientos" text="Consulta los instructivos y lineamientos institucionales." href="#PLACEHOLDER_DRIVE_INSTRUCTIVOS" target="_blank" hint-size="100%,92px"></dc-import>
+    </div>
+  </section>
+
+  <section id="noticias" data-spy="noticias" data-screen-label="Noticias" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Noticias UPES" hint-size="100%,160px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/NUEVOS%20TALENTOS.png" alt="Nuevos talentos UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Nuevos Talentos</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Nuevos talentos se suman a la Universidad para construir juntos un entorno de excelencia y crecimiento.</p>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:30px">
+        <div>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,28px);color:#1C2D5E;margin:0">Se suman a nuestro equipo</h3>
+          <div style="width:54px;height:4px;background:#F5A800;border-radius:3px;margin-top:12px"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span style="background:rgba(0,180,180,.13);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:9px 17px;border-radius:50px;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-user-plus"></i> {{ talentosCount }} nuevos colaboradores</span>
+          <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddTalentos }}" style="background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+        </div>
+      </div>
+      <div data-dyn="1" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:24px">
+        <sc-for list="{{ talentos }}" as="p" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:28px 22px 24px;box-shadow:0 12px 30px rgba(13,27,75,.07);text-align:center;display:flex;flex-direction:column;align-items:center;gap:13px;position:relative;overflow:hidden">
+            <span style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#00B4B4,#1A3A8F)"></span>
+            <sc-if value="{{ p.editMode }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:13px;right:11px;display:flex;gap:6px;z-index:3"><button onClick="{{ p.onEdit }}" style="{{ p.editBtnStyle }}"><i class="fa-solid fa-pen"></i></button><button onClick="{{ p.onDelete }}" style="{{ p.delBtnStyle }}"><i class="fa-solid fa-trash-can"></i></button></div></sc-if>
+            {{ p.avatar }}
+            <div>
+              <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16.5px;color:#1C2D5E;margin:0 0 5px;line-height:1.3">{{ p.name }}</h4>
+              <div style="font-size:13.5px;color:#1A3A8F;font-weight:600;line-height:1.4">{{ p.role }}</div>
+            </div>
+            <span style="display:inline-flex;align-items:center;gap:7px;background:#F7F9FC;border:1px solid #eef2f8;color:#566087;font-size:12px;font-weight:600;padding:7px 14px;border-radius:50px"><i class="fa-solid fa-door-open" style="color:#00B4B4;font-size:12px"></i> Ingreso: {{ p.date }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="margin:24px 0">
+      <dc-import name="SectionHeader" title="Celebraciones y Reconocimientos" hint-size="100%,160px"></dc-import>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:48px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:300px"><img src="assets/CUMPLEANEROS.png" alt="Cumpleañeros del mes UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Cumpleañeros del mes</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Celebramos la vida de quienes forman parte de UPES, reconociendo su valor humano y su aporte diario a nuestra institución.</p>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:8px 24px 64px">
+      <div style="background:linear-gradient(135deg,#0D1B4B,#1A3A8F);border-radius:22px;padding:38px 28px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:18px;right:26px;font-size:46px;color:rgba(245,168,0,.16)"><i class="fa-solid fa-cake-candles"></i></div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:28px;position:relative">
+          <span style="width:42px;height:42px;border-radius:50%;background:rgba(245,168,0,.18);color:#F5A800;display:flex;align-items:center;justify-content:center;font-size:18px"><i class="fa-solid fa-gift"></i></span>
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(18px,2.4vw,24px);color:#fff;margin:0">¡Les deseamos un feliz cumpleaños!</h3>
+          <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddCumple }}" style="margin-left:auto;background:#F5A800;color:#0D1B4B;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;flex:none"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+        </div>
+        <div data-dyn="1" style="{{ cumpleGridStyle }}">
+          <sc-for list="{{ cumple }}" as="p" hint-placeholder-count="10">
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:20px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:11px;position:relative">
+              <sc-if value="{{ p.editMode }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:8px;right:8px;display:flex;gap:5px;z-index:3"><button onClick="{{ p.onEdit }}" style="{{ p.editBtnStyle }}"><i class="fa-solid fa-pen"></i></button><button onClick="{{ p.onDelete }}" style="{{ p.delBtnStyle }}"><i class="fa-solid fa-trash-can"></i></button></div></sc-if>
+              {{ p.avatar }}
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:#fff;line-height:1.3">{{ p.name }}</div>
+              <span style="color:#F5A800;font-size:13px"><i class="fa-solid fa-cake-candles"></i></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:24px 24px 72px;display:flex;gap:46px;align-items:center;flex-wrap:wrap-reverse">
+      <div style="flex:1;min-width:300px">
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Reconocimientos 2026</h3>
+        <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Reconocemos el <strong style="color:#00B4B4">compromiso</strong>, la <strong style="color:#1A3A8F">excelencia</strong> y el impacto de quienes hacen la diferencia en UPES.</p>
+      </div>
+      <div style="flex:1;min-width:300px"><img src="assets/RECONOCIMIENTOS.png" alt="Reconocimientos UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+    </div>
+
+    <div style="background:#F2F4F7;padding:56px 0">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+        <div style="text-align:center;margin-bottom:38px">
+          <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,28px);color:#1C2D5E;margin:0">Colaboradores reconocidos</h3>
+          <div style="width:64px;height:4px;background:#F5A800;border-radius:3px;margin:14px auto 0"></div>
+          <p style="font-size:15px;color:#566087;max-width:560px;margin:16px auto 0;line-height:1.6">Distinciones otorgadas durante el año a quienes destacan por su entrega, talento y aporte a la institución.</p>
+          <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><div style="margin-top:18px"><button onClick="{{ onAddRecon }}" style="background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar reconocimiento</button></div></sc-if>
+        </div>
+        <div data-dyn="1" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:24px">
+          <sc-for list="{{ reconocimientos }}" as="p" hint-placeholder-count="7">
+            <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 14px 34px rgba(13,27,75,.1);display:flex;flex-direction:column">
+              <div style="height:62px;background:linear-gradient(135deg,#0D1B4B,#1A3A8F);position:relative">
+                <span style="position:absolute;top:13px;right:15px;background:#F5A800;color:#0D1B4B;font-family:'Montserrat',sans-serif;font-weight:800;font-size:12px;padding:4px 12px;border-radius:50px">{{ p.year }}</span>
+                <sc-if value="{{ p.editMode }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:13px;left:15px;display:flex;gap:6px;z-index:3"><button onClick="{{ p.onEdit }}" style="{{ p.editBtnStyle }}"><i class="fa-solid fa-pen"></i></button><button onClick="{{ p.onDelete }}" style="{{ p.delBtnStyle }}"><i class="fa-solid fa-trash-can"></i></button></div></sc-if>
+              </div>
+              <div style="padding:0 22px 26px;margin-top:-40px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px">
+                <div style="position:relative">
+                  {{ p.avatar }}
+                  <span style="position:absolute;bottom:-1px;right:-1px;width:29px;height:29px;border-radius:50%;background:#F5A800;color:#0D1B4B;display:flex;align-items:center;justify-content:center;font-size:13px;border:2.5px solid #fff"><i class="{{ p.icon }}"></i></span>
+                </div>
+                <div>
+                  <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#1C2D5E;margin:0 0 8px;line-height:1.3">{{ p.name }}</h4>
+                  <span style="display:inline-flex;align-items:center;gap:7px;background:rgba(245,168,0,.15);color:#9a6b00;font-size:12.5px;font-weight:700;padding:6px 14px;border-radius:50px;line-height:1.3">{{ p.type }}</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#0D1B4B;color:#fff;padding:48px 24px 28px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;gap:30px;justify-content:space-between;align-items:center;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:13px">
+        <span style="width:48px;height:48px;border-radius:50%;border:2.5px solid #F5A800;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none"><img src="assets/logo-upes-mark.png" alt="UPES" style="width:56%;height:56%;object-fit:contain" /></span>
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px">Recursos Humanos UPES</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.6)">Universidad Politécnica de El Salvador · Donde sucede el cambio</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,.55);text-align:right">© 2026 UPES · Departamento de Recursos Humanos<br>Todos los derechos reservados.</div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:1000;background:rgba(8,15,40,.62);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:14px">
+      <div onClick="{{ stop }}" style="width:100%;max-width:520px;height:min(88vh,720px);background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+        <div style="background:#0D1B4B;color:#fff;padding:15px 18px;display:flex;align-items:center;gap:12px;flex:none">
+          <span style="width:42px;height:42px;border-radius:50%;border:2px solid #F5A800;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none"><img src="assets/logo-upes-mark.png" alt="UPES" style="width:56%;height:56%;object-fit:contain" /></span>
+          <div style="flex:1;min-width:0">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;line-height:1.2">{{ mTitle }}</div>
+            <sc-if value="{{ mSecure }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px;color:#F5A800;margin-top:3px"><i class="fa-solid fa-lock"></i> Reporte completamente anónimo y confidencial</div></sc-if>
+          </div>
+          <button onClick="{{ closeModal }}" style="background:rgba(255,255,255,.12);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;flex:none"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div ref="{{ setChatRef }}" style="flex:1;overflow-y:auto;background:#F2F4F7;padding:20px 18px">
+          <sc-for list="{{ chatRows }}" as="row" hint-placeholder-count="0">
+            <div style="{{ row.rowStyle }}">
+              <sc-if value="{{ row.showIcon }}" hint-placeholder-val="{{ false }}">
+                <span style="flex:none;width:32px;height:32px;border-radius:50%;background:#00B4B4;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;margin-bottom:2px"><i class="fa-solid fa-robot"></i></span>
+              </sc-if>
+              <div style="{{ row.bubbleStyle }}">
+                {{ row.text }}
+                <sc-if value="{{ row.noteShow }}" hint-placeholder-val="{{ false }}"><div style="margin-top:9px;font-size:11.5px;font-style:italic;color:#7a86a8;border-top:1px dashed #c7d2ea;padding-top:8px">{{ row.note }}</div></sc-if>
+              </div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ typing }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:10px;align-items:flex-end;margin-bottom:12px">
+              <span style="flex:none;width:32px;height:32px;border-radius:50%;background:#00B4B4;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px"><i class="fa-solid fa-robot"></i></span>
+              <div style="background:#fff;border:1px solid #d8e2f5;border-radius:4px 16px 16px 16px;padding:14px 18px;display:flex;gap:5px;align-items:center">
+                <span style="width:8px;height:8px;border-radius:50%;background:#1A3A8F;animation:upesBlink 1.2s infinite"></span>
+                <span style="width:8px;height:8px;border-radius:50%;background:#1A3A8F;animation:upesBlink 1.2s infinite .2s"></span>
+                <span style="width:8px;height:8px;border-radius:50%;background:#1A3A8F;animation:upesBlink 1.2s infinite .4s"></span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="padding:14px 16px;border-top:1px solid #e6ebf5;background:#fff;flex:none">
+          <sc-if value="{{ errorShow }}" hint-placeholder-val="{{ false }}"><div style="color:#d6332b;font-size:12.5px;margin-bottom:9px"><i class="fa-solid fa-circle-exclamation"></i> {{ error }}</div></sc-if>
+
+          <sc-if value="{{ showScale }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:9px;justify-content:space-between">
+              <sc-for list="{{ scaleNums }}" as="n" hint-placeholder-count="5">
+                <button onClick="{{ n.onClick }}" style="flex:1;height:54px;border:2px solid #c7d2ea;background:#fff;color:#1C2D5E;border-radius:12px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:20px;cursor:pointer" style-hover="border-color:#F5A800;background:#fff7e6">{{ n.n }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showOptions }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;max-height:200px;overflow-y:auto">
+              <sc-for list="{{ options }}" as="o" hint-placeholder-count="3">
+                <button onClick="{{ o.onClick }}" style="background:#eef2fb;border:1.5px solid #c7d2ea;color:#1A3A8F;border-radius:50px;padding:10px 16px;font-family:'Open Sans',sans-serif;font-weight:600;font-size:13.5px;cursor:pointer" style-hover="background:#1A3A8F;color:#fff;border-color:#1A3A8F">{{ o.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showText }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:9px">
+              <input value="{{ inputValue }}" onInput="{{ onInput }}" onKeyDown="{{ onKeyDown }}" placeholder="{{ placeholder }}" style="flex:1;border:1.5px solid #c7d2ea;border-radius:50px;padding:13px 18px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;min-width:0" />
+              <button onClick="{{ submitText }}" style="background:#F5A800;border:none;color:#0D1B4B;font-weight:800;font-family:'Montserrat',sans-serif;border-radius:50px;padding:0 20px;cursor:pointer;flex:none;font-size:14px" style-hover="background:#ffbe2e"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showTextarea }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <textarea value="{{ inputValue }}" onInput="{{ onInput }}" placeholder="{{ placeholder }}" rows="3" style="border:1.5px solid #c7d2ea;border-radius:14px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;resize:vertical;width:100%"></textarea>
+              <button onClick="{{ submitText }}" style="align-self:flex-end;background:#F5A800;border:none;color:#0D1B4B;font-weight:800;font-family:'Montserrat',sans-serif;border-radius:50px;padding:11px 22px;cursor:pointer;font-size:14px;display:inline-flex;align-items:center;gap:8px" style-hover="background:#ffbe2e">Enviar <i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showDate }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:9px">
+              <input type="date" value="{{ inputValue }}" onInput="{{ onInput }}" style="flex:1;border:1.5px solid #c7d2ea;border-radius:50px;padding:12px 18px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;min-width:0" />
+              <button onClick="{{ submitText }}" style="background:#F5A800;border:none;color:#0D1B4B;font-weight:800;font-family:'Montserrat',sans-serif;border-radius:50px;padding:0 22px;cursor:pointer;flex:none;font-size:14px" style-hover="background:#ffbe2e">Enviar</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showDatetime }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:9px">
+              <input type="datetime-local" value="{{ inputValue }}" onInput="{{ onInput }}" style="flex:1;border:1.5px solid #c7d2ea;border-radius:50px;padding:12px 18px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;min-width:0" />
+              <button onClick="{{ submitText }}" style="background:#F5A800;border:none;color:#0D1B4B;font-weight:800;font-family:'Montserrat',sans-serif;border-radius:50px;padding:0 22px;cursor:pointer;flex:none;font-size:14px" style-hover="background:#ffbe2e">Enviar</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showFile }}" hint-placeholder-val="{{ false }}">
+            <label style="display:flex;flex-direction:column;align-items:center;gap:8px;border:1.5px dashed #c7d2ea;border-radius:14px;padding:20px 16px;text-align:center;cursor:pointer;background:#f7f9ff;color:#1A3A8F;font-family:'Open Sans',sans-serif;font-weight:600;font-size:14px" style-hover="border-color:#1A3A8F;background:#eef2fb">
+              <span style="width:46px;height:46px;border-radius:50%;background:rgba(26,58,143,.1);display:flex;align-items:center;justify-content:center;font-size:20px"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+              Toca aquí para adjuntar tu documento
+              <span style="font-size:11.5px;font-weight:400;color:#7a86a8">Foto (JPG, PNG) o PDF · máximo 5 MB</span>
+              <input type="file" accept="{{ fileAccept }}" onChange="{{ onFlowFile }}" style="display:none" />
+            </label>
+          </sc-if>
+
+          <sc-if value="{{ showClose }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center">
+              <div style="font-size:11.5px;color:#7a86a8;margin-bottom:12px;line-height:1.5"><i class="fa-solid fa-circle-check" style="color:#1F8A5B"></i> Respuestas guardadas localmente. Para integración con base de datos, conectar al backend institucional.</div>
+              <button onClick="{{ closeModal }}" style="background:#1A3A8F;border:none;color:#fff;font-weight:800;font-family:'Montserrat',sans-serif;border-radius:50px;padding:13px 36px;cursor:pointer;font-size:14px" style-hover="background:#0D1B4B">Cerrar</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showSummary }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#F7F9FC;border:1px solid #e6ebf5;border-radius:14px;padding:8px 16px;max-height:32vh;overflow-y:auto;margin-bottom:12px">
+              <sc-for list="{{ summaryRows }}" as="r" hint-placeholder-count="9">
+                <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #eef2f8">
+                  <span style="font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#7a86a8;flex:none;max-width:46%">{{ r.label }}</span>
+                  <span style="font-size:13.5px;color:#1C2D5E;text-align:right;font-weight:600;line-height:1.35">{{ r.value }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button onClick="{{ confirmPermiso }}" style="flex:1;min-width:170px;background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;padding:13px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-file-arrow-down"></i> Confirmar y generar PDF</button>
+              <button onClick="{{ correctPermiso }}" style="background:#eef2fb;border:none;color:#45506b;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:13px 20px;border-radius:50px;cursor:pointer" style-hover="background:#e2e8f5">Corregir</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showPermisoDone }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center">
+              <div style="font-size:12px;color:#7a86a8;margin-bottom:12px;line-height:1.55"><i class="fa-solid fa-circle-check" style="color:#1F8A5B"></i> Documento <strong style="color:#1A3A8F">{{ permisoNum }}</strong> generado. Imprímelo o envíalo a tu jefe inmediato para su autorización. <em>(El envío por correo y la aprobación se habilitarán próximamente.)</em></div>
+              <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+                <button onClick="{{ downloadPermiso }}" style="background:#F5A800;border:none;color:#0D1B4B;font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;padding:13px 24px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#ffbe2e"><i class="fa-solid fa-download"></i> Descargar de nuevo</button>
+                <button onClick="{{ closeModal }}" style="background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:13px 24px;border-radius:50px;cursor:pointer" style-hover="background:#0D1B4B">Cerrar</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <button onClick="{{ editToggle }}" style="{{ editFabStyle }}"><i class="{{ editFabIcon }}"></i> {{ editFabLabel }}</button>
+  <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ onLogout }}" title="Cerrar sesión" style="position:fixed;right:18px;bottom:70px;z-index:950;background:#0D1B4B;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:9px 16px;border-radius:50px;cursor:pointer;box-shadow:0 8px 20px rgba(13,27,75,.3);display:flex;align-items:center;gap:7px"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
+  </sc-if>
+
+  <sc-if value="{{ loginOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ cancelLogin }}" style="position:fixed;inset:0;z-index:1100;background:rgba(8,15,40,.66);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:14px">
+      <div onClick="{{ stop }}" style="width:100%;max-width:400px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+        <div style="background:#0D1B4B;color:#fff;padding:24px 22px 20px;text-align:center">
+          <span style="width:54px;height:54px;border-radius:50%;border:2.5px solid #F5A800;display:inline-flex;align-items:center;justify-content:center;font-size:22px;color:#F5A800;margin-bottom:12px"><i class="fa-solid fa-user-shield"></i></span>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:18px">Acceso de administrador</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,.7);margin-top:5px">Inicia sesión para editar el contenido</div>
+        </div>
+        <div style="padding:22px 22px 8px">
+          <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:6px">Usuario</label>
+          <input value="{{ loginUser }}" onInput="{{ onLoginUser }}" onKeyDown="{{ onLoginKey }}" placeholder="Usuario" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;margin-bottom:14px" />
+          <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:6px">Contraseña</label>
+          <input type="password" value="{{ loginPass }}" onInput="{{ onLoginPass }}" onKeyDown="{{ onLoginKey }}" placeholder="Contraseña" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none" />
+          <sc-if value="{{ loginErrorShow }}" hint-placeholder-val="{{ false }}"><div style="color:#d6332b;font-size:13px;margin-top:12px"><i class="fa-solid fa-circle-exclamation"></i> {{ loginError }}</div></sc-if>
+        </div>
+        <div style="padding:14px 22px 22px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
+          <button onClick="{{ cancelLogin }}" style="background:#eef2fb;border:none;color:#45506b;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 22px;border-radius:50px;cursor:pointer">Cancelar</button>
+          <button onClick="{{ doLogin }}" style="background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ assetEditOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ cancelAsset }}" style="position:fixed;inset:0;z-index:1100;background:rgba(8,15,40,.66);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:14px">
+      <div onClick="{{ stop }}" style="width:100%;max-width:460px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+        <div style="background:#0D1B4B;color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px">
+          <span style="width:40px;height:40px;border-radius:11px;background:rgba(245,168,0,.18);color:#F5A800;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none"><i class="fa-solid fa-image"></i></span>
+          <div style="flex:1;font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px">{{ assetTitle }}</div>
+          <button onClick="{{ cancelAsset }}" style="background:rgba(255,255,255,.12);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;flex:none"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div style="padding:22px 20px">
+          <sc-if value="{{ assetIsImage }}" hint-placeholder-val="{{ true }}">
+            <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:8px">Subir desde tu equipo</label>
+            <input type="file" accept="image/*" onChange="{{ onAssetFile }}" style="width:100%;font-family:'Open Sans',sans-serif;font-size:13.5px;margin-bottom:18px" />
+            <div style="font-size:11.5px;color:#9aa3bd;margin-bottom:8px">— o pega una URL —</div>
+          </sc-if>
+          <sc-if value="{{ assetIsVideo }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;color:#7a86a8;line-height:1.55;margin-bottom:14px"><i class="fa-brands fa-youtube" style="color:#d6332b"></i> Pega el enlace de YouTube (ej. <strong>https://youtu.be/ID</strong> o el enlace normal del video). Se insertará automáticamente.</div></sc-if>
+          <input value="{{ assetDraft }}" onInput="{{ onAssetUrl }}" placeholder="https://…" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14px;outline:none" />
+          <sc-if value="{{ assetPreviewShow }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ assetPreviewStyle }}"></div>
+          </sc-if>
+        </div>
+        <div style="padding:0 20px 22px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
+          <button onClick="{{ cancelAsset }}" style="background:#eef2fb;border:none;color:#45506b;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 22px;border-radius:50px;cursor:pointer">Cancelar</button>
+          <button onClick="{{ saveAsset }}" style="background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ editorOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ editorCancel }}" style="position:fixed;inset:0;z-index:1000;background:rgba(8,15,40,.62);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:14px">
+      <div onClick="{{ stop }}" style="width:100%;max-width:540px;max-height:min(92vh,780px);background:#fff;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.45)">
+        <div style="background:#0D1B4B;color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px;flex:none">
+          <span style="width:40px;height:40px;border-radius:11px;background:rgba(245,168,0,.18);color:#F5A800;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none"><i class="fa-solid fa-pen-to-square"></i></span>
+          <div style="flex:1;min-width:0;font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;text-transform:capitalize;line-height:1.25">{{ editorTitle }}</div>
+          <button onClick="{{ editorCancel }}" style="background:rgba(255,255,255,.12);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;flex:none"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:22px 20px;background:#fff">
+          <div style="background:#F2F4F7;border-radius:12px;padding:11px 14px;font-size:12px;color:#7a86a8;line-height:1.5;margin-bottom:20px"><i class="fa-solid fa-circle-info" style="color:#1A3A8F"></i> Los cambios se guardan en este dispositivo. La estructura está lista para conectarse a la base de datos institucional.</div>
+          <sc-for list="{{ editorFields }}" as="f" hint-placeholder-count="4">
+            <div style="margin-bottom:16px">
+              <label style="display:block;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#7a86a8;margin-bottom:6px">{{ f.label }}</label>
+              <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+                <input value="{{ f.value }}" onInput="{{ f.onInput }}" placeholder="{{ f.placeholder }}" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none" />
+              </sc-if>
+              <sc-if value="{{ f.isTextarea }}" hint-placeholder-val="{{ false }}">
+                <textarea value="{{ f.value }}" onInput="{{ f.onInput }}" placeholder="{{ f.placeholder }}" rows="3" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;resize:vertical"></textarea>
+              </sc-if>
+              <sc-if value="{{ f.isEnum }}" hint-placeholder-val="{{ false }}">
+                <select value="{{ f.value }}" onChange="{{ f.onInput }}" style="width:100%;border:1.5px solid #c7d2ea;border-radius:12px;padding:12px 16px;font-family:'Open Sans',sans-serif;font-size:14.5px;outline:none;background:#fff;cursor:pointer">
+                  <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3"><option value="{{ o.value }}">{{ o.label }}</option></sc-for>
+                </select>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+        <div style="padding:14px 18px;border-top:1px solid #e6ebf5;background:#fff;flex:none">
+          <sc-if value="{{ editorErrorShow }}" hint-placeholder-val="{{ false }}"><div style="color:#d6332b;font-size:13px;margin-bottom:10px"><i class="fa-solid fa-circle-exclamation"></i> {{ editorError }}</div></sc-if>
+          <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
+            <button onClick="{{ editorCancel }}" style="background:#eef2fb;border:none;color:#45506b;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 24px;border-radius:50px;cursor:pointer" style-hover="background:#e2e8f5">Cancelar</button>
+            <button onClick="{{ editorSave }}" style="background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;induccionUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://upes.grupoa.education/plataforma/auth/signin/&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;investigacionUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://upes.grupoa.education/plataforma/auth/signin/&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;vinculacionUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://upes.grupoa.education/plataforma/auth/signin/&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;adminUser&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;admin&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;adminPass&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;upes2026&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.collections = this.buildCollections();
+    const store = {};
+    Object.keys(this.collections).forEach((k) => { store[k] = this.loadCol(k); });
+    this.content = this.loadContent();
+    let authed = false;
+    try { authed = localStorage.getItem('upes_admin_session') === '1'; } catch (e) {}
+    this.state = {
+      store: store,
+      editMode: false,
+      editor: null,
+      authed: authed,
+      loginOpen: false,
+      loginUser: '',
+      loginPass: '',
+      loginError: '',
+      assetEdit: null,
+      assetDraft: '',
+      width: typeof window !== 'undefined' ? window.innerWidth : 1200,
+      menuOpen: false,
+      activeSection: 'inicio',
+      flow: null,
+      messages: [],
+      typing: false,
+      current: null,
+      inputValue: '',
+      error: '',
+      done: false,
+      vacancies: [],
+      vacEditId: null,
+      draft: { title: '', description: '', requirements: [] },
+      vacError: ''
+    };
+    this.queue = [];
+    this.answers = {};
+    this._meta = {};
+    this.navItems = [
+      { id: 'inicio', label: 'Inicio' },
+      { id: 'cultura', label: 'Cultura y Valores' },
+      { id: 'clima', label: 'Clima Organizacional' },
+      { id: 'salud', label: 'Salud y Seguridad' },
+      { id: 'bienestar', label: 'Bienestar' },
+      { id: 'administracion', label: 'Administración' },
+      { id: 'capacitacion', label: 'Capacitación' },
+      { id: 'talento', label: 'Talento' },
+      { id: 'repositorio', label: 'Repositorio' },
+      { id: 'noticias', label: 'Noticias' }
+    ];
+    this.flows = this.buildFlows();
+  }
+
+  buildFlows() {
+    const fin = (bot) => ({ id: 'final', type: 'final', bot });
+    return {
+      permiso: { title: 'Solicitud de Permiso', secure: false, steps: [
+        { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 📄 Te ayudaré a completar tu Solicitud de Permiso oficial. Al final podrás descargarla en PDF para enviarla a tu jefe inmediato. Para comenzar, ¿cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'dui', type: 'text', sum: 'DUI', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
+        { id: 'codigo', type: 'text', sum: 'Código de empleado(a)', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
+        { id: 'unidad', type: 'text', sum: 'Unidad en que labora', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
+        { id: 'tipo', type: 'options', sum: 'Tipo de permiso', bot: '¿Qué tipo de permiso necesitas? Cada uno tiene condiciones distintas según el Reglamento Interno.', options: ['Trámite personal', 'Salud', 'Cumplimiento legal', 'Emergencia', 'Reposición de tiempo', 'Cambio temporal de horario', 'Estudio', 'Misión institucional'], branch: {
+          'Trámite personal': [
+            { id: 'tp_fecha', type: 'date', sum: 'Fecha del permiso', bot: 'La Universidad otorga 1 permiso personal de 8 horas al mes con goce de sueldo cuando se demuestre que tu presencia es indispensable. ¿Para qué fecha lo necesitas?', note: 'Debe solicitarse con 5 días de anticipación al jefe inmediato y notificarse a RRHH con 3 días de anticipación.' },
+            { id: 'tp_horas', type: 'text', sum: 'Horas solicitadas', bot: '¿Cuántas horas necesitas? (máximo 8 horas al mes)', placeholder: 'Ej. 8 horas' },
+            { id: 'tp_motivo', type: 'textarea', sum: 'Motivo del trámite', bot: 'Describe brevemente el motivo del trámite personal.' },
+            { id: 'tp_doc', type: 'file', sum: 'Evidencia adjunta', accept: 'image/*,application/pdf', bot: 'Adjunta la evidencia que demuestra que tu presencia es indispensable.', note: 'Sin evidencia el permiso podría no considerarse con goce de sueldo.' }
+          ],
+          'Salud': [
+            { id: 'sa_motivo', type: 'options', sum: 'Motivo de salud', bot: '¿Cuál es el motivo de salud?', options: ['Cita médica', 'Retiro de medicamentos', 'Exámenes médicos', 'Otro'], otherTrigger: 'Otro', followUp: { id: 'sa_motivo_otro', type: 'text', bot: 'Especifica el motivo de salud:', placeholder: 'Describe el motivo...' } },
+            { id: 'sa_desde', type: 'datetime', sum: 'Desde', bot: '¿Desde cuándo? Indica fecha y hora de inicio.' },
+            { id: 'sa_hasta', type: 'datetime', sum: 'Hasta', bot: '¿Hasta cuándo? Indica fecha y hora de finalización.' },
+            { id: 'sa_doc', type: 'file', sum: 'Comprobante adjunto', accept: 'image/*,application/pdf', bot: 'Adjunta el comprobante (cita, receta, resultado de examen, etc.).', note: 'Es obligatorio anexar el comprobante para que el permiso sea considerado con goce de sueldo.' }
+          ],
+          'Cumplimiento legal': [
+            { id: 'cl_instancia', type: 'options', sum: 'Instancia legal', bot: '¿Qué instancia legal te solicita?', options: ['FGR', 'PNC', 'CSJ', 'Otra'], otherTrigger: 'Otra', followUp: { id: 'cl_instancia_otra', type: 'text', bot: 'Especifica la instancia legal:', placeholder: 'Nombre de la instancia...' } },
+            { id: 'cl_fecha', type: 'datetime', sum: 'Fecha y hora de la citación', bot: '¿Para qué fecha y hora es la citación?' },
+            { id: 'cl_doc', type: 'file', sum: 'Documento legal adjunto', accept: 'image/*,application/pdf', bot: 'Adjunta el documento emitido por la instancia legal.', note: 'Presenta el documento y notifica al jefe inmediato y a RRHH para considerarse con goce de sueldo.' }
+          ],
+          'Emergencia': [
+            { id: 'em_causa', type: 'options', sum: 'Causa de la emergencia', bot: 'Lamentamos la situación. ¿Cuál fue la causa de la emergencia?', options: ['Enfermedad', 'Hospitalización', 'Accidente', 'Otra'], otherTrigger: 'Otra', followUp: { id: 'em_causa_otra', type: 'text', bot: 'Especifica la causa:', placeholder: 'Describe la causa...' } },
+            { id: 'em_afectado', type: 'options', sum: 'Persona afectada', bot: '¿A quién afectó?', options: ['El colaborador', 'Familiar en 1er grado'] },
+            { id: 'em_fecha', type: 'datetime', sum: 'Fecha y hora del hecho', bot: '¿Cuándo ocurrió? Indica fecha y hora aproximada.' },
+            { id: 'em_doc', type: 'file', sum: 'Comprobante adjunto', accept: 'image/*,application/pdf', bot: 'Adjunta el comprobante del hecho (fotografías, documentos, incapacidad, etc.).', note: 'Recuerda que debiste notificar de inmediato al jefe inmediato y a RRHH vía correo. El comprobante permite considerarlo con goce de sueldo.' }
+          ],
+          'Reposición de tiempo': [
+            { id: 'rt_fecha', type: 'date', sum: 'Fecha de la ausencia', bot: 'Este permiso aplica para ausencias menores a 3 horas. ¿Qué día te ausentarás?' },
+            { id: 'rt_horas', type: 'text', sum: 'Horas a reponer', bot: '¿Cuántas horas necesitas? (máximo 3 horas)', placeholder: 'Ej. 2 horas' },
+            { id: 'rt_motivo', type: 'textarea', sum: 'Motivo', bot: '¿Cuál es el motivo (trámite, diligencia, eventualidad, etc.)?' },
+            { id: 'rt_reposicion', type: 'date', sum: 'Día de reposición', bot: '¿Qué día repondrás las horas de ausencia?', note: 'El día de reposición no debe ser posterior a dos días hábiles.' }
+          ],
+          'Cambio temporal de horario': [
+            { id: 'ch_inicio', type: 'date', sum: 'Fecha de inicio', bot: 'Este permiso se otorga cuando hay necesidad de trabajar en horarios diferentes o por más de 8 horas. ¿Cuál es la fecha de inicio?', note: 'Máximo 2 días continuos al mes (límite de 24 permisos por año fiscal). Debe enviarse a RRHH con al menos 2 días de anticipación.' },
+            { id: 'ch_fin', type: 'date', sum: 'Fecha de finalización', bot: '¿Cuál es la fecha de finalización?' },
+            { id: 'ch_horario', type: 'text', sum: 'Nuevo horario', bot: '¿Cuál será el nuevo horario?', placeholder: 'Ej. 6:00 a.m. – 2:00 p.m.' },
+            { id: 'ch_motivo', type: 'textarea', sum: 'Actividad / motivo', bot: 'Describe la actividad o motivo del cambio de horario.', note: 'Si la actividad supera 2 días continuos en el mes, debe establecerse un plan de trabajo para pago de horas extras (aprobado por Vicerrectoría Administrativa y Financiera y autorizado por Rectoría).' }
+          ],
+          'Estudio': [
+            { id: 'es_dias', type: 'text', sum: 'Días de estudio', bot: 'Este beneficio solo puede ser otorgado por el Rector o Vicerrectores. ¿Qué días son tus estudios?', placeholder: 'Ej. Lunes y miércoles' },
+            { id: 'es_horario', type: 'text', sum: 'Horario de estudio', bot: '¿En qué horario estudias?', placeholder: 'Ej. 5:00 p.m. – 7:00 p.m.' },
+            { id: 'es_organizacion', type: 'textarea', sum: 'Organización del cambio de horario', bot: '¿Cómo organizarás el cambio de tu horario de trabajo para cubrir tus funciones?' }
+          ],
+          'Misión institucional': [
+            { id: 'mi_desde', type: 'datetime', sum: 'Desde', bot: '¿Desde cuándo inicia la misión? Indica fecha y hora.' },
+            { id: 'mi_hasta', type: 'datetime', sum: 'Hasta', bot: '¿Hasta cuándo? Indica fecha y hora de finalización.' },
+            { id: 'mi_descripcion', type: 'textarea', sum: 'Descripción de la misión', bot: 'Describe la misión institucional.', note: 'Llena este formato cuando no puedas presentarte a realizar tus marcaciones. Si la misión es dentro del horario laboral, basta con notificar por correo.' }
+          ]
+        } },
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+      ]},
+      licencia: { title: 'Solicitud de Licencia', secure: false, steps: [
+        { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 🗂️ Te ayudaré a completar tu Solicitud de Licencia. Al final podrás descargarla en PDF y adjuntar tu documento de respaldo. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'dui', type: 'text', sum: 'DUI', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
+        { id: 'codigo', type: 'text', sum: 'Código de empleado(a)', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
+        { id: 'unidad', type: 'text', sum: 'Unidad en que labora', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
+        { id: 'tipo', type: 'options', sum: 'Tipo de licencia', bot: '¿Qué tipo de licencia necesitas?', options: ['Maternidad', 'Paternidad', 'Duelo', 'Matrimonio', 'Lactancia'] },
+        { id: 'desde', type: 'date', sum: 'Desde', bot: '¿Desde qué fecha inicia la licencia?' },
+        { id: 'hasta', type: 'date', sum: 'Hasta', bot: '¿Hasta qué fecha finaliza la licencia?' },
+        { id: 'detalle', type: 'textarea', sum: 'Detalle', bot: 'Agrega cualquier detalle relevante de tu solicitud.' },
+        { id: 'doc', type: 'file', sum: 'Documento de respaldo', accept: 'image/*,application/pdf', bot: 'Adjunta el documento que respalda tu licencia (partida de nacimiento, acta de matrimonio, constancia, etc.).', note: 'El documento de respaldo permite tramitar la licencia con goce de sueldo conforme a la normativa.' },
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+      ]},
+      expediente: { title: 'Expediente Personal', secure: true, steps: [
+        { id: 'info', type: 'final', bot: '🔒 Tu Expediente Personal estará disponible muy pronto. Será un espacio totalmente privado y confidencial: únicamente tú podrás ingresar, completar y consultar tu expediente — nadie más tendrá acceso. Te avisaremos cuando esté habilitado.' }
+      ]},
+      clima: { title: 'Encuesta de Clima Organizacional', secure: true, steps: [
+        { id: 'unidad', type: 'text', bot: '¡Hola! Esta encuesta es completamente anónima 🔒. ¿A qué unidad, departamento o facultad perteneces?', placeholder: 'Tu unidad o departamento...' },
+        { id: 'ambiente', type: 'scale', bot: 'En una escala del 1 al 5, ¿cómo calificarías el ambiente de trabajo en tu área? (1 = Muy malo, 5 = Excelente)' },
+        { id: 'mejora_ambiente', type: 'textarea', bot: '¿Qué cosas podríamos mejorar en el ambiente de trabajo?' },
+        { id: 'valorado', type: 'scale', bot: '¿Te sientes valorado/a por tu equipo y jefatura? (1 = Nunca, 5 = Siempre)' },
+        { id: 'mejora_valorado', type: 'textarea', bot: '¿Qué podríamos mejorar para que te sientas más valorado/a?' },
+        { id: 'comunicacion', type: 'scale', bot: '¿La comunicación interna es efectiva? (1 = Muy deficiente, 5 = Excelente)' },
+        { id: 'mejora_comunicacion', type: 'textarea', bot: '¿Qué sugerirías para mejorar la comunicación interna?' },
+        { id: 'recursos', type: 'scale', bot: '¿Cuentas con los recursos necesarios para hacer tu trabajo? (1 = Nunca, 5 = Siempre)' },
+        { id: 'mejora_recursos', type: 'textarea', bot: '¿Qué recursos o herramientas harían mejor tu trabajo?' },
+        { id: 'motivado', type: 'scale', bot: '¿Te sientes motivado/a en tu puesto actual? (1 = Nada, 5 = Totalmente)' },
+        { id: 'mejora_motivacion', type: 'textarea', bot: '¿Qué podríamos hacer para aumentar tu motivación?' },
+        { id: 'recomendacion', type: 'textarea', bot: '¿Tienes alguna recomendación adicional para mejorar el clima organizacional?' },
+        fin('✅ ¡Gracias por tu participación! Tu opinión es muy valiosa para UPES. Tus respuestas han sido registradas de forma anónima.')
+      ]},
+      ideas: { title: 'Encuesta de Ideas de Mejora', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: '¡Hola! Me alegra que quieras compartir una idea 💡. ¿Cuál es tu nombre completo?', placeholder: 'Tu nombre completo...' },
+        { id: 'unidad', type: 'text', bot: '¿A qué unidad, departamento o facultad perteneces?', placeholder: 'Tu unidad...' },
+        { id: 'area', type: 'options', bot: '¿En qué área aplica tu idea de mejora?', options: ['Académica', 'Administración Financiera', 'Tecnología', 'Vicerrectoría General', 'Rectoría'] },
+        { id: 'idea', type: 'textarea', bot: 'Cuéntame, ¿cuál es tu idea de mejora?' },
+        { id: 'problema', type: 'textarea', bot: '¿Qué problema específico resuelve esta idea?' },
+        { id: 'propuesta', type: 'textarea', bot: '¿Cuál sería tu propuesta de implementación?' },
+        fin('✅ ¡Excelente idea! Ha sido registrada. El equipo de RRHH la revisará. ¡Gracias por contribuir al crecimiento de UPES!')
+      ]},
+      denuncia: { title: 'Reporte de Denuncia', secure: true, steps: [
+        { id: 'unidad', type: 'text', bot: 'Este canal es seguro y anónimo 🔒. ¿A qué unidad, departamento o facultad perteneces?', placeholder: 'Tu unidad...' },
+        { id: 'tipo', type: 'options', bot: '¿Qué tipo de denuncia deseas reportar?', options: ['Acoso laboral', 'Discriminación', 'Fraude', 'Corrupción', 'Abuso de autoridad', 'Hostigamiento', 'Conflicto de interés', 'Incumplimiento de normativa', 'Irregularidad administrativa', 'Otra'], otherTrigger: 'Otra', followUp: { id: 'tipo_otra', type: 'text', bot: 'Por favor describe el tipo de denuncia:', placeholder: 'Describe el tipo...' } },
+        { id: 'involucrados', type: 'text', bot: '¿Quién o quiénes están involucrados? (Puedes indicar cargo o área si prefieres no dar nombre)', placeholder: 'Cargo, área o nombre...' },
+        { id: 'fecha', type: 'date', bot: '¿Cuándo ocurrió el hecho? (Fecha aproximada)' },
+        { id: 'descripcion', type: 'textarea', bot: 'Describe con detalle lo ocurrido:' },
+        { id: 'evidencia', type: 'textarea', bot: '¿Tienes evidencia que respalde esta denuncia? Si es así, puedes indicar que la entregarás físicamente a RRHH o describir de qué tipo es.', note: 'La carga de archivos estará disponible próximamente.' },
+        fin('✅ Tu denuncia ha sido registrada de forma confidencial. El departamento de RRHH dará seguimiento según los protocolos institucionales. Gracias por contribuir a un mejor ambiente.')
+      ]},
+      queja: { title: 'Reporte de Queja', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: 'Hola, lamentamos que hayas tenido una experiencia difícil. ¿Cuál es tu nombre completo?', placeholder: 'Tu nombre completo...' },
+        { id: 'unidad', type: 'text', bot: '¿A qué unidad, departamento o facultad perteneces?', placeholder: 'Tu unidad...' },
+        { id: 'tipo', type: 'options', bot: '¿Sobre qué tipo de queja deseas reportar?', options: ['Servicio recibido', 'Trato recibido', 'Procesos administrativos', 'Infraestructura', 'Otra'] },
+        { id: 'involucrado', type: 'text', bot: '¿Cuál es el área o persona involucrada?', placeholder: 'Área o persona...' },
+        { id: 'fecha', type: 'date', bot: '¿Cuándo ocurrió el hecho?' },
+        { id: 'descripcion', type: 'textarea', bot: 'Describe detalladamente tu queja:' },
+        { id: 'solucion', type: 'textarea', bot: '¿Qué solución o respuesta esperas?' },
+        fin('✅ Tu queja ha sido registrada. RRHH le dará seguimiento en los próximos días hábiles. Gracias por comunicarte con nosotros.')
+      ]},
+      condicion: { title: 'Reporte de Condición Insegura', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: 'Hola ⚠️. Vamos a registrar una condición insegura. ¿Cuál es tu nombre?', placeholder: 'Tu nombre...' },
+        { id: 'area', type: 'text', bot: '¿A qué departamento o área perteneces?', placeholder: 'Tu área...' },
+        { id: 'lugar', type: 'text', bot: '¿En qué lugar exacto se encuentra la condición insegura?', placeholder: 'Edificio, piso, salón...' },
+        { id: 'tipo', type: 'options', bot: '¿De qué tipo es la condición?', options: ['Infraestructura', 'Eléctrica', 'Equipos', 'Señalización', 'Otra'] },
+        { id: 'descripcion', type: 'textarea', bot: 'Describe detalladamente la condición insegura:' },
+        { id: 'riesgo', type: 'options', bot: '¿Qué nivel de riesgo percibes?', options: ['Bajo', 'Medio', 'Alto', 'Crítico'] },
+        { id: 'evidencia', type: 'textarea', bot: '¿Tienes evidencia fotográfica? Puedes indicar que la entregarás físicamente a RRHH o describir qué tipo de evidencia tienes.', note: 'La carga de archivos estará disponible próximamente.' },
+        fin('✅ El reporte de condición insegura ha sido registrado. El equipo de Seguridad Ocupacional tomará las acciones necesarias. ¡Gracias por contribuir a un ambiente seguro!')
+      ]},
+      accion: { title: 'Reporte de Acción Insegura', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: 'Hola 🏃. Vamos a registrar una acción insegura. ¿Cuál es tu nombre?', placeholder: 'Tu nombre...' },
+        { id: 'area', type: 'text', bot: '¿A qué departamento o área perteneces?', placeholder: 'Tu área...' },
+        { id: 'quien', type: 'text', bot: '¿Quién o quiénes realizaron la acción insegura? (Puedes indicar cargo si prefieres)', placeholder: 'Cargo o descripción...' },
+        { id: 'lugar', type: 'text', bot: '¿En qué lugar ocurrió?', placeholder: 'Lugar...' },
+        { id: 'descripcion', type: 'textarea', bot: 'Describe la acción insegura observada:' },
+        { id: 'cuando', type: 'datetime', bot: '¿Cuándo ocurrió? (Fecha y hora aproximada)' },
+        { id: 'riesgo', type: 'options', bot: '¿Qué nivel de riesgo representó?', options: ['Bajo', 'Medio', 'Alto', 'Crítico'] },
+        { id: 'inmediata', type: 'options', bot: '¿Se tomó alguna acción inmediata?', options: ['Sí', 'No'], otherTrigger: 'Sí', followUp: { id: 'inmediata_desc', type: 'text', bot: 'Describe la acción inmediata tomada:', placeholder: 'Describe la acción...' } },
+        fin('✅ El reporte de acción insegura ha sido registrado. El equipo de Seguridad Ocupacional dará seguimiento. ¡Gracias por velar por la seguridad de todos!')
+      ]},
+      incapacidad: { title: 'Registro de Incapacidad Médica', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: '¡Hola! 🩺 Te ayudaré a registrar tu Incapacidad Médica. Al final podrás descargar el comprobante en PDF y dejará adjunto tu documento. Para comenzar, ¿cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
+        { id: 'desde', type: 'date', bot: 'Indiquemos el período de incapacidad. ¿Desde qué fecha inicia?' },
+        { id: 'hasta', type: 'date', bot: '¿Hasta qué fecha finaliza la incapacidad?' },
+        { id: 'tipo', type: 'options', bot: '¿Qué tipo de incapacidad es?', options: ['Inicial', 'Prórroga'] },
+        { id: 'riesgo', type: 'options', bot: '¿Cuál es el tipo de riesgo?', options: ['Enfermedad Común', 'Enfermedad Profesional', 'Accidente Común', 'Accidente Profesional', 'Maternidad'] },
+        { id: 'archivo', type: 'file', bot: 'Por último, adjunta tu incapacidad. Sube una foto o el PDF del documento emitido por el ISSS o tu médico tratante.', accept: 'image/*,application/pdf', note: 'Formatos permitidos: imagen o PDF · Tamaño máximo: 5 MB.' },
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu registro. Si todo está correcto, genera el comprobante; si necesitas cambiar algo, usa "Corregir".' }
+      ]},
+      constancia: { title: 'Solicitud de Constancia Laboral', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: '¡Hola! 📄 Te ayudaré a solicitar tu Constancia Laboral. Al final descargarás el formulario oficial en PDF para entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
+        { id: 'codigo', type: 'text', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
+        { id: 'cargo', type: 'text', bot: '¿Cuál es tu cargo actual?', placeholder: 'Ej. Asistente Administrativa' },
+        { id: 'unidad', type: 'text', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
+        { id: 'tipo', type: 'options', bot: '¿Qué tipo de constancia necesitas?', options: ['Constancia laboral simple', 'Constancia con salario', 'Constancia para trámite bancario', 'Constancia para visa / migración', 'Constancia para crédito', 'Otra'], otherTrigger: 'Otra', followUp: { id: 'tipo_otro', type: 'text', bot: 'Especifica el tipo de constancia:', placeholder: 'Describe el tipo...' } },
+        { id: 'dirigida', type: 'text', bot: '¿A quién va dirigida la constancia?', placeholder: 'Institución o "A quien interese"' },
+        { id: 'motivo', type: 'textarea', bot: '¿Cuál es el motivo o uso que le darás a la constancia?' },
+        { id: 'entrega', type: 'options', bot: '¿Cómo prefieres recibir la constancia?', options: ['Física (impresa)', 'Correo electrónico', 'Ambas'] },
+        { id: 'correo', type: 'text', bot: 'Indica un correo electrónico de contacto.', placeholder: 'nombre@correo.com' },
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+      ]},
+      orden: { title: 'Orden de Descuento', secure: false, steps: [
+        { id: 'nombre', type: 'text', bot: '¡Hola! 💲 Te ayudaré a generar tu Orden de Descuento. Al final descargarás el documento oficial en PDF para autorizarlo y entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
+        { id: 'codigo', type: 'text', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
+        { id: 'unidad', type: 'text', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
+        { id: 'concepto', type: 'options', bot: '¿Cuál es el concepto del descuento?', options: ['Préstamo institucional', 'Cuota a cooperativa / asociación', 'Seguro', 'Pensión alimenticia', 'Compra o servicio interno', 'Otro'], otherTrigger: 'Otro', followUp: { id: 'concepto_otro', type: 'text', bot: 'Especifica el concepto del descuento:', placeholder: 'Describe el concepto...' } },
+        { id: 'beneficiario', type: 'text', bot: '¿Quién es el beneficiario del descuento?', placeholder: 'Persona o entidad beneficiaria' },
+        { id: 'monto', type: 'text', bot: '¿Cuál es el monto de cada cuota? (USD)', placeholder: 'Ej. $50.00' },
+        { id: 'cuotas', type: 'text', bot: '¿En cuántas cuotas se aplicará el descuento?', placeholder: 'Ej. 12 cuotas' },
+        { id: 'inicio', type: 'date', bot: '¿A partir de qué fecha (planilla) debe iniciar el descuento?' },
+        { id: 'comentarios', type: 'textarea', bot: 'Por último, agrega cualquier observación o detalle adicional.', note: 'El descuento se aplicará una vez autorizado por el trabajador(a) y validado por RRHH y la Administración Financiera.' },
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu orden. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+      ]}
+    };
+  }
+
+  docConfigs() {
+    return {
+      permiso: {
+        title: 'SOLICITUD DE PERMISO', code: 'UPES-RH-DA-FOR-16', prefix: 'UPES-RH-PER', filename: 'Solicitud-Permiso',
+        goceCheckbox: true,
+        sections: [
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Unidad en que labora', 'unidad'], ['Fecha de la solicitud', '@fecha']] ] },
+          { bar: 'DETALLES DE LA SOLICITUD', dynamic: true, exclude: ['nombre', 'dui', 'codigo', 'unidad'] }
+        ],
+        signatures: ['Firma del trabajador(a)', 'Nombre y firma del jefe inmediato'],
+        rh: { label: 'PERMISO OTORGADO', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
+        legal: [
+          'Código de Trabajo: Art. 29 numeral 6 (literales a, b, c, d, e, f).',
+          'Ley Especial Integral para una Vida Libre de Violencia para las Mujeres — Art. 24.',
+          'Decreto No. 376 — Licencia de Paternidad por Nacimiento o Adopción.',
+          'Reglamento Interno de Trabajo: Art. 56 (literal f, numerales 1, 2, 3, 4).'
+        ],
+        note: 'NOTA: Para ser considerado con goce de sueldo, el permiso debe cumplir las condiciones del Reglamento Interno y anexar el comprobante respectivo cuando aplique.'
+      },
+      licencia: {
+        title: 'SOLICITUD DE LICENCIA', code: 'UPES-RH-DA-FOR-LIC', prefix: 'UPES-RH-LIC', filename: 'Solicitud-Licencia',
+        goceCheckbox: true,
+        sections: [
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Unidad en que labora', 'unidad'], ['Fecha de la solicitud', '@fecha']] ] },
+          { bar: 'DETALLES DE LA LICENCIA', dynamic: true, exclude: ['nombre', 'dui', 'codigo', 'unidad'] }
+        ],
+        signatures: ['Firma del trabajador(a)', 'Nombre y firma del jefe inmediato'],
+        rh: { label: 'LICENCIA OTORGADA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
+        note: 'NOTA: La licencia se tramita conforme a la normativa institucional y legal vigente. Adjunte el documento de respaldo correspondiente.'
+      },
+      incapacidad: {
+        title: 'REGISTRO DE INCAPACIDAD MÉDICA', code: 'UPES-RH-DA-FOR-INC', prefix: 'UPES-RH-INC', filename: 'Registro-Incapacidad',
+        summary: [
+          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Período — desde', '@d:desde'], ['Período — hasta', '@d:hasta'],
+          ['Tipo de incapacidad', 'tipo'], ['Tipo de riesgo', 'riesgo'], ['Documento adjunto', '@file:archivo']
+        ],
+        sections: [
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Fecha del registro', '@fecha']] ] },
+          { bar: 'PERÍODO Y TIPO DE INCAPACIDAD', rows: [ [['Período — desde', '@d:desde'], ['Período — hasta', '@d:hasta']], [['Tipo de incapacidad', 'tipo'], ['Tipo de riesgo', 'riesgo']], [['Documento adjunto', '@file:archivo'], null, null, 11] ] }
+        ],
+        signatures: ['Firma del trabajador(a)', 'Nombre y firma del jefe inmediato'],
+        rh: { label: 'INCAPACIDAD VALIDADA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
+        note: 'NOTA: El documento adjunto debe ser la incapacidad original emitida por el ISSS o médico tratante. Este comprobante no sustituye la constancia médica oficial.'
+      },
+      constancia: {
+        title: 'SOLICITUD DE CONSTANCIA LABORAL', code: 'UPES-RH-DA-FOR-CON', prefix: 'UPES-RH-CON', filename: 'Solicitud-Constancia',
+        summary: [
+          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Código de empleado(a)', 'codigo'], ['Cargo actual', 'cargo'], ['Unidad en que labora', 'unidad'],
+          ['Tipo de constancia', 'tipo'], ['Dirigida a', 'dirigida'], ['Motivo / uso', 'motivo'], ['Forma de entrega', 'entrega'], ['Correo de contacto', 'correo']
+        ],
+        sections: [
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Cargo actual', 'cargo'], ['Unidad en que labora', 'unidad']] ] },
+          { bar: 'DETALLES DE LA SOLICITUD', rows: [ [['Tipo de constancia', 'tipo'], ['Fecha de la solicitud', '@fecha']], [['Dirigida a', 'dirigida'], ['Forma de entrega', 'entrega']], [['Correo de contacto', 'correo']], [['Motivo / uso', 'motivo'], null, null, 18] ] }
+        ],
+        signatures: ['Firma del trabajador(a)', 'Recibido por (RRHH)'],
+        rh: { label: 'CONSTANCIA EMITIDA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
+        note: 'NOTA: La constancia será emitida en un plazo de hasta 3 días hábiles a partir de la recepción de esta solicitud.'
+      },
+      orden: {
+        title: 'ORDEN DE DESCUENTO', code: 'UPES-RH-DA-FOR-ORD', prefix: 'UPES-RH-ORD', filename: 'Orden-Descuento',
+        summary: [
+          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Código de empleado(a)', 'codigo'], ['Unidad en que labora', 'unidad'],
+          ['Concepto del descuento', 'concepto'], ['Beneficiario', 'beneficiario'], ['Monto por cuota', 'monto'], ['No. de cuotas', 'cuotas'], ['Inicio del descuento', '@d:inicio'], ['Observaciones', 'comentarios']
+        ],
+        sections: [
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Unidad en que labora', 'unidad'], ['Fecha de la orden', '@fecha']] ] },
+          { bar: 'DETALLES DEL DESCUENTO', rows: [ [['Concepto del descuento', 'concepto']], [['Beneficiario', 'beneficiario']], [['Monto por cuota (USD)', 'monto'], ['No. de cuotas', 'cuotas'], ['Inicio (planilla)', '@d:inicio']], [['Observaciones', 'comentarios'], null, null, 18] ] }
+        ],
+        signatures: ['Firma del trabajador(a) — Autorizo el descuento', 'Administración Financiera'],
+        rh: { label: 'ORDEN APLICADA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
+        note: 'NOTA: Con la firma de este documento, el trabajador(a) autoriza expresamente la aplicación del descuento en planilla en los términos aquí descritos.'
+      }
+    };
+  }
+
+  seedVacancies() {
+    return [
+      { title: 'Creador de Contenido', description: 'Responsable de crear, editar y producir contenido visual, audiovisual y digital que fortalezca la presencia institucional y la comunicación con nuestros públicos.', requirements: ['Dominio de herramientas de diseño y edición audiovisual', 'Creatividad y manejo de redes sociales', 'Portafolio de trabajos previos'] },
+      { title: 'Auditor Interno', description: 'Responsable de evaluar y mejorar los procesos de control interno, gestión de riesgos y cumplimiento normativo, contribuyendo a la transparencia y eficiencia institucional.', requirements: ['Licenciatura en Contaduría Pública o carrera afín', 'Conocimiento de normativa y control interno', 'Experiencia comprobable en auditoría'] },
+      { title: 'Académico a Tiempo Completo — Ing. Civil', description: 'Responsable de la docencia, investigación y vinculación en el área de Ingeniería Civil, formando profesionales competentes, éticos y comprometidos con el desarrollo sostenible y la transformación social.', requirements: ['Ingeniero(a) Civil con grado académico afín', 'Experiencia docente comprobable', 'Disponibilidad de tiempo completo'] },
+      { title: 'Académico a Tiempo Completo — Ing. Eléctrica', description: 'Responsable de la docencia, investigación y vinculación en el área de Ingeniería Eléctrica, formando profesionales competentes, éticos y comprometidos con la innovación, la eficiencia energética y el desarrollo sostenible.', requirements: ['Ingeniero(a) Electricista o carrera afín', 'Experiencia docente comprobable', 'Disponibilidad de tiempo completo'] },
+      { title: 'Académico a Tiempo Completo — Área Básica', description: 'Responsable de la docencia, investigación y vinculación en áreas de matemática o física, contribuyendo a la formación integral de los estudiantes a través del pensamiento lógico, analítico y científico.', requirements: ['Formación en Matemática, Física o área afín', 'Experiencia docente en educación superior', 'Disponibilidad de tiempo completo'] },
+      { title: 'Gestor de Organización y Método', description: 'Responsable de analizar, diseñar e implementar sistemas, procesos y procedimientos que mejoren la eficiencia organizacional, optimicen recursos y promuevan la mejora continua en todas las áreas institucionales.', requirements: ['Formación en Administración, Ingeniería Industrial o afín', 'Manejo de mapeo y mejora de procesos', 'Pensamiento analítico y orientación a resultados'] },
+      { title: 'Encargado(a) de Ventas', description: 'Responsable de planificar, dirigir y supervisar las estrategias de ventas, promoviendo el crecimiento de las relaciones con clientes, el cumplimiento de metas comerciales y la excelencia en el servicio.', requirements: ['Experiencia en gestión comercial y ventas', 'Orientación a resultados y metas', 'Habilidades de negociación y servicio al cliente'] },
+      { title: 'Encargado(a) de Mercadeo', description: 'Responsable de planificar, desarrollar y ejecutar estrategias de mercadeo que fortalezcan la imagen institucional, promuevan nuestros servicios y contribuyan al posicionamiento de la universidad.', requirements: ['Formación en Mercadeo, Comunicaciones o afín', 'Manejo de marketing digital y redes sociales', 'Pensamiento estratégico y creativo'] },
+      { title: 'Gerente de Proyectos', description: 'Responsable de planificar, ejecutar y supervisar proyectos institucionales, asegurando el cumplimiento de objetivos, tiempos y recursos, alineados a la estrategia organizacional y la mejora continua.', requirements: ['Experiencia en gestión de proyectos', 'Conocimiento de metodologías de planificación', 'Liderazgo y coordinación de equipos'] },
+      { title: 'Coordinador de Ing. Civil y Arquitectura', description: 'Responsable de coordinar y fortalecer los procesos académicos, administrativos y de gestión de las carreras de Ingeniería Civil y Arquitectura, promoviendo la calidad educativa, la innovación, la sostenibilidad y el desarrollo institucional.', requirements: ['Ingeniero(a) Civil o Arquitecto(a)', 'Experiencia en coordinación académica', 'Visión estratégica y de gestión'] }
+    ].map((v, i) => Object.assign({ id: 'seed_' + i }, v));
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // DATOS DINÁMICOS — Editables mes a mes / listos para integración
+  // Cada arreglo puede sustituirse por una consulta a base de datos,
+  // formulario institucional o automatización. Para mostrar una foto
+  // real, asigna la ruta/URL en el campo `photo` (ej. 'assets/foto.jpg');
+  // si queda vacío se muestra un avatar con iniciales.
+  // ─────────────────────────────────────────────────────────────
+  seedAscensos() {
+    return [
+      { name: 'Andrea Beatriz Morales', prev: 'Asistente Administrativa', next: 'Coordinadora de Procesos', date: 'Marzo 2026', photo: '' },
+      { name: 'Carlos Ernesto Rivas', prev: 'Analista de TI', next: 'Jefe de Infraestructura', date: 'Marzo 2026', photo: '' },
+      { name: 'María José Hernández', prev: 'Auxiliar Contable', next: 'Encargada de Tesorería', date: 'Febrero 2026', photo: '' },
+      { name: 'José Roberto Campos', prev: 'Docente Hora Clase', next: 'Académico Tiempo Completo', date: 'Febrero 2026', photo: '' },
+      { name: 'Gabriela Alejandra Flores', prev: 'Recepcionista', next: 'Asistente de Rectoría', date: 'Enero 2026', photo: '' },
+      { name: 'Luis Fernando Aguilar', prev: 'Técnico de Soporte', next: 'Analista de Sistemas', date: 'Enero 2026', photo: '' }
+    ];
+  }
+
+  seedTalentos() {
+    return [
+      { name: 'Sofía Marcela Díaz', role: 'Diseñadora Gráfica', date: '02 marzo 2026', photo: '' },
+      { name: 'Diego Alberto Ramírez', role: 'Auxiliar de Biblioteca', date: '02 marzo 2026', photo: '' },
+      { name: 'Karla Patricia Mendoza', role: 'Asistente de Mercadeo', date: '16 febrero 2026', photo: '' },
+      { name: 'Óscar Eduardo Portillo', role: 'Docente de Matemática', date: '03 febrero 2026', photo: '' },
+      { name: 'Valeria Nicole Cruz', role: 'Analista de Talento Humano', date: '16 febrero 2026', photo: '' },
+      { name: 'Ricardo Antonio Vega', role: 'Técnico de Mantenimiento', date: '02 marzo 2026', photo: '' }
+    ];
+  }
+
+  seedCumple() {
+    return [
+      { name: 'Ana Lucía Pérez', photo: '' },
+      { name: 'Manuel Antonio Soto', photo: '' },
+      { name: 'Claudia Vanessa Reyes', photo: '' },
+      { name: 'Jorge Alberto Martínez', photo: '' },
+      { name: 'Daniela Estefanía López', photo: '' },
+      { name: 'Roberto Carlos Guzmán', photo: '' },
+      { name: 'Wendy Carolina Ayala', photo: '' },
+      { name: 'Fernando José Quintanilla', photo: '' },
+      { name: 'Patricia Elena Cordero', photo: '' },
+      { name: 'Mauricio Ernesto Linares', photo: '' }
+    ];
+  }
+
+  seedReconocimientos() {
+    return [
+      { name: 'Andrea Beatriz Morales', type: 'Empleado del Año', year: '2026', icon: 'fa-solid fa-trophy', photo: '' },
+      { name: 'Carlos Ernesto Rivas', type: 'Trayectoria — 10 años', year: '2026', icon: 'fa-solid fa-medal', photo: '' },
+      { name: 'María José Hernández', type: 'Excelencia en el Servicio', year: '2026', icon: 'fa-solid fa-star', photo: '' },
+      { name: 'José Roberto Campos', type: 'Innovación Académica', year: '2026', icon: 'fa-solid fa-lightbulb', photo: '' },
+      { name: 'Gabriela Alejandra Flores', type: 'Liderazgo Destacado', year: '2026', icon: 'fa-solid fa-flag', photo: '' },
+      { name: 'Luis Fernando Aguilar', type: 'Compromiso Institucional', year: '2026', icon: 'fa-solid fa-handshake', photo: '' },
+      { name: 'Valeria Nicole Cruz', type: 'Mejor Trabajo en Equipo', year: '2026', icon: 'fa-solid fa-people-group', photo: '' }
+    ];
+  }
+
+  seedCapRecibidas() {
+    return [
+      { name: 'Formación para Comités de Seguridad y Salud Ocupacional (CSSO)', date: 'Febrero 2026', desc: 'Capacitación de 48 horas con apoyo de INCAF para la conformación y operación de los comités de seguridad.', href: '#PLACEHOLDER_ENLACE_CSSO' },
+      { name: 'Brigada de Primeros Auxilios', date: 'Marzo 2026', desc: 'Preparación práctica del personal para responder ante emergencias médicas dentro de la institución.', href: '#PLACEHOLDER_ENLACE_BRIGADA' },
+      { name: 'Gestión Estratégica del Talento Humano', date: 'Marzo 2026', desc: 'Herramientas modernas para la atracción, desarrollo y retención del talento institucional.', href: '#PLACEHOLDER_ENLACE_TALENTO' },
+      { name: 'Introducción a Power BI y BI Empresarial', date: 'Abril 2026', desc: 'Análisis y visualización de datos para la toma de decisiones basada en información.', href: '#PLACEHOLDER_ENLACE_POWERBI' }
+    ];
+  }
+
+  seedCapProximas() {
+    return [
+      { name: 'Liderazgo y Gestión de Equipos', date: 'Mayo 2026', desc: 'Programa orientado a jefaturas y coordinaciones para fortalecer competencias de liderazgo.', href: '#PLACEHOLDER_ENLACE_LIDERAZGO' },
+      { name: 'Ofimática Avanzada', date: 'Junio 2026', desc: 'Dominio de hojas de cálculo, presentaciones y herramientas colaborativas institucionales.', href: '#PLACEHOLDER_ENLACE_OFIMATICA' },
+      { name: 'Atención y Servicio al Cliente', date: 'Julio 2026', desc: 'Buenas prácticas de atención para el personal con contacto directo con estudiantes y público.', href: '#PLACEHOLDER_ENLACE_SERVICIO' }
+    ];
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // EDICIÓN DE CONTENIDO — cada colección define sus campos.
+  // Los datos se guardan en localStorage (este dispositivo). Para
+  // integrar con base de datos / formularios institucionales basta
+  // reemplazar loadCol/persistCol por llamadas al backend.
+  // ─────────────────────────────────────────────────────────────
+  buildCollections() {
+    const iconOpts = [
+      { value: 'fa-solid fa-trophy', label: 'Trofeo' },
+      { value: 'fa-solid fa-medal', label: 'Medalla' },
+      { value: 'fa-solid fa-star', label: 'Estrella' },
+      { value: 'fa-solid fa-lightbulb', label: 'Innovación' },
+      { value: 'fa-solid fa-flag', label: 'Liderazgo' },
+      { value: 'fa-solid fa-handshake', label: 'Compromiso' },
+      { value: 'fa-solid fa-people-group', label: 'Equipo' },
+      { value: 'fa-solid fa-award', label: 'Distinción' }
+    ];
+    const photoField = { key: 'photo', label: 'Foto (URL, opcional)', type: 'text', placeholder: 'https://… o assets/foto.jpg' };
+    return {
+      ascensos: { title: 'ascenso', max: 6, storeKey: 'upes_ascensos_v1', seed: () => this.seedAscensos(), fields: [
+        { key: 'name', label: 'Nombre completo', type: 'text', required: true, placeholder: 'Nombre y apellidos' },
+        { key: 'prev', label: 'Cargo anterior', type: 'text', required: true, placeholder: 'Ej. Asistente Administrativa' },
+        { key: 'next', label: 'Nuevo cargo', type: 'text', required: true, placeholder: 'Ej. Coordinadora de Procesos' },
+        { key: 'date', label: 'Fecha del ascenso', type: 'text', placeholder: 'Ej. Marzo 2026' },
+        photoField
+      ] },
+      talentos: { title: 'nuevo talento', max: 6, storeKey: 'upes_talentos_v1', seed: () => this.seedTalentos(), fields: [
+        { key: 'name', label: 'Nombre completo', type: 'text', required: true, placeholder: 'Nombre y apellidos' },
+        { key: 'role', label: 'Cargo', type: 'text', required: true, placeholder: 'Ej. Diseñadora Gráfica' },
+        { key: 'date', label: 'Fecha de ingreso', type: 'text', placeholder: 'Ej. 02 marzo 2026' },
+        photoField
+      ] },
+      cumple: { title: 'cumpleañero/a', max: 10, storeKey: 'upes_cumple_v1', seed: () => this.seedCumple(), fields: [
+        { key: 'name', label: 'Nombre completo', type: 'text', required: true, placeholder: 'Nombre y apellidos' },
+        photoField
+      ] },
+      reconocimientos: { title: 'reconocimiento', max: 7, storeKey: 'upes_recon_v1', seed: () => this.seedReconocimientos(), fields: [
+        { key: 'name', label: 'Nombre completo', type: 'text', required: true, placeholder: 'Nombre y apellidos' },
+        { key: 'type', label: 'Tipo de reconocimiento', type: 'text', required: true, placeholder: 'Ej. Empleado del Año' },
+        { key: 'year', label: 'Año', type: 'text', placeholder: 'Ej. 2026' },
+        { key: 'icon', label: 'Ícono', type: 'enum', options: iconOpts },
+        photoField
+      ] },
+      capRecibidas: { title: 'capacitación recibida', max: 20, storeKey: 'upes_caprec_v1', seed: () => this.seedCapRecibidas(), fields: [
+        { key: 'name', label: 'Nombre de la capacitación', type: 'text', required: true, placeholder: 'Nombre del curso o taller' },
+        { key: 'date', label: 'Fecha', type: 'text', placeholder: 'Ej. Febrero 2026' },
+        { key: 'desc', label: 'Descripción breve', type: 'textarea', placeholder: 'Breve descripción del contenido…' },
+        { key: 'href', label: 'Enlace relacionado', type: 'text', placeholder: 'https://…' }
+      ] },
+      capProximas: { title: 'próxima capacitación', max: 20, storeKey: 'upes_capprox_v1', seed: () => this.seedCapProximas(), fields: [
+        { key: 'name', label: 'Nombre de la capacitación', type: 'text', required: true, placeholder: 'Nombre del curso o taller' },
+        { key: 'date', label: 'Fecha', type: 'text', placeholder: 'Ej. Mayo 2026' },
+        { key: 'desc', label: 'Descripción breve', type: 'textarea', placeholder: 'Breve descripción del contenido…' },
+        { key: 'href', label: 'Enlace relacionado', type: 'text', placeholder: 'https://…' }
+      ] }
+    };
+  }
+
+  loadCol(key) {
+    const cfg = this.collections[key];
+    try {
+      const raw = localStorage.getItem(cfg.storeKey);
+      if (raw) { const p = JSON.parse(raw); if (Array.isArray(p)) return p; }
+    } catch (e) {}
+    const list = cfg.seed().map((it, i) => Object.assign({ id: key + '_' + i }, it));
+    this.persistCol(key, list);
+    return list;
+  }
+
+  persistCol(key, list) {
+    try { localStorage.setItem(this.collections[key].storeKey, JSON.stringify(list)); } catch (e) {}
+  }
+
+  toggleEdit() {
+    this.setState((st) => ({ editMode: !st.editMode }));
+  }
+
+  colAdd(key) {
+    const cfg = this.collections[key];
+    if (this.state.store[key].length >= cfg.max) {
+      if (typeof window !== 'undefined') window.alert('Esta sección admite un máximo de ' + cfg.max + ' elementos. Elimina alguno para agregar otro.');
+      return;
+    }
+    const draft = {};
+    cfg.fields.forEach((f) => { draft[f.key] = f.type === 'enum' ? f.options[0].value : ''; });
+    if (typeof document !== 'undefined') document.body.style.overflow = 'hidden';
+    this.setState({ editor: { col: key, id: 'new', draft: draft, error: '' } });
+  }
+
+  colEdit(key, id) {
+    const item = this.state.store[key].find((x) => x.id === id);
+    if (!item) return;
+    const draft = {};
+    this.collections[key].fields.forEach((f) => { draft[f.key] = item[f.key] != null ? item[f.key] : (f.type === 'enum' ? f.options[0].value : ''); });
+    if (typeof document !== 'undefined') document.body.style.overflow = 'hidden';
+    this.setState({ editor: { col: key, id: id, draft: draft, error: '' } });
+  }
+
+  colDelete(key, id) {
+    if (typeof window !== 'undefined' && !window.confirm('¿Eliminar este elemento? Esta acción no se puede deshacer.')) return;
+    const list = this.state.store[key].filter((x) => x.id !== id);
+    this.persistCol(key, list);
+    this.setState((st) => ({ store: Object.assign({}, st.store, { [key]: list }) }));
+  }
+
+  setEditorField(k, v) {
+    this.setState((st) => ({ editor: Object.assign({}, st.editor, { draft: Object.assign({}, st.editor.draft, { [k]: v }), error: '' }) }));
+  }
+
+  editorSave() {
+    const ed = this.state.editor;
+    if (!ed) return;
+    const cfg = this.collections[ed.col];
+    for (const f of cfg.fields) {
+      if (f.required && !((ed.draft[f.key] || '').trim())) {
+        this.setState({ editor: Object.assign({}, ed, { error: 'Completa el campo obligatorio: ' + f.label + '.' }) });
+        return;
+      }
+    }
+    const clean = {};
+    cfg.fields.forEach((f) => { clean[f.key] = (ed.draft[f.key] || '').trim(); });
+    let list = this.state.store[ed.col].slice();
+    if (ed.id === 'new') {
+      list.push(Object.assign({ id: ed.col + '_' + Date.now() }, clean));
+    } else {
+      list = list.map((x) => x.id === ed.id ? Object.assign({ id: x.id }, clean) : x);
+    }
+    this.persistCol(ed.col, list);
+    if (typeof document !== 'undefined') document.body.style.overflow = '';
+    this.setState((st) => ({ store: Object.assign({}, st.store, { [ed.col]: list }), editor: null }));
+  }
+
+  editorCancel() {
+    if (typeof document !== 'undefined') document.body.style.overflow = '';
+    this.setState({ editor: null });
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // AUTENTICACIÓN DE ADMINISTRADOR
+  // El modo edición sólo está disponible tras iniciar sesión. Las
+  // credenciales se definen en las propiedades (adminUser/adminPass).
+  // ⚠ Validación del lado del cliente (prototipo). Para seguridad real
+  // conecta doLogin() a un servicio de autenticación del backend.
+  // ─────────────────────────────────────────────────────────────
+  lockScroll() { if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'; }
+  unlockScroll() { if (typeof document !== 'undefined') document.body.style.overflow = ''; }
+
+  requestEdit() {
+    if (this.state.authed) {
+      this.setState((st) => ({ editMode: !st.editMode }), () => this.applyEditable());
+    } else {
+      this.lockScroll();
+      this.setState({ loginOpen: true, loginError: '', loginUser: '', loginPass: '' });
+    }
+  }
+
+  doLogin() {
+    const u = (this.state.loginUser || '').trim();
+    const p = this.state.loginPass || '';
+    const U = this.props.adminUser || 'admin';
+    const P = this.props.adminPass || 'upes2026';
+    if (u === U && p === P) {
+      try { localStorage.setItem('upes_admin_session', '1'); } catch (e) {}
+      this.unlockScroll();
+      this.setState({ authed: true, loginOpen: false, editMode: true, loginUser: '', loginPass: '', loginError: '' }, () => this.applyEditable());
+    } else {
+      this.setState({ loginError: 'Usuario o contraseña incorrectos.' });
+    }
+  }
+
+  cancelLogin() {
+    this.unlockScroll();
+    this.setState({ loginOpen: false, loginError: '', loginUser: '', loginPass: '' });
+  }
+
+  logout() {
+    try { localStorage.removeItem('upes_admin_session'); } catch (e) {}
+    this.setState({ authed: false, editMode: false, editor: null }, () => this.applyEditable());
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // CONTENIDO EDITABLE (textos, imágenes, enlaces)
+  // Se guarda en localStorage de este navegador. Para que los cambios
+  // se vean en todos los dispositivos, persistir este objeto en el backend.
+  // ─────────────────────────────────────────────────────────────
+  loadContent() {
+    try {
+      const raw = localStorage.getItem('upes_content_v1');
+      if (raw) { const p = JSON.parse(raw); if (p && typeof p === 'object') return { texts: p.texts || {}, images: p.images || {}, links: p.links || {}, videos: p.videos || {} }; }
+    } catch (e) {}
+    return { texts: {}, images: {}, links: {}, videos: {} };
+  }
+
+  ytEmbed(url) {
+    if (!url) return '';
+    url = url.trim();
+    let id = '';
+    const m1 = url.match(/[?&]v=([\w-]{11})/);
+    const m2 = url.match(/youtu\.be\/([\w-]{11})/);
+    const m3 = url.match(/embed\/([\w-]{11})/);
+    const m4 = url.match(/shorts\/([\w-]{11})/);
+    if (m1) id = m1[1]; else if (m2) id = m2[1]; else if (m3) id = m3[1]; else if (m4) id = m4[1];
+    else if (/^[\w-]{11}$/.test(url)) id = url;
+    return id ? 'https://www.youtube.com/embed/' + id : url;
+  }
+
+  persistContent() {
+    try { localStorage.setItem('upes_content_v1', JSON.stringify(this.content)); } catch (e) {}
+  }
+
+  saveText(key, html) {
+    this.content.texts[key] = html;
+    this.persistContent();
+  }
+
+  openAsset(kind, key, current) {
+    let draft = '';
+    if (kind === 'image') draft = this.content.images[key] || '';
+    else if (kind === 'video') draft = this.content.videos[key] || (current || '');
+    else draft = this.content.links[key] || (current && current.indexOf('#PLACEHOLDER') !== 0 ? current : '');
+    this.lockScroll();
+    this.setState({ assetEdit: { kind: kind, key: key }, assetDraft: draft });
+  }
+
+  onAssetFile(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { window.alert('La imagen supera 2 MB. Usa una imagen más liviana o pega una URL.'); return; }
+    const reader = new FileReader();
+    reader.onload = () => this.setState({ assetDraft: reader.result });
+    reader.readAsDataURL(file);
+  }
+
+  saveAsset() {
+    const a = this.state.assetEdit;
+    if (!a) return;
+    const val = (this.state.assetDraft || '').trim();
+    if (a.kind === 'image') this.content.images[a.key] = val;
+    else if (a.kind === 'video') this.content.videos[a.key] = this.ytEmbed(val);
+    else this.content.links[a.key] = val;
+    this.persistContent();
+    this.unlockScroll();
+    this.setState({ assetEdit: null, assetDraft: '' }, () => this.applyEditable());
+  }
+
+  cancelAsset() {
+    this.unlockScroll();
+    this.setState({ assetEdit: null, assetDraft: '' });
+  }
+
+  applyEditable() {
+    if (typeof document === 'undefined') return;
+    const editing = this.state.authed && this.state.editMode;
+    const C = this.content;
+    const self = this;
+    const dashed = '1.5px dashed rgba(26,58,143,.5)';
+    document.querySelectorAll('section[data-spy]').forEach((sec) => {
+      const sid = sec.id || 'sec';
+      let ti = 0;
+      sec.querySelectorAll('h1,h2,h3,h4,h5,p').forEach((el) => {
+        if (el.closest('[data-dyn]')) return;
+        const key = sid + '_t' + (ti++);
+        if (C.texts[key] != null && document.activeElement !== el) el.innerHTML = C.texts[key];
+        el.dataset.ceKey = key;
+        if (editing) {
+          el.setAttribute('contenteditable', 'true');
+          el.style.outline = dashed;
+          el.style.outlineOffset = '3px';
+          el.style.borderRadius = '5px';
+          if (!el._ceB) {
+            el._ceB = true;
+            el.addEventListener('blur', function () { self.saveText(el.dataset.ceKey, el.innerHTML); });
+            el.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') el.blur(); });
+          }
+        } else {
+          el.removeAttribute('contenteditable');
+          el.style.outline = '';
+        }
+      });
+      let ii = 0;
+      sec.querySelectorAll('img').forEach((el) => {
+        if (el.closest('[data-dyn]')) return;
+        const key = sid + '_img' + (ii++);
+        el.dataset.imgKey = key;
+        if (C.images[key]) el.src = C.images[key];
+        const parent = el.parentElement;
+        if (!parent) return;
+        let btn = parent.querySelector(':scope > [data-imgbtn]');
+        if (editing) {
+          if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+          if (!btn) {
+            btn = document.createElement('button');
+            btn.setAttribute('data-imgbtn', '1');
+            btn.type = 'button';
+            btn.innerHTML = '<i class="fa-solid fa-camera"></i> Cambiar imagen';
+            btn.style.cssText = 'position:absolute;top:10px;left:10px;z-index:6;background:#1A3A8F;color:#fff;border:none;font-family:Montserrat,sans-serif;font-weight:700;font-size:12px;padding:8px 13px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(13,27,75,.32)';
+            btn.addEventListener('click', function (ev) { ev.preventDefault(); ev.stopPropagation(); self.openAsset('image', key, ''); });
+            parent.appendChild(btn);
+          }
+        } else if (btn) { btn.remove(); }
+      });
+      let li = 0;
+      sec.querySelectorAll('a[href]').forEach((el) => {
+        if (el.closest('[data-dyn]')) return;
+        const href = el.getAttribute('href') || '';
+        if (href.charAt(0) === '#' && href.indexOf('#PLACEHOLDER') !== 0) return;
+        const key = sid + '_lnk' + (li++);
+        el.dataset.lnkKey = key;
+        if (C.links[key]) el.setAttribute('href', C.links[key]);
+        let lbtn = el.querySelector(':scope > [data-lnkbtn]');
+        if (editing) {
+          if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+          if (!lbtn) {
+            lbtn = document.createElement('span');
+            lbtn.setAttribute('data-lnkbtn', '1');
+            lbtn.title = 'Editar enlace';
+            lbtn.innerHTML = '<i class="fa-solid fa-link"></i>';
+            lbtn.style.cssText = 'position:absolute;top:6px;right:6px;z-index:6;background:#F5A800;color:#0D1B4B;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;box-shadow:0 3px 8px rgba(13,27,75,.3)';
+            lbtn.addEventListener('click', function (ev) { ev.preventDefault(); ev.stopPropagation(); self.openAsset('link', key, el.getAttribute('href')); });
+            el.appendChild(lbtn);
+          }
+        } else if (lbtn) { lbtn.remove(); }
+      });
+    });
+  }
+
+  // Calcula iniciales, color y estilos para el avatar de cada persona.
+  personCard(p, size, onDark) {
+    const sz = size || 62;
+    const name = (p.name || '').trim();
+    const parts = name.split(/\s+/).filter(Boolean);
+    const initials = (((parts[0] || '')[0] || '') + ((parts[1] || '')[0] || '')).toUpperCase();
+    const accents = ['#1A3A8F', '#00B4B4', '#057a7a', '#F5A800', '#0D1B4B', '#8a9a2b'];
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    const accent = accents[h % accents.length];
+    const hasPhoto = !!(p.photo && p.photo.trim());
+    const avatarStyle = {
+      width: sz + 'px', height: sz + 'px', borderRadius: '50%', overflow: 'hidden',
+      flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      border: '3px solid ' + (onDark ? '#F5A800' : accent),
+      background: onDark ? '#fff' : accent + '14',
+      boxShadow: '0 6px 16px rgba(13,27,75,.14)'
+    };
+    const inner = hasPhoto
+      ? React.createElement('img', { src: p.photo, alt: name, style: { width: '100%', height: '100%', objectFit: 'cover' } })
+      : React.createElement('span', { style: { fontFamily: "'Montserrat',sans-serif", fontWeight: 800, fontSize: Math.round(sz * 0.34) + 'px', color: accent, lineHeight: 1 } }, initials || 'U');
+    return Object.assign({}, p, {
+      avatar: React.createElement('div', { style: avatarStyle }, inner)
+    });
+  }
+
+  loadVacancies() {
+    let list = null;
+    try {
+      const raw = localStorage.getItem('upes_vacantes_v1');
+      if (raw) { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) list = parsed; }
+    } catch (e) {}
+    if (!list) { list = this.seedVacancies(); this.persistVac(list); }
+    this.setState({ vacancies: list });
+  }
+
+  persistVac(list) {
+    try { localStorage.setItem('upes_vacantes_v1', JSON.stringify(list)); } catch (e) {}
+  }
+
+  vacAdd() {
+    this.setState({ vacEditId: 'new', draft: { title: '', description: '', requirements: [''] }, vacError: '' });
+  }
+
+  vacEdit(id) {
+    const v = this.state.vacancies.find((x) => x.id === id);
+    if (!v) return;
+    this.setState({ vacEditId: id, vacError: '', draft: { title: v.title, description: v.description, requirements: (v.requirements && v.requirements.length) ? v.requirements.slice() : [''] } });
+  }
+
+  cancelDraft() {
+    this.setState({ vacEditId: null, vacError: '' });
+  }
+
+  saveDraft() {
+    const d = this.state.draft;
+    const title = (d.title || '').trim();
+    const desc = (d.description || '').trim();
+    if (title.length < 3) { this.setState({ vacError: 'El nombre de la plaza debe tener al menos 3 caracteres.' }); return; }
+    if (desc.length < 3) { this.setState({ vacError: 'La descripción del puesto debe tener al menos 3 caracteres.' }); return; }
+    const reqs = (d.requirements || []).map((r) => (r || '').trim()).filter((r) => r.length > 0);
+    let list = this.state.vacancies.slice();
+    if (this.state.vacEditId === 'new') {
+      list.push({ id: 'v_' + Date.now(), title: title, description: desc, requirements: reqs });
+    } else {
+      list = list.map((x) => x.id === this.state.vacEditId ? { id: x.id, title: title, description: desc, requirements: reqs } : x);
+    }
+    this.persistVac(list);
+    this.setState({ vacancies: list, vacEditId: null, vacError: '' });
+  }
+
+  vacDelete(id) {
+    const v = this.state.vacancies.find((x) => x.id === id);
+    const name = v ? v.title : 'esta plaza';
+    if (typeof window !== 'undefined' && !window.confirm('¿Eliminar la plaza "' + name + '"?')) return;
+    const list = this.state.vacancies.filter((x) => x.id !== id);
+    this.persistVac(list);
+    this.setState({ vacancies: list });
+  }
+
+  vacApply(v) {
+    const subject = 'Aplicación a la plaza: ' + v.title;
+    const body = 'Estimado equipo de Recursos Humanos UPES,\n\nDeseo postularme a la plaza "' + v.title + '". Adjunto mi hoja de vida (CV) para su consideración.\n\nNombre completo:\nTeléfono de contacto:\nCorreo electrónico:\n\nQuedo atento(a) a su respuesta. Saludos cordiales.';
+    window.location.href = 'mailto:rrhh@upes.edu.sv?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  }
+
+  setDraftField(key, value) {
+    this.setState((st) => ({ draft: Object.assign({}, st.draft, { [key]: value }), vacError: '' }));
+  }
+
+  setReq(i, value) {
+    this.setState((st) => { const r = st.draft.requirements.slice(); r[i] = value; return { draft: Object.assign({}, st.draft, { requirements: r }) }; });
+  }
+
+  addReq() {
+    this.setState((st) => ({ draft: Object.assign({}, st.draft, { requirements: st.draft.requirements.concat(['']) }) }));
+  }
+
+  removeReq(i) {
+    this.setState((st) => { const r = st.draft.requirements.slice(); r.splice(i, 1); return { draft: Object.assign({}, st.draft, { requirements: r }) }; });
+  }
+
+  ytVideoId(url) {
+    if (!url) return '';
+    const m = String(url).match(/(?:embed\/|v=|youtu\.be\/|shorts\/)([\w-]{11})/);
+    if (m) return m[1];
+    if (/^[\w-]{11}$/.test(String(url).trim())) return String(url).trim();
+    return '';
+  }
+
+  vidSrc(key, def) { return (this.content.videos && this.content.videos[key]) || def; }
+
+  curVidIds() {
+    return [
+      this.ytVideoId(this.vidSrc('bienestar_vid0', 'https://www.youtube.com/embed/gwDZRjdBnRo')),
+      this.ytVideoId(this.vidSrc('bienestar_vid1', 'https://www.youtube.com/embed/UX9Cf36fSOU'))
+    ];
+  }
+
+  loadYTApi() {
+    return new Promise((resolve) => {
+      if (window.YT && window.YT.Player) return resolve();
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => { if (typeof prev === 'function') prev(); resolve(); };
+      if (!document.getElementById('__ytapi')) {
+        const s = document.createElement('script'); s.id = '__ytapi'; s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+      }
+    });
+  }
+
+  mountVideos() {
+    if (typeof window === 'undefined') return;
+    const ids = this.curVidIds();
+    this.loadYTApi().then(() => {
+      [[this.vid0El, ids[0]], [this.vid1El, ids[1]]].forEach((pair, i) => {
+        const el = pair[0], id = pair[1];
+        if (!el || !id) return;
+        const key = 'p' + i;
+        this.players = this.players || {};
+        if (this.players[key]) { try { this.players[key].destroy(); } catch (e) {} this.players[key] = null; }
+        el.innerHTML = '';
+        const holder = document.createElement('div');
+        el.appendChild(holder);
+        this.players[key] = new YT.Player(holder, {
+          videoId: id, width: '100%', height: '100%',
+          playerVars: { rel: 0, modestbranding: 1, playsinline: 1 },
+          events: { onReady: (e) => { const f = e.target.getIframe(); f.style.position = 'absolute'; f.style.inset = '0'; f.style.width = '100%'; f.style.height = '100%'; f.style.border = '0'; } }
+        });
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadVacancies();
+    this._vidIds = this.curVidIds().join('|');
+    this.mountVideos();
+    this._onResize = () => this.setState({ width: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+    try {
+      this._obs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) this.setState({ activeSection: e.target.id });
+        });
+      }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+      document.querySelectorAll('[data-spy]').forEach((el) => this._obs.observe(el));
+    } catch (err) {}
+    this.applyEditable();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    if (this._obs) this._obs.disconnect();
+    clearTimeout(this._t);
+    document.body.style.overflow = '';
+  }
+
+  componentDidUpdate() {
+    if (this.chatEl) this.chatEl.scrollTop = this.chatEl.scrollHeight;
+    this.applyEditable();
+    const sig = this.curVidIds().join('|');
+    if (sig !== this._vidIds && this.vid0El) { this._vidIds = sig; this.mountVideos(); }
+  }
+
+  openFlow(key) {
+    const flow = this.flows[key];
+    if (!flow) return;
+    this.answers = {};
+    this.queue = flow.steps.map((s) => Object.assign({}, s));
+    this._meta = { title: flow.title, secure: !!flow.secure };
+    this.labelOrder = this.buildLabelOrder(flow.steps);
+    document.body.style.overflow = 'hidden';
+    this.setState({ flow: key, messages: [], typing: false, current: null, inputValue: '', error: '', done: false, permisoDone: false }, () => this.nextStep());
+  }
+
+  buildLabelOrder(steps) {
+    const out = [];
+    const walk = (arr) => arr.forEach((s) => {
+      if (s.sum) out.push({ id: s.id, label: s.sum });
+      if (s.followUp) walk([s.followUp]);
+      if (s.branch) Object.keys(s.branch).forEach((k) => walk(s.branch[k]));
+    });
+    walk(steps);
+    return out;
+  }
+
+  closeFlow() {
+    clearTimeout(this._t);
+    document.body.style.overflow = '';
+    this.setState({ flow: null, current: null, typing: false });
+  }
+
+  nextStep() {
+    if (!this.queue.length) return;
+    const step = this.queue.shift();
+    this.setState({ typing: true, current: null, error: '' });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => {
+      this.setState((st) => ({ typing: false, current: step, messages: [...st.messages, { from: 'bot', text: step.bot, note: step.note }] }));
+      if (step.type === 'final') { this.saveAnswers(); this.setState({ done: true }); }
+    }, 480);
+  }
+
+  answer(value, display) {
+    const cur = this.state.current;
+    if (!cur) return;
+    this.answers[cur.id] = value;
+    this.setState((st) => ({ messages: [...st.messages, { from: 'user', text: display }], inputValue: '', error: '', current: null }));
+    if (cur.otherTrigger && value === cur.otherTrigger && cur.followUp) {
+      this.queue.unshift(Object.assign({}, cur.followUp));
+    }
+    if (cur.branch && cur.branch[value]) {
+      this.queue = cur.branch[value].map((s) => Object.assign({}, s)).concat(this.queue);
+    }
+    this.nextStep();
+  }
+
+  submitText() {
+    const cur = this.state.current;
+    if (!cur) return;
+    const v = (this.state.inputValue || '').trim();
+    if ((cur.type === 'text' || cur.type === 'textarea') && v.length < 3) {
+      this.setState({ error: 'Por favor escribe al menos 3 caracteres antes de continuar.' });
+      return;
+    }
+    if ((cur.type === 'date' || cur.type === 'datetime') && !v) {
+      this.setState({ error: 'Por favor selecciona una fecha para continuar.' });
+      return;
+    }
+    this.answer(v, cur.type === 'datetime' ? v.replace('T', ' ') : v);
+  }
+
+  saveAnswers() {
+    try {
+      const k = 'upes_rrhh_' + this.state.flow + '_' + Date.now();
+      localStorage.setItem(k, JSON.stringify({ flow: this.state.flow, answers: this.answers, ts: new Date().toISOString() }));
+    } catch (e) {}
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // GENERACIÓN DE LA SOLICITUD DE PERMISO (PDF oficial)
+  // Basado en el formato institucional UPES-RH-DA-FOR-16.
+  // No implementa: envío de correo, aprobaciones, firma electrónica
+  // ni integración con BD/RRHH (sólo genera el documento descargable).
+  // ─────────────────────────────────────────────────────────────
+  pad2(x) { return String(x).padStart(2, '0'); }
+
+  fmtDT(v) {
+    if (!v) return '—';
+    const m = String(v).match(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+    if (!m) return v;
+    return m[3] + '/' + m[2] + '/' + m[1] + '  ' + m[4] + ':' + m[5];
+  }
+
+  makePermisoMeta() {
+    let n = 1;
+    try { n = parseInt(localStorage.getItem('upes_permiso_counter') || '0', 10) + 1; localStorage.setItem('upes_permiso_counter', String(n)); } catch (e) {}
+    const now = new Date();
+    return {
+      num: 'UPES-RH-PER-' + now.getFullYear() + '-' + String(n).padStart(4, '0'),
+      fecha: this.pad2(now.getDate()) + '/' + this.pad2(now.getMonth() + 1) + '/' + now.getFullYear(),
+      hora: this.pad2(now.getHours()) + ':' + this.pad2(now.getMinutes())
+    };
+  }
+
+  buildPermisoPDF(a, meta) {
+    if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
+    const jsPDF = window.jspdf.jsPDF;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const NAVY = [13, 27, 75], GOLD = [245, 168, 0], INK = [28, 45, 94], GREY = [120, 130, 150], LINE = [205, 213, 232];
+    const W = 210, M = 15, CW = W - M * 2;
+    let y = 0;
+
+    // ── Encabezado institucional
+    doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(0, 0, W, 32, 'F');
+    doc.setDrawColor(GOLD[0], GOLD[1], GOLD[2]); doc.setLineWidth(0.8); doc.circle(M + 7, 15, 7, 'S');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.text('U', M + 7, 17.6, { align: 'center' });
+    doc.setFontSize(11); doc.text('UNIVERSIDAD POLITÉCNICA DE EL SALVADOR', M + 18, 11);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(214, 221, 240); doc.text('RECURSOS HUMANOS', M + 18, 16);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.setTextColor(GOLD[0], GOLD[1], GOLD[2]); doc.text('SOLICITUD DE PERMISO', M + 18, 23.5);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(255, 255, 255); doc.text('No. de solicitud:', W - M, 10.5, { align: 'right' });
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.text(meta.num, W - M, 15, { align: 'right' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(210, 216, 232);
+    doc.text('Cód. UPES-RH-DA-FOR-16', W - M, 20, { align: 'right' });
+    doc.text('Generado: ' + meta.fecha + ' ' + meta.hora, W - M, 24, { align: 'right' });
+
+    y = 38;
+    const chkbox = (x, yy, checked, label) => {
+      doc.setDrawColor(NAVY[0], NAVY[1], NAVY[2]); doc.setLineWidth(0.4); doc.rect(x, yy - 3.3, 4, 4, 'S');
+      if (checked) { doc.setFont('helvetica', 'bold'); doc.setTextColor(NAVY[0], NAVY[1], NAVY[2]); doc.setFontSize(9); doc.text('X', x + 0.7, yy - 0.1); }
+      doc.setFont('helvetica', 'bold'); doc.setTextColor(INK[0], INK[1], INK[2]); doc.setFontSize(8.5); doc.text(label, x + 6, yy);
+    };
+    chkbox(M, y, false, 'CON GOCE DE SUELDO');
+    chkbox(M + 75, y, false, 'SIN GOCE DE SUELDO');
+    doc.setFont('helvetica', 'italic'); doc.setFontSize(6.6); doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+    doc.text('(A definir por la jefatura inmediata)', W - M, y, { align: 'right' });
+    y += 7;
+
+    const sectionBar = (title) => {
+      doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(M, y, CW, 6.5, 'F');
+      doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.text(title, M + 3, y + 4.5);
+      y += 6.5;
+    };
+    const cell = (x, w, h, label, value) => {
+      doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.rect(x, y, w, h, 'S');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(6.8); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text(label.toUpperCase(), x + 2.5, y + 3.4);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(INK[0], INK[1], INK[2]);
+      doc.text(doc.splitTextToSize(String(value || '—'), w - 5), x + 2.5, y + 7.6);
+    };
+    const row1 = (label, value, h) => { h = h || 9; cell(M, CW, h, label, value); y += h; };
+    const row2 = (l1, v1, l2, v2) => { const hw = CW / 2; cell(M, hw, 9, l1, v1); cell(M + hw, hw, 9, l2, v2); y += 9; };
+
+    sectionBar('DATOS DEL TRABAJADOR(A)');
+    row1('Nombre y apellidos', a.nombre);
+    row2('Documento Único de Identidad', a.dui, 'Código de empleado(a)', a.codigo);
+    row2('Unidad en que labora', a.unidad, 'Fecha de la solicitud', meta.fecha);
+    y += 3;
+
+    sectionBar('DETALLES DE LA SOLICITUD');
+    const tipo = a.tipo === 'Otro' ? (a.tipo_otro || 'Otro') : a.tipo;
+    row1('Tipo de permiso / ausencia', tipo);
+    row2('Desde (fecha y hora)', this.fmtDT(a.desde), 'Hasta (fecha y hora)', this.fmtDT(a.hasta));
+    row1('Comentarios', a.comentarios, 18);
+    y += 6;
+
+    const sigLine = (x, w, label) => {
+      doc.setDrawColor(INK[0], INK[1], INK[2]); doc.setLineWidth(0.3); doc.line(x, y + 10, x + w, y + 10);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text(label, x + w / 2, y + 14, { align: 'center' });
+    };
+    const hw = (CW - 12) / 2;
+    sigLine(M, hw, 'Firma del trabajador(a)');
+    sigLine(M + hw + 12, hw, 'Nombre y firma del jefe inmediato');
+    y += 20;
+
+    sectionBar('PARA USO EXCLUSIVO DE RECURSOS HUMANOS');
+    doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.rect(M, y, CW, 9, 'S');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(6.8); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text('PERMISO OTORGADO', M + 2.5, y + 3.4);
+    chkbox(M + 70, y + 6, false, 'SÍ'); chkbox(M + 95, y + 6, false, 'NO');
+    y += 9;
+    row1('Observaciones', '', 16);
+    y += 4;
+    sigLine(M + CW / 4, hw, 'Jefatura de Recursos Humanos — Nombre, firma y sello');
+    y += 18;
+
+    // ── Pie legal
+    doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); y += 4;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(6.6); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text('LEYES RELACIONADAS:', M, y); y += 3.4;
+    doc.setFont('helvetica', 'normal');
+    const legal = [
+      'Código de Trabajo: Art. 29 numeral 6 (literales a, b, c, d, e, f).',
+      'Ley Especial Integral para una Vida Libre de Violencia para las Mujeres — Art. 24.',
+      'Decreto No. 376 — Licencia de Paternidad por Nacimiento o Adopción.',
+      'Reglamento Interno de Trabajo: Art. 56 (literal f, numerales 1, 2, 3, 4).'
+    ];
+    legal.forEach((t) => { doc.text('•  ' + t, M, y); y += 3.2; });
+    y += 1.5;
+    doc.setFont('helvetica', 'italic'); doc.setFontSize(6.6); doc.setTextColor(INK[0], INK[1], INK[2]);
+    doc.text(doc.splitTextToSize('NOTA: Si el permiso es por cita médica, enfermedad o misión institucional, deberá anexar el comprobante respectivo.', CW), M, y);
+
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5); doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+    doc.text('Documento generado automáticamente desde el Portal de RRHH UPES · ' + meta.num + ' · ' + meta.fecha + ' ' + meta.hora, W / 2, 290, { align: 'center' });
+
+    doc.save('Solicitud-Permiso-' + meta.num + '.pdf');
+  }
+
+  fmtDate(v) {
+    if (!v) return '—';
+    const m = String(v).match(/(\d{4})-(\d{2})-(\d{2})/);
+    return m ? (m[3] + '/' + m[2] + '/' + m[1]) : v;
+  }
+
+  makeDocMeta(cfg) {
+    let n = 1;
+    const ck = 'upes_counter_' + cfg.prefix;
+    try { n = parseInt(localStorage.getItem(ck) || '0', 10) + 1; localStorage.setItem(ck, String(n)); } catch (e) {}
+    const now = new Date();
+    return {
+      num: cfg.prefix + '-' + now.getFullYear() + '-' + String(n).padStart(4, '0'),
+      fecha: this.pad2(now.getDate()) + '/' + this.pad2(now.getMonth() + 1) + '/' + now.getFullYear(),
+      hora: this.pad2(now.getHours()) + ':' + this.pad2(now.getMinutes())
+    };
+  }
+
+  resolveAnswers(flowKey) {
+    const a = Object.assign({}, this.answers);
+    const walk = (arr) => arr.forEach((s) => {
+      if (s.otherTrigger && s.followUp && a[s.id] === s.otherTrigger && a[s.followUp.id]) a[s.id] = a[s.followUp.id];
+      if (s.followUp) walk([s.followUp]);
+      if (s.branch) Object.keys(s.branch).forEach((k) => walk(s.branch[k]));
+    });
+    walk((this.flows[flowKey] && this.flows[flowKey].steps) || []);
+    return a;
+  }
+
+  displayAnswer(v) {
+    if (v == null || v === '') return '—';
+    if (typeof v === 'object' && v.name) return v.name;
+    const s = String(v);
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)) return this.fmtDT(s);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return this.fmtDate(s);
+    return s;
+  }
+
+  resolveVal(token, a, meta) {
+    if (!token) return '';
+    if (token === '@fecha') return meta ? meta.fecha : '—';
+    if (token === '@hora') return meta ? meta.hora : '—';
+    if (token === '@goce') return a.goce || '—';
+    if (token.indexOf('@d:') === 0) return this.fmtDate(a[token.slice(3)]);
+    if (token.indexOf('@dt:') === 0) return this.fmtDT(a[token.slice(4)]);
+    if (token.indexOf('@file:') === 0) { const f = a[token.slice(6)]; return (f && f.name) ? f.name : '— (sin adjuntar)'; }
+    const v = a[token];
+    return (v == null || v === '') ? '—' : String(v);
+  }
+
+  buildSummaryRows() {
+    const fk = this.state.flow;
+    if (!fk) return [];
+    const cfg = this.docConfigs()[fk];
+    const a = this.resolveAnswers(fk);
+    if (cfg && cfg.summary) return cfg.summary.map((pair) => ({ label: pair[0], value: this.resolveVal(pair[1], a, null) }));
+    return (this.labelOrder || []).filter((o) => a[o.id] != null && a[o.id] !== '').map((o) => ({ label: o.label, value: this.displayAnswer(a[o.id]) }));
+  }
+
+  buildDocPDF(fk, a, meta) {
+    return this.buildGenericDocPDF(this.docConfigs()[fk], a, meta);
+  }
+
+  buildGenericDocPDF(cfg, a, meta) {
+    if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
+    const jsPDF = window.jspdf.jsPDF;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const NAVY = [13, 27, 75], GOLD = [245, 168, 0], INK = [28, 45, 94], GREY = [120, 130, 150], LINE = [205, 213, 232];
+    const W = 210, M = 15, CW = W - M * 2;
+    let y = 0;
+
+    doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(0, 0, W, 32, 'F');
+    doc.setDrawColor(GOLD[0], GOLD[1], GOLD[2]); doc.setLineWidth(0.8); doc.circle(M + 7, 15, 7, 'S');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.text('U', M + 7, 17.6, { align: 'center' });
+    doc.setFontSize(11); doc.text('UNIVERSIDAD POLITÉCNICA DE EL SALVADOR', M + 18, 11);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(214, 221, 240); doc.text('RECURSOS HUMANOS', M + 18, 16);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(13); doc.setTextColor(GOLD[0], GOLD[1], GOLD[2]); doc.text(cfg.title, M + 18, 23.5);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(255, 255, 255); doc.text('No. de documento:', W - M, 10.5, { align: 'right' });
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.text(meta.num, W - M, 15, { align: 'right' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(210, 216, 232);
+    doc.text('Cód. ' + cfg.code, W - M, 20, { align: 'right' });
+    doc.text('Generado: ' + meta.fecha + ' ' + meta.hora, W - M, 24, { align: 'right' });
+
+    y = 40;
+    const sectionBar = (title) => {
+      doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(M, y, CW, 6.5, 'F');
+      doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); doc.text(title, M + 3, y + 4.5);
+      y += 6.5;
+    };
+    const cell = (x, w, h, label, value) => {
+      doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.rect(x, y, w, h, 'S');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(6.8); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text(String(label).toUpperCase(), x + 2.5, y + 3.4);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(INK[0], INK[1], INK[2]);
+      doc.text(doc.splitTextToSize(String(value || '—'), w - 5), x + 2.5, y + 7.6);
+    };
+
+    if (cfg.goceCheckbox) {
+      const chk = (x, label) => { doc.setDrawColor(NAVY[0], NAVY[1], NAVY[2]); doc.setLineWidth(0.4); doc.rect(x, y - 3.3, 4, 4, 'S'); doc.setFont('helvetica', 'bold'); doc.setTextColor(INK[0], INK[1], INK[2]); doc.setFontSize(8.5); doc.text(label, x + 6, y); };
+      chk(M, 'CON GOCE DE SUELDO'); chk(M + 75, 'SIN GOCE DE SUELDO');
+      doc.setFont('helvetica', 'italic'); doc.setFontSize(6.6); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text('(A definir por la jefatura inmediata)', W - M, y, { align: 'right' });
+      y += 8;
+    }
+
+    cfg.sections.forEach((sec) => {
+      sectionBar(sec.bar);
+      if (sec.dynamic) {
+        const order = this.docLabelOrder || [];
+        const ex = sec.exclude || [];
+        order.filter((o) => ex.indexOf(o.id) < 0 && a[o.id] != null && a[o.id] !== '').forEach((o) => {
+          const val = this.displayAnswer(a[o.id]);
+          const h = String(val).length > 70 ? 16 : 9;
+          cell(M, CW, h, o.label, val);
+          y += h;
+        });
+      } else {
+        sec.rows.forEach((row) => {
+          let h = 9, cells;
+          if (typeof row[row.length - 1] === 'number') { h = row[row.length - 1]; cells = row.slice(0, row.length - 1).filter((c) => c); }
+          else { cells = row.filter((c) => c); }
+          const n = cells.length || 1, cw = CW / n;
+          cells.forEach((c, i) => { cell(M + cw * i, cw, h, c[0], this.resolveVal(c[1], a, meta)); });
+          y += h;
+        });
+      }
+      y += 3;
+    });
+    y += 2;
+
+    const sigLine = (x, w, label) => {
+      doc.setDrawColor(INK[0], INK[1], INK[2]); doc.setLineWidth(0.3); doc.line(x, y + 10, x + w, y + 10);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text(label, x + w / 2, y + 14, { align: 'center' });
+    };
+    const hw = (CW - 12) / 2;
+    if (cfg.signatures && cfg.signatures.length === 2) { sigLine(M, hw, cfg.signatures[0]); sigLine(M + hw + 12, hw, cfg.signatures[1]); y += 20; }
+
+    if (cfg.rh) {
+      sectionBar('PARA USO EXCLUSIVO DE RECURSOS HUMANOS');
+      doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.rect(M, y, CW, 9, 'S');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(6.8); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text(cfg.rh.label, M + 2.5, y + 3.4);
+      const chk = (x, yy, label) => { doc.setDrawColor(NAVY[0], NAVY[1], NAVY[2]); doc.setLineWidth(0.4); doc.rect(x, yy - 3.3, 4, 4, 'S'); doc.setFont('helvetica', 'bold'); doc.setTextColor(INK[0], INK[1], INK[2]); doc.setFontSize(8.5); doc.text(label, x + 6, yy); };
+      chk(M + 80, y + 6, 'SÍ'); chk(M + 105, y + 6, 'NO');
+      y += 9;
+      cell(M, CW, 16, 'Observaciones', ''); y += 16; y += 4;
+      sigLine(M + CW / 4, hw, cfg.rh.sig); y += 18;
+    }
+
+    if (cfg.legal || cfg.note) { doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); y += 4; }
+    if (cfg.legal) {
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(6.6); doc.setTextColor(GREY[0], GREY[1], GREY[2]); doc.text('LEYES RELACIONADAS:', M, y); y += 3.4;
+      doc.setFont('helvetica', 'normal'); doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+      cfg.legal.forEach((t) => { const lines = doc.splitTextToSize('•  ' + t, CW); doc.text(lines, M, y); y += 3.2 * lines.length; });
+      y += 1.5;
+    }
+    if (cfg.note) {
+      doc.setFont('helvetica', 'italic'); doc.setFontSize(6.8); doc.setTextColor(INK[0], INK[1], INK[2]);
+      doc.text(doc.splitTextToSize(cfg.note, CW), M, y);
+    }
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5); doc.setTextColor(GREY[0], GREY[1], GREY[2]);
+    doc.text('Documento generado automáticamente desde el Portal de RRHH UPES · ' + meta.num + ' · ' + meta.fecha + ' ' + meta.hora, W / 2, 290, { align: 'center' });
+
+    const f = a.archivo;
+    if (f && f.dataUrl && f.type && f.type.indexOf('image') === 0) {
+      try {
+        doc.addPage();
+        doc.setFillColor(NAVY[0], NAVY[1], NAVY[2]); doc.rect(0, 0, W, 18, 'F');
+        doc.setTextColor(GOLD[0], GOLD[1], GOLD[2]); doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.text('DOCUMENTO ADJUNTO', M, 11.5);
+        const fmt = f.type.indexOf('png') >= 0 ? 'PNG' : 'JPEG';
+        let iw = CW, ih = CW * 1.3;
+        const props = doc.getImageProperties ? doc.getImageProperties(f.dataUrl) : null;
+        if (props && props.width && props.height) { const r = props.height / props.width; ih = iw * r; if (ih > 250) { ih = 250; iw = ih / r; } }
+        doc.addImage(f.dataUrl, fmt, M, 26, iw, ih);
+      } catch (e) {}
+    }
+    doc.save(cfg.filename + '-' + meta.num + '.pdf');
+  }
+
+  confirmPermiso() {
+    if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
+    const fk = this.state.flow || 'permiso';
+    const cfg = this.docConfigs()[fk];
+    const meta = this.makeDocMeta(cfg);
+    this.docMeta = meta;
+    this.docFlow = fk;
+    this.docAnswers = this.resolveAnswers(fk);
+    this.docLabelOrder = (this.labelOrder || []).slice();
+    this.buildDocPDF(fk, this.docAnswers, meta);
+    this.saveAnswers();
+    const title = (this.flows[fk] && this.flows[fk].title) || 'documento';
+    const f = this.answers.archivo;
+    const extra = f ? (' Tu documento adjunto (' + f.name + ') quedó registrado con la solicitud.') : ' Imprímelo o entrégalo a RRHH para continuar el trámite.';
+    this.setState((st) => ({
+      messages: [...st.messages, { from: 'user', text: 'Confirmar y generar documento' }, { from: 'bot', text: '✅ ¡Listo! Tu ' + title + ' (' + meta.num + ') fue generado y descargado en PDF.' + extra }],
+      current: null, permisoDone: true
+    }));
+  }
+
+  correctPermiso() { this.openFlow(this.state.flow || 'permiso'); }
+
+  downloadPermiso() { if (this.docMeta && this.docFlow) this.buildDocPDF(this.docFlow, this.docAnswers || this.answers, this.docMeta); }
+
+  onFlowFile(e) {
+    const cur = this.state.current;
+    if (!cur) return;
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { this.setState({ error: 'El archivo supera 5 MB. Sube uno más liviano (foto o PDF).' }); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.answers[cur.id] = { name: file.name, type: file.type, size: file.size, dataUrl: reader.result };
+      this.setState((st) => ({ messages: [...st.messages, { from: 'user', text: '📎 ' + file.name }], error: '', current: null }));
+      this.nextStep();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const isMobile = st.width < 980;
+    const cur = st.current;
+
+    const navListStyle = isMobile
+      ? { position: 'absolute', top: '64px', left: 0, right: 0, background: '#0D1B4B', display: st.menuOpen ? 'flex' : 'none', flexDirection: 'column', padding: '10px 14px 16px', gap: '2px', boxShadow: '0 14px 24px rgba(0,0,0,.3)' }
+      : { display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '3px', flexWrap: 'wrap' };
+
+    const navLinks = this.navItems.map((it) => {
+      const active = st.activeSection === it.id;
+      return {
+        href: '#' + it.id,
+        label: it.label,
+        onClick: () => this.setState({ menuOpen: false }),
+        style: {
+          textDecoration: 'none',
+          fontFamily: "'Open Sans',sans-serif",
+          fontSize: isMobile ? '15px' : '12.5px',
+          fontWeight: active ? 700 : 500,
+          color: active ? '#F5A800' : 'rgba(255,255,255,.85)',
+          padding: isMobile ? '11px 8px' : '8px 9px',
+          borderRadius: '6px',
+          borderBottom: isMobile ? 'none' : (active ? '2px solid #F5A800' : '2px solid transparent'),
+          whiteSpace: 'nowrap'
+        }
+      };
+    });
+
+    const chatRows = st.messages.map((m) => {
+      const isBot = m.from === 'bot';
+      return {
+        text: m.text,
+        note: m.note,
+        noteShow: !!m.note,
+        showIcon: isBot,
+        rowStyle: { display: 'flex', gap: '9px', alignItems: 'flex-end', justifyContent: isBot ? 'flex-start' : 'flex-end', marginBottom: '12px' },
+        bubbleStyle: Object.assign(
+          { maxWidth: '80%', padding: '12px 16px', fontSize: '14.5px', lineHeight: 1.55, fontFamily: "'Open Sans',sans-serif", boxShadow: '0 2px 6px rgba(13,27,75,.08)' },
+          isBot
+            ? { background: '#fff', border: '1px solid #d8e2f5', color: '#1C2D5E', borderRadius: '4px 16px 16px 16px' }
+            : { background: '#1A3A8F', color: '#fff', borderRadius: '16px 16px 4px 16px' }
+        )
+      };
+    });
+
+    const options = (cur && cur.options) ? cur.options.map((o) => ({ label: o, onClick: () => this.answer(o, o) })) : [];
+    const scaleNums = [1, 2, 3, 4, 5].map((n) => ({ n, onClick: () => this.answer(n, n + ' / 5') }));
+
+    const em = st.authed && st.editMode;
+    const editBtn = { background: '#1A3A8F', color: '#fff', border: 'none', width: '32px', height: '32px', borderRadius: '9px', cursor: 'pointer', fontSize: '12.5px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(13,27,75,.28)' };
+    const delBtn = Object.assign({}, editBtn, { background: '#d6332b' });
+    const withEdit = (item, col) => Object.assign(item, {
+      editMode: em,
+      onEdit: () => this.colEdit(col, item.id),
+      onDelete: () => this.colDelete(col, item.id),
+      editBtnStyle: editBtn,
+      delBtnStyle: delBtn
+    });
+    const editorCol = st.editor ? this.collections[st.editor.col] : null;
+
+    return {
+      // nav
+      navListStyle,
+      navLinks,
+      hamburgerShow: isMobile,
+      hamburgerIcon: st.menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars',
+      toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
+
+      // section data
+      // Enlaces configurables hacia la plataforma institucional de formación virtual.
+      // Se ajustan desde el panel de propiedades (Tweaks) sin tocar el código.
+      courses: [
+        { title: 'Inducción y Reinducción Virtual', imgStyle: { height: '150px', backgroundImage: "url('assets/curso-induccion.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#0D1B4B' }, href: this.props.induccionUrl || 'https://formacion.upes.edu.sv/induccion' },
+        { title: 'Introducción a la Investigación UPES', imgStyle: { height: '150px', backgroundImage: "url('assets/curso-investigacion.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#0D1B4B' }, href: this.props.investigacionUrl || 'https://formacion.upes.edu.sv/investigacion' },
+        { title: 'Introducción a la Vinculación Social UPES', imgStyle: { height: '150px', backgroundImage: "url('assets/curso-vinculacion.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#0D1B4B' }, href: this.props.vinculacionUrl || 'https://formacion.upes.edu.sv/vinculacion' }
+      ],
+
+      // Personas — galerías dinámicas editables (persisten en localStorage)
+      ascensos: st.store.ascensos.map((p) => withEdit(this.personCard(p, 64), 'ascensos')),
+      talentos: st.store.talentos.map((p) => withEdit(this.personCard(p, 72), 'talentos')),
+      cumple: st.store.cumple.map((p) => withEdit(this.personCard(p, 76, true), 'cumple')),
+      reconocimientos: st.store.reconocimientos.map((p) => withEdit(this.personCard(p, 72, true), 'reconocimientos')),
+      capRecibidas: st.store.capRecibidas.map((c) => withEdit(Object.assign({}, c), 'capRecibidas')),
+      capProximas: st.store.capProximas.map((c) => withEdit(Object.assign({}, c), 'capProximas')),
+      ascensosCount: st.store.ascensos.length,
+      talentosCount: st.store.talentos.length,
+      cumpleGridStyle: { display: 'grid', gridTemplateColumns: 'repeat(' + (st.width < 560 ? 2 : st.width < 920 ? 3 : 5) + ',1fr)', gap: '18px' },
+
+      // Modo edición + autenticación
+      editMode: em,
+      editToggle: () => this.requestEdit(),
+      editFabLabel: !st.authed ? 'Editar contenido' : (st.editMode ? 'Salir de edición' : 'Activar edición'),
+      editFabIcon: !st.authed ? 'fa-solid fa-lock' : (st.editMode ? 'fa-solid fa-circle-check' : 'fa-solid fa-pen-to-square'),
+      editFabStyle: { position: 'fixed', right: '18px', bottom: '18px', zIndex: 950, background: st.editMode ? '#1F8A5B' : '#F5A800', color: st.editMode ? '#fff' : '#0D1B4B', border: 'none', fontFamily: "'Montserrat',sans-serif", fontWeight: 800, fontSize: '13.5px', padding: '13px 21px', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 12px 30px rgba(13,27,75,.32)', display: 'flex', alignItems: 'center', gap: '9px' },
+      isAuthed: st.authed,
+      onLogout: () => this.logout(),
+      loginOpen: st.loginOpen,
+      loginUser: st.loginUser,
+      loginPass: st.loginPass,
+      onLoginUser: (e) => this.setState({ loginUser: e.target.value, loginError: '' }),
+      onLoginPass: (e) => this.setState({ loginPass: e.target.value, loginError: '' }),
+      onLoginKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.doLogin(); } },
+      doLogin: () => this.doLogin(),
+      cancelLogin: () => this.cancelLogin(),
+      loginError: st.loginError,
+      loginErrorShow: !!st.loginError,
+      assetEditOpen: !!st.assetEdit,
+      assetIsImage: !!(st.assetEdit && st.assetEdit.kind === 'image'),
+      assetIsLink: !!(st.assetEdit && st.assetEdit.kind === 'link'),
+      assetIsVideo: !!(st.assetEdit && st.assetEdit.kind === 'video'),
+      assetTitle: st.assetEdit ? (st.assetEdit.kind === 'image' ? 'Cambiar imagen' : (st.assetEdit.kind === 'video' ? 'Cambiar video' : 'Editar enlace')) : '',
+      setVid0: (el) => { this.vid0El = el; },
+      setVid1: (el) => { this.vid1El = el; },
+      onEditVideo0: () => this.openAsset('video', 'bienestar_vid0', (this.content.videos && this.content.videos.bienestar_vid0) || ''),
+      onEditVideo1: () => this.openAsset('video', 'bienestar_vid1', (this.content.videos && this.content.videos.bienestar_vid1) || ''),
+      assetDraft: st.assetDraft,
+      assetPreviewShow: !!(st.assetEdit && st.assetEdit.kind === 'image' && st.assetDraft),
+      assetPreviewStyle: { width: '100%', height: '200px', borderRadius: '14px', border: '1px solid #e6ebf5', backgroundImage: "url('" + (st.assetDraft || '') + "')", backgroundSize: 'cover', backgroundPosition: 'center', marginTop: '16px' },
+      onAssetUrl: (e) => this.setState({ assetDraft: e.target.value }),
+      onAssetFile: (e) => this.onAssetFile(e),
+      saveAsset: () => this.saveAsset(),
+      cancelAsset: () => this.cancelAsset(),
+      onAddAscensos: () => this.colAdd('ascensos'),
+      onAddTalentos: () => this.colAdd('talentos'),
+      onAddCumple: () => this.colAdd('cumple'),
+      onAddRecon: () => this.colAdd('reconocimientos'),
+      onAddCapRec: () => this.colAdd('capRecibidas'),
+      onAddCapProx: () => this.colAdd('capProximas'),
+      editorOpen: !!st.editor,
+      editorTitle: st.editor ? ((st.editor.id === 'new' ? 'Agregar ' : 'Editar ') + (editorCol ? editorCol.title : '')) : '',
+      editorFields: st.editor ? editorCol.fields.map((f) => {
+        const type = f.type || 'text';
+        return {
+          key: f.key, label: f.label, placeholder: f.placeholder || '',
+          value: st.editor.draft[f.key] != null ? st.editor.draft[f.key] : '',
+          isText: type === 'text', isTextarea: type === 'textarea', isEnum: type === 'enum',
+          options: (f.options || []).map((o) => ({ value: o.value, label: o.label })),
+          onInput: (e) => this.setEditorField(f.key, e.target.value)
+        };
+      }) : [],
+      editorError: st.editor ? st.editor.error : '',
+      editorErrorShow: !!(st.editor && st.editor.error),
+      editorSave: () => this.editorSave(),
+      editorCancel: () => this.editorCancel(),
+      certStats: [
+        { icon: 'fa-solid fa-certificate', label: '6 certificaciones' },
+        { icon: 'fa-solid fa-clock', label: '360 horas' },
+        { icon: 'fa-solid fa-bullseye', label: 'Enfoque por competencias' },
+        { icon: 'fa-solid fa-laptop', label: 'Modalidad híbrida' },
+        { icon: 'fa-solid fa-arrow-trend-up', label: 'Desarrollo de habilidades' },
+        { icon: 'fa-solid fa-building-columns', label: 'Fortalecimiento institucional' }
+      ],
+
+      // vacancies
+      vacCount: st.vacancies.length,
+      vacList: st.vacancies.map((v) => ({
+        title: v.title,
+        description: v.description,
+        requirements: v.requirements || [],
+        hasReqs: !!(v.requirements && v.requirements.length),
+        noReqs: !(v.requirements && v.requirements.length),
+        onApply: () => this.vacApply(v),
+        onEdit: () => this.vacEdit(v.id),
+        onDelete: () => this.vacDelete(v.id)
+      })),
+      vacAdd: () => this.vacAdd(),
+      vacFormOpen: st.vacEditId !== null,
+      vacFormTitle: st.vacEditId === 'new' ? 'Nueva plaza' : 'Editar plaza',
+      draftTitle: st.draft.title,
+      draftDesc: st.draft.description,
+      draftReqs: st.draft.requirements.map((value, i) => ({
+        value,
+        onInput: (e) => this.setReq(i, e.target.value),
+        onRemove: () => this.removeReq(i)
+      })),
+      onDraftTitle: (e) => this.setDraftField('title', e.target.value),
+      onDraftDesc: (e) => this.setDraftField('description', e.target.value),
+      addReq: () => this.addReq(),
+      saveDraft: () => this.saveDraft(),
+      cancelDraft: () => this.cancelDraft(),
+      vacError: st.vacError,
+      vacErrorShow: !!st.vacError,
+
+      // flow openers
+      openClima: () => this.openFlow('clima'),
+      openIdeas: () => this.openFlow('ideas'),
+      openDenuncia: () => this.openFlow('denuncia'),
+      openQueja: () => this.openFlow('queja'),
+      openCondicion: () => this.openFlow('condicion'),
+      openAccion: () => this.openFlow('accion'),
+      openPermisos: () => this.openFlow('permiso'),
+      openIncapacidad: () => this.openFlow('incapacidad'),
+      openConstancia: () => this.openFlow('constancia'),
+      openOrden: () => this.openFlow('orden'),
+      openLicencia: () => this.openFlow('licencia'),
+      openExpediente: () => this.openFlow('expediente'),
+
+      // document flows (summary → confirm → PDF → done)
+      showSummary: !!cur && cur.type === 'summary' && !st.permisoDone,
+      summaryRows: this.buildSummaryRows(),
+      confirmPermiso: () => this.confirmPermiso(),
+      correctPermiso: () => this.correctPermiso(),
+      showPermisoDone: !!st.permisoDone,
+      permisoNum: (this.docMeta && this.docMeta.num) || '',
+      downloadPermiso: () => this.downloadPermiso(),
+      showFile: !!cur && cur.type === 'file',
+      fileAccept: (cur && cur.accept) || '*/*',
+      onFlowFile: (e) => this.onFlowFile(e),
+
+      // modal
+      modalOpen: !!st.flow,
+      mTitle: this._meta.title || '',
+      mSecure: !!this._meta.secure,
+      closeModal: () => this.closeFlow(),
+      stop: (e) => e.stopPropagation(),
+      setChatRef: (el) => { this.chatEl = el; },
+
+      // chat
+      chatRows,
+      typing: st.typing,
+      error: st.error,
+      errorShow: !!st.error,
+
+      // input area
+      showText: !!cur && cur.type === 'text',
+      showTextarea: !!cur && cur.type === 'textarea',
+      showScale: !!cur && cur.type === 'scale',
+      showOptions: !!cur && cur.type === 'options',
+      showDate: !!cur && cur.type === 'date',
+      showDatetime: !!cur && cur.type === 'datetime',
+      showClose: !!cur && cur.type === 'final',
+      options,
+      scaleNums,
+      placeholder: (cur && cur.placeholder) || 'Escribe tu respuesta...',
+      inputValue: st.inputValue,
+      onInput: (e) => this.setState({ inputValue: e.target.value }),
+      onKeyDown: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitText(); } },
+      submitText: () => this.submitText()
+    };
+  }
+}
+</script>
+</body>
+</html>

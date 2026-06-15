@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="position:relative;width:100%;height:100%;min-height:220px;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#0D1B4B,#0D1B4B 14px,#13265c 14px,#13265c 28px);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 34px rgba(13,27,75,.2)">
+  <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(245,168,0,.12),transparent 62%)"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:20px;position:relative">
+    <div style="width:76px;height:76px;border-radius:50%;border:3px solid #F5A800;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,.05)"><img src="assets/logo-upes-mark.png" alt="UPES" style="width:58%;height:58%;object-fit:contain" /></div>
+    <div style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:.4px;color:rgba(255,255,255,.74);max-width:260px;line-height:1.55">{{ label }}</div>
+  </div>
+  <div style="position:absolute;top:13px;left:13px;width:28px;height:5px;background:#00B4B4;border-radius:3px;transform:rotate(-42deg)"></div>
+  <div style="position:absolute;top:30px;left:32px;width:20px;height:5px;background:#F5A800;border-radius:3px;transform:rotate(-42deg)"></div>
+  <div style="position:absolute;bottom:13px;right:13px;width:28px;height:5px;background:#F5A800;border-radius:3px;transform:rotate(-42deg)"></div>
+  <div style="position:absolute;bottom:30px;right:32px;width:20px;height:5px;background:#00B4B4;border-radius:3px;transform:rotate(-42deg)"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:300},&quot;label&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;imagen institucional&quot;,&quot;tsType&quot;:&quot;string&quot;}}"></script>
+</body>
+</html>
