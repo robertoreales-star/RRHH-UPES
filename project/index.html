@@ -23,6 +23,8 @@
   };
 })();
 </script>
+<script src="./config.js"></script>
+<script src="./apps-script/frontend/rrhh-api.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -2013,7 +2015,9 @@ class Component extends DCLogic {
   }
 
   buildDocPDF(fk, a, meta) {
-    return this.buildGenericDocPDF(this.docConfigs()[fk], a, meta);
+    const r = this.buildGenericDocPDF(this.docConfigs()[fk], a, meta);
+    if (r && r.doc) r.doc.save(r.filename);
+    return r;
   }
 
   buildGenericDocPDF(cfg, a, meta) {
@@ -2126,20 +2130,69 @@ class Component extends DCLogic {
         doc.addImage(f.dataUrl, fmt, M, 26, iw, ih);
       } catch (e) {}
     }
-    doc.save(cfg.filename + '-' + meta.num + '.pdf');
+    return { doc, filename: cfg.filename + '-' + meta.num + '.pdf' };
   }
 
-  confirmPermiso() {
+  async confirmPermiso() {
     if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
+    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad', 'constancia'];
+    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades', constancia: 'constancias' };
     const fk = this.state.flow || 'permiso';
     const cfg = this.docConfigs()[fk];
-    const meta = this.makeDocMeta(cfg);
+    const api = window.RrhhAPI;
+    const cfg_ = window.RRHH_CONFIG || {};
+    const useBackend = BACKEND_FLOWS.indexOf(fk) >= 0 && api && cfg_.APPS_SCRIPT_URL && cfg_.APPS_SCRIPT_URL.indexOf('REEMPLAZA') < 0;
+
+    // 1. Obtener correlativo (backend con fallback a localStorage)
+    let meta;
+    if (useBackend) {
+      try {
+        const ctr = await api.incrementCounter(cfg.prefix);
+        if (ctr && ctr.ok) {
+          const now = new Date();
+          meta = {
+            num: ctr.formatted,
+            fecha: this.pad2(now.getDate()) + '/' + this.pad2(now.getMonth() + 1) + '/' + now.getFullYear(),
+            hora: this.pad2(now.getHours()) + ':' + this.pad2(now.getMinutes())
+          };
+        } else { meta = this.makeDocMeta(cfg); }
+      } catch (e) { meta = this.makeDocMeta(cfg); }
+    } else { meta = this.makeDocMeta(cfg); }
+
     this.docMeta = meta;
     this.docFlow = fk;
     this.docAnswers = this.resolveAnswers(fk);
     this.docLabelOrder = (this.labelOrder || []).slice();
-    this.buildDocPDF(fk, this.docAnswers, meta);
+
+    // 2. Generar y descargar PDF
+    const pdfResult = this.buildDocPDF(fk, this.docAnswers, meta);
+
+    // 3. Backup en localStorage siempre
     this.saveAnswers();
+
+    // 4. Backend: subir PDF a Drive y guardar en Sheets (fire-and-forget, no bloquea la UX)
+    if (useBackend && pdfResult && pdfResult.doc) {
+      (async () => {
+        try {
+          let archivoUrl = '';
+          try {
+            const b64 = pdfResult.doc.output('datauristring').split(',')[1];
+            const up = await api.uploadFile(pdfResult.filename, 'application/pdf', b64, FOLDER_MAP[fk]);
+            if (up && up.ok) archivoUrl = up.viewUrl;
+          } catch (e2) {}
+          await api.submitForm({
+            flow: fk,
+            numero_doc: meta.num,
+            nombre_empleado: this.docAnswers.nombre || '',
+            cargo: this.docAnswers.cargo || '',
+            unidad: this.docAnswers.unidad || '',
+            answers: this.docAnswers,
+            archivo_url: archivoUrl
+          });
+        } catch (e) {}
+      })();
+    }
+
     const title = (this.flows[fk] && this.flows[fk].title) || 'documento';
     const f = this.answers.archivo;
     const extra = f ? (' Tu documento adjunto (' + f.name + ') quedó registrado con la solicitud.') : ' Imprímelo o entrégalo a RRHH para continuar el trámite.';
