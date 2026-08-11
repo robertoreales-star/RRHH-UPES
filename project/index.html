@@ -1492,7 +1492,7 @@ class Component extends DCLogic {
   onAssetFile(e) {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { window.alert('La imagen supera 2 MB. Usa una imagen más liviana o pega una URL.'); return; }
+    if (file.size > 20 * 1024 * 1024) { window.alert('La imagen supera 20 MB. Usa una imagen más liviana.'); return; }
     const reader = new FileReader();
     reader.onload = () => this.setState({ assetDraft: reader.result });
     reader.readAsDataURL(file);
@@ -2392,7 +2392,7 @@ class Component extends DCLogic {
         const type = f.type || 'text';
         const currentVal = st.editor.draft[f.key] != null ? st.editor.draft[f.key] : '';
         const onInput = type === 'file'
-          ? (e) => { const file = e.target.files && e.target.files[0]; if (!file) return; if (file.size > 2 * 1024 * 1024) { window.alert('La foto supera 2 MB. Usa una imagen más liviana.'); return; } const reader = new FileReader(); reader.onload = () => this.setEditorField(f.key, reader.result); reader.readAsDataURL(file); }
+          ? (e) => { const file = e.target.files && e.target.files[0]; if (!file) return; if (file.size > 20 * 1024 * 1024) { window.alert('La foto supera 20 MB. Usa una imagen más liviana.'); return; } const reader = new FileReader(); reader.onload = () => this.setEditorField(f.key, reader.result); reader.readAsDataURL(file); }
           : (e) => this.setEditorField(f.key, e.target.value);
         return {
           key: f.key, label: f.label, placeholder: f.placeholder || '',
