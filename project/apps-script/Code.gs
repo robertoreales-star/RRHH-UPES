@@ -103,7 +103,16 @@ function doPost(e) {
   return jsonResponse_(result);
 }
 
-// ── Helper ─────────────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────────
+
+function getSpreadsheet_() {
+  var props = PropertiesService.getScriptProperties();
+  var ssId  = props.getProperty('SPREADSHEET_ID');
+  if (!ssId) throw new Error(
+    'Spreadsheet no configurado. Ejecuta setupAll() desde Apps Script primero.'
+  );
+  return SpreadsheetApp.openById(ssId);
+}
 
 function jsonResponse_(data) {
   return ContentService

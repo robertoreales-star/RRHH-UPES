@@ -22,7 +22,7 @@ function submitForm(payload) {
   if (!payload.flow)       throw new Error('Campo requerido: flow');
   if (!payload.numero_doc) throw new Error('Campo requerido: numero_doc');
 
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = getSpreadsheet_();
   var sheet = ss.getSheetByName(SHEET_NAMES.SOLICITUDES);
   if (!sheet) throw new Error(
     'Hoja "' + SHEET_NAMES.SOLICITUDES + '" no encontrada. ' +
@@ -75,7 +75,7 @@ function incrementCounter(payload) {
   lock.waitLock(10000);
 
   try {
-    var ss    = SpreadsheetApp.getActiveSpreadsheet();
+    var ss    = getSpreadsheet_();
     var sheet = ss.getSheetByName(SHEET_NAMES.CONTADORES);
     if (!sheet) throw new Error(
       'Hoja "' + SHEET_NAMES.CONTADORES + '" no encontrada. ' +
@@ -183,7 +183,7 @@ function uploadFile(payload) {
 function getSheet(params) {
   if (!params.sheet) throw new Error('Parámetro requerido: sheet');
 
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = getSpreadsheet_();
   var sheet = ss.getSheetByName(params.sheet);
   if (!sheet) throw new Error('Hoja "' + params.sheet + '" no encontrada');
 
@@ -219,7 +219,7 @@ function getSheet(params) {
 function getFormByNum(payload) {
   if (!payload.numero_doc) throw new Error('Campo requerido: numero_doc');
 
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = getSpreadsheet_();
   var sheet = ss.getSheetByName(SHEET_NAMES.SOLICITUDES);
   if (!sheet) throw new Error('Hoja "' + SHEET_NAMES.SOLICITUDES + '" no encontrada');
 
@@ -259,7 +259,7 @@ function getFormByNum(payload) {
 function updateForm(payload) {
   if (!payload.numero_doc) throw new Error('Campo requerido: numero_doc');
 
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = getSpreadsheet_();
   var sheet = ss.getSheetByName(SHEET_NAMES.SOLICITUDES);
   if (!sheet) throw new Error('Hoja "' + SHEET_NAMES.SOLICITUDES + '" no encontrada');
 
@@ -322,7 +322,7 @@ function upsertExpediente(payload) {
   if (!payload.dui)    throw new Error('Campo requerido: dui');
   if (!payload.nombre) throw new Error('Campo requerido: nombre');
 
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = getSpreadsheet_();
   var sheet = ss.getSheetByName(SHEET_NAMES.EXPEDIENTES);
   if (!sheet) throw new Error(
     'Hoja "' + SHEET_NAMES.EXPEDIENTES + '" no encontrada. ' +
