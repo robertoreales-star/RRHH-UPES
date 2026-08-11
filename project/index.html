@@ -569,10 +569,10 @@
         </div>
         <div data-dyn="1" style="{{ cumpleGridStyle }}">
           <sc-for list="{{ cumple }}" as="p" hint-placeholder-count="10">
-            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:20px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:11px;position:relative">
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:28px 16px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative">
               <sc-if value="{{ p.editMode }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:8px;right:8px;display:flex;gap:5px;z-index:3"><button onClick="{{ p.onEdit }}" style="{{ p.editBtnStyle }}"><i class="fa-solid fa-pen"></i></button><button onClick="{{ p.onDelete }}" style="{{ p.delBtnStyle }}"><i class="fa-solid fa-trash-can"></i></button></div></sc-if>
               {{ p.avatar }}
-              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;color:#fff;line-height:1.3">{{ p.name }}</div>
+              <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:#fff;line-height:1.35">{{ p.name }}</div>
               <span style="color:#F5A800;font-size:13px;display:inline-flex;align-items:center;gap:5px"><i class="fa-solid fa-cake-candles"></i> {{ p.date }}</span>
             </div>
           </sc-for>
@@ -2334,7 +2334,7 @@ class Component extends DCLogic {
       // Personas — galerías dinámicas editables (persisten en localStorage)
       ascensos: st.store.ascensos.map((p) => withEdit(this.personCard(p, 64), 'ascensos')),
       talentos: st.store.talentos.map((p) => withEdit(this.personCard(p, 72), 'talentos')),
-      cumple: st.store.cumple.map((p) => withEdit(this.personCard(p, 76, true), 'cumple')),
+      cumple: st.store.cumple.map((p) => withEdit(this.personCard(p, 100, true), 'cumple')),
       reconocimientos: st.store.reconocimientos.map((p) => withEdit(this.personCard(p, 72, true), 'reconocimientos')),
       capRecibidas: st.store.capRecibidas.map((c) => withEdit(Object.assign({}, c), 'capRecibidas')),
       capProximas: st.store.capProximas.map((c) => withEdit(Object.assign({}, c), 'capProximas')),
@@ -2344,7 +2344,7 @@ class Component extends DCLogic {
       talentosToggleLabel: this.content.talentosVisible === true ? 'Forzado visible — click para ocultar' : this.content.talentosVisible === false ? 'Forzado oculto — click para auto' : 'Auto (oculto si vacío) — click para forzar visible',
       talentosToggleIcon: this.content.talentosVisible === false ? 'fa-solid fa-eye' : this.content.talentosVisible === true ? 'fa-solid fa-eye-slash' : 'fa-solid fa-toggle-on',
       onToggleTalentos: () => this.toggleTalentosVisible(),
-      cumpleGridStyle: { display: 'grid', gridTemplateColumns: 'repeat(' + (st.width < 560 ? 2 : st.width < 920 ? 3 : 5) + ',1fr)', gap: '18px' },
+      cumpleGridStyle: { display: 'grid', gridTemplateColumns: 'repeat(' + (st.width < 560 ? 2 : st.width < 920 ? 3 : 4) + ',1fr)', gap: '24px' },
 
       // Modo edición + autenticación
       editMode: em,
