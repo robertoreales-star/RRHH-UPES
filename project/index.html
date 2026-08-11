@@ -64,8 +64,8 @@
         <div style="width:96px;height:5px;background:#F5A800;border-radius:3px;margin:24px 0 22px"></div>
         <p style="font-family:'Open Sans',sans-serif;font-size:clamp(16px,2vw,20px);line-height:1.65;color:rgba(255,255,255,.86);max-width:540px;margin:0">Nuestro talento, el motor que impulsa el desarrollo y la excelencia institucional.</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px">
-          <a href="#cultura" style="background:#F5A800;color:#0D1B4B;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Conoce más <i class="fa-solid fa-arrow-down"></i></a>
-          <a href="#repositorio" style="background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;border:1.5px solid rgba(255,255,255,.3);display:inline-flex;align-items:center;gap:9px">Repositorio <i class="fa-solid fa-folder-open"></i></a>
+          <a href="#filosofia" style="background:#F5A800;color:#0D1B4B;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Filosofía Institucional <i class="fa-solid fa-arrow-down"></i></a>
+          <a onClick="{{ goToDocumentos }}" style="background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;border:1.5px solid rgba(255,255,255,.3);display:inline-flex;align-items:center;gap:9px;cursor:pointer">Documentos RRHH <i class="fa-solid fa-folder-open"></i></a>
         </div>
       </div>
       <div style="flex:none;width:min(400px,84vw);height:min(400px,84vw);border-radius:50%;position:relative;border:6px solid rgba(245,168,0,.7);box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden">
@@ -75,12 +75,13 @@
     </div>
   </section>
 
-  <section id="cultura" data-spy="cultura" data-screen-label="Cultura y Valores" style="scroll-margin-top:64px">
-    <dc-import name="SectionHeader" title="Cultura y Valores" hint-size="100%,160px"></dc-import>
+<sc-if value="{{ showInicio }}">
+  <div id="filosofia">
+    <dc-import name="SectionHeader" title="Filosofía Institucional" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
-      <div style="flex:1;min-width:300px"><img src="assets/CULTURA%20ORG.png" alt="Cultura organizacional UPES: liderazgo, innovación y servicio" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
+      <div style="flex:1;min-width:300px"><img src="assets/CULTURA%20ORG.png" alt="Filosofía Institucional UPES: liderazgo, innovación y servicio" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
       <div style="flex:1;min-width:300px">
-        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Filosofía organizacional</h3>
+        <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Filosofía Institucional</h3>
         <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
         <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Nuestra cultura se fundamenta en el <strong style="color:#00B4B4">liderazgo</strong>, la <strong style="color:#F5A800">innovación</strong> y el <strong style="color:#1A3A8F">servicio</strong> como pilares del crecimiento institucional.</p>
       </div>
@@ -130,8 +131,10 @@
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</sc-if>
 
+  <sc-if value="{{ showClima }}">
   <section id="clima" data-spy="clima" data-screen-label="Clima Organizacional" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Clima Organizacional" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
@@ -149,7 +152,9 @@
       <dc-import name="ActionCard" icon="fa-solid fa-comment-dots" accent="#057a7a" title="Reporte de Queja" text="Reporta una experiencia y te daremos seguimiento." onClick="{{ openQueja }}" hint-size="100%,92px"></dc-import>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ showSalud }}">
   <section id="salud" data-spy="salud" data-screen-label="Salud y Seguridad" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Salud y Seguridad Ocupacional" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
@@ -166,7 +171,9 @@
       <dc-import name="ActionCard" icon="fa-solid fa-person-falling-burst" accent="#00B4B4" title="Reportar Acción Insegura" text="Reporta un comportamiento o práctica de riesgo." onClick="{{ openAccion }}" hint-size="100%,92px"></dc-import>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ showBienestar }}">
   <section id="bienestar" data-spy="bienestar" data-screen-label="Bienestar" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Bienestar Organizacional" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
@@ -210,7 +217,9 @@
       </div>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ showAdmin }}">
   <section id="administracion" data-spy="administracion" data-screen-label="Administración" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Administración y Control Interno" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
@@ -230,7 +239,9 @@
       <dc-import name="ActionCard" icon="fa-solid fa-folder-open" accent="#1A3A8F" title="Expediente" text="Completa y actualiza tu ficha de datos de empleado. Privada, solo para ti." href="Expediente%20UPES.dc.html" target="_blank" hint-size="100%,92px"></dc-import>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ showCap }}">
   <section id="capacitacion" data-spy="capacitacion" data-screen-label="Capacitación" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Capacitación y Desarrollo" hint-size="100%,160px"></dc-import>
 
@@ -346,7 +357,9 @@
       </div>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ showTalento }}">
   <section id="talento" data-spy="talento" data-screen-label="Talento" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Gestión del Talento" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
@@ -465,8 +478,11 @@
     </div>
   </section>
 
-  <section id="repositorio" data-spy="repositorio" data-screen-label="Repositorio" style="scroll-margin-top:64px">
-    <dc-import name="SectionHeader" title="Repositorio Documental" hint-size="100%,160px"></dc-import>
+  </sc-if>
+
+  <sc-if value="{{ showRepo }}">
+  <section id="repositorio" data-spy="repositorio" data-screen-label="Documentos RRHH" style="scroll-margin-top:64px">
+    <dc-import name="SectionHeader" title="Documentos de RRHH" hint-size="100%,160px"></dc-import>
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
       <div style="flex:1;min-width:300px"><img src="assets/DOCUMENTAL.png" alt="Repositorio documental UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
       <div style="flex:1;min-width:300px">
@@ -484,9 +500,17 @@
       <dc-import name="ActionCard" icon="fa-solid fa-list-check" accent="#1A3A8F" title="Instructivos y Lineamientos" text="Consulta los instructivos y lineamientos institucionales." href="#PLACEHOLDER_DRIVE_INSTRUCTIVOS" target="_blank" hint-size="100%,92px"></dc-import>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ showNoticias }}">
   <section id="noticias" data-spy="noticias" data-screen-label="Noticias" style="scroll-margin-top:64px">
     <dc-import name="SectionHeader" title="Noticias UPES" hint-size="100%,160px"></dc-import>
+    <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1200px;margin:0 auto;padding:16px 24px 0;display:flex;justify-content:flex-end">
+        <button onClick="{{ onToggleTalentos }}" style="background:#0D1B4B;color:#F5A800;border:1.5px solid #F5A800;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:9px 16px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="background:#1A3A8F"><i class="{{ talentosToggleIcon }}"></i> Nuevos Talentos: {{ talentosToggleLabel }}</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showTalentosBlock }}" hint-placeholder-val="{{ true }}">
     <div style="max-width:1200px;margin:0 auto;padding:64px 24px 36px;display:flex;gap:46px;align-items:center;flex-wrap:wrap">
       <div style="flex:1;min-width:300px"><img src="assets/NUEVOS%20TALENTOS.png" alt="Nuevos talentos UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
       <div style="flex:1;min-width:300px">
@@ -522,6 +546,7 @@
         </sc-for>
       </div>
     </div>
+    </sc-if>
 
     <div style="margin:24px 0">
       <dc-import name="SectionHeader" title="Celebraciones y Reconocimientos" hint-size="100%,160px"></dc-import>
@@ -595,6 +620,7 @@
       </div>
     </div>
   </section>
+  </sc-if>
 
   <footer style="background:#0D1B4B;color:#fff;padding:48px 24px 28px">
     <div style="max-width:1200px;margin:0 auto;display:flex;gap:30px;justify-content:space-between;align-items:center;flex-wrap:wrap">
@@ -857,6 +883,7 @@ class Component extends DCLogic {
       width: typeof window !== 'undefined' ? window.innerWidth : 1200,
       menuOpen: false,
       activeSection: 'inicio',
+      currentTab: 'inicio',
       flow: null,
       messages: [],
       typing: false,
@@ -874,15 +901,14 @@ class Component extends DCLogic {
     this._meta = {};
     this.navItems = [
       { id: 'inicio', label: 'Inicio' },
-      { id: 'cultura', label: 'Cultura y Valores' },
+      { id: 'noticias', label: 'Noticias' },
+      { id: 'administracion', label: 'Administración' },
+      { id: 'talento', label: 'Talento' },
+      { id: 'capacitacion', label: 'Capacitación' },
+      { id: 'bienestar', label: 'Bienestar' },
       { id: 'clima', label: 'Clima Organizacional' },
       { id: 'salud', label: 'Salud y Seguridad' },
-      { id: 'bienestar', label: 'Bienestar' },
-      { id: 'administracion', label: 'Administración' },
-      { id: 'capacitacion', label: 'Capacitación' },
-      { id: 'talento', label: 'Talento' },
-      { id: 'repositorio', label: 'Repositorio' },
-      { id: 'noticias', label: 'Noticias' }
+      { id: 'repositorio', label: 'Documentos' }
     ];
     this.flows = this.buildFlows();
   }
@@ -1413,9 +1439,9 @@ class Component extends DCLogic {
   loadContent() {
     try {
       const raw = localStorage.getItem('upes_content_v1');
-      if (raw) { const p = JSON.parse(raw); if (p && typeof p === 'object') return { texts: p.texts || {}, images: p.images || {}, links: p.links || {}, videos: p.videos || {} }; }
+      if (raw) { const p = JSON.parse(raw); if (p && typeof p === 'object') return { texts: p.texts || {}, images: p.images || {}, links: p.links || {}, videos: p.videos || {}, talentosVisible: p.talentosVisible !== undefined ? p.talentosVisible : null }; }
     } catch (e) {}
-    return { texts: {}, images: {}, links: {}, videos: {} };
+    return { texts: {}, images: {}, links: {}, videos: {}, talentosVisible: null };
   }
 
   ytEmbed(url) {
@@ -1433,6 +1459,14 @@ class Component extends DCLogic {
 
   persistContent() {
     try { localStorage.setItem('upes_content_v1', JSON.stringify(this.content)); } catch (e) {}
+  }
+
+  toggleTalentosVisible() {
+    const cur = this.content.talentosVisible;
+    // Cycles: null (auto) → true (force show) → false (force hide) → null
+    this.content.talentosVisible = cur === null ? true : cur === true ? false : null;
+    this.persistContent();
+    this.setState({});
   }
 
   saveText(key, html) {
@@ -2211,11 +2245,11 @@ class Component extends DCLogic {
       : { display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '3px', flexWrap: 'wrap' };
 
     const navLinks = this.navItems.map((it) => {
-      const active = st.activeSection === it.id;
+      const active = st.currentTab === it.id;
       return {
-        href: '#' + it.id,
+        href: '#',
         label: it.label,
-        onClick: () => this.setState({ menuOpen: false }),
+        onClick: () => { this.setState({ currentTab: it.id, menuOpen: false }); window.scrollTo(0, 0); },
         style: {
           textDecoration: 'none',
           fontFamily: "'Open Sans',sans-serif",
@@ -2225,7 +2259,8 @@ class Component extends DCLogic {
           padding: isMobile ? '11px 8px' : '8px 9px',
           borderRadius: '6px',
           borderBottom: isMobile ? 'none' : (active ? '2px solid #F5A800' : '2px solid transparent'),
-          whiteSpace: 'nowrap'
+          whiteSpace: 'nowrap',
+          cursor: 'pointer'
         }
       };
     });
@@ -2267,6 +2302,17 @@ class Component extends DCLogic {
       navListStyle,
       navLinks,
       hamburgerShow: isMobile,
+      // tab visibility
+      showInicio: st.currentTab === 'inicio',
+      showClima: st.currentTab === 'clima',
+      showSalud: st.currentTab === 'salud',
+      showBienestar: st.currentTab === 'bienestar',
+      showAdmin: st.currentTab === 'administracion',
+      showCap: st.currentTab === 'capacitacion',
+      showTalento: st.currentTab === 'talento',
+      showRepo: st.currentTab === 'repositorio',
+      showNoticias: st.currentTab === 'noticias',
+      goToDocumentos: () => { this.setState({ currentTab: 'repositorio' }); window.scrollTo(0, 0); },
       hamburgerIcon: st.menuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars',
       toggleMenu: () => this.setState((s) => ({ menuOpen: !s.menuOpen })),
 
@@ -2288,6 +2334,10 @@ class Component extends DCLogic {
       capProximas: st.store.capProximas.map((c) => withEdit(Object.assign({}, c), 'capProximas')),
       ascensosCount: st.store.ascensos.length,
       talentosCount: st.store.talentos.length,
+      showTalentosBlock: this.content.talentosVisible === false ? false : (st.store.talentos.length > 0 || this.content.talentosVisible === true),
+      talentosToggleLabel: this.content.talentosVisible === true ? 'Forzado visible — click para ocultar' : this.content.talentosVisible === false ? 'Forzado oculto — click para auto' : 'Auto (oculto si vacío) — click para forzar visible',
+      talentosToggleIcon: this.content.talentosVisible === false ? 'fa-solid fa-eye' : this.content.talentosVisible === true ? 'fa-solid fa-eye-slash' : 'fa-solid fa-toggle-on',
+      onToggleTalentos: () => this.toggleTalentosVisible(),
       cumpleGridStyle: { display: 'grid', gridTemplateColumns: 'repeat(' + (st.width < 560 ? 2 : st.width < 920 ? 3 : 5) + ',1fr)', gap: '18px' },
 
       // Modo edición + autenticación
