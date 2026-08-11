@@ -923,7 +923,6 @@ class Component extends DCLogic {
       permiso: { title: 'Solicitud de Permiso', secure: false, steps: [
         { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 📄 Te ayudaré a completar tu Solicitud de Permiso oficial. Al final podrás descargarla en PDF para enviarla a tu jefe inmediato. Para comenzar, ¿cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
         { id: 'dui', type: 'text', sum: 'DUI', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
-        { id: 'codigo', type: 'text', sum: 'Código de empleado(a)', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
         { id: 'unidad', type: 'text', sum: 'Unidad en que labora', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
         { id: 'tipo', type: 'options', sum: 'Tipo de permiso', bot: '¿Qué tipo de permiso necesitas? Cada uno tiene condiciones distintas según el Reglamento Interno.', options: ['Trámite personal', 'Salud', 'Cumplimiento legal', 'Emergencia', 'Reposición de tiempo', 'Cambio temporal de horario', 'Estudio', 'Misión institucional'], branch: {
           'Trámite personal': [
@@ -977,7 +976,6 @@ class Component extends DCLogic {
       licencia: { title: 'Solicitud de Licencia', secure: false, steps: [
         { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 🗂️ Te ayudaré a completar tu Solicitud de Licencia. Al final podrás descargarla en PDF y adjuntar tu documento de respaldo. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
         { id: 'dui', type: 'text', sum: 'DUI', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
-        { id: 'codigo', type: 'text', sum: 'Código de empleado(a)', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
         { id: 'unidad', type: 'text', sum: 'Unidad en que labora', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
         { id: 'tipo', type: 'options', sum: 'Tipo de licencia', bot: '¿Qué tipo de licencia necesitas?', options: ['Maternidad', 'Paternidad', 'Duelo', 'Matrimonio', 'Lactancia'] },
         { id: 'desde', type: 'date', sum: 'Desde', bot: '¿Desde qué fecha inicia la licencia?' },
@@ -1066,7 +1064,6 @@ class Component extends DCLogic {
       constancia: { title: 'Solicitud de Constancia Laboral', secure: false, steps: [
         { id: 'nombre', type: 'text', bot: '¡Hola! 📄 Te ayudaré a solicitar tu Constancia Laboral. Al final descargarás el formulario oficial en PDF para entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
         { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
-        { id: 'codigo', type: 'text', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
         { id: 'cargo', type: 'text', bot: '¿Cuál es tu cargo actual?', placeholder: 'Ej. Asistente Administrativa' },
         { id: 'unidad', type: 'text', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
         { id: 'tipo', type: 'options', bot: '¿Qué tipo de constancia necesitas?', options: ['Constancia laboral simple', 'Constancia con salario', 'Constancia para trámite bancario', 'Constancia para visa / migración', 'Constancia para crédito', 'Otra'], otherTrigger: 'Otra', followUp: { id: 'tipo_otro', type: 'text', bot: 'Especifica el tipo de constancia:', placeholder: 'Describe el tipo...' } },
@@ -1079,7 +1076,6 @@ class Component extends DCLogic {
       orden: { title: 'Orden de Descuento', secure: false, steps: [
         { id: 'nombre', type: 'text', bot: '¡Hola! 💲 Te ayudaré a generar tu Orden de Descuento. Al final descargarás el documento oficial en PDF para autorizarlo y entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
         { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
-        { id: 'codigo', type: 'text', bot: '¿Cuál es tu código de empleado(a)?', placeholder: 'Código de empleado' },
         { id: 'unidad', type: 'text', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
         { id: 'concepto', type: 'options', bot: '¿Cuál es el concepto del descuento?', options: ['Préstamo institucional', 'Cuota a cooperativa / asociación', 'Seguro', 'Pensión alimenticia', 'Compra o servicio interno', 'Otro'], otherTrigger: 'Otro', followUp: { id: 'concepto_otro', type: 'text', bot: 'Especifica el concepto del descuento:', placeholder: 'Describe el concepto...' } },
         { id: 'beneficiario', type: 'text', bot: '¿Quién es el beneficiario del descuento?', placeholder: 'Persona o entidad beneficiaria' },
@@ -1098,8 +1094,8 @@ class Component extends DCLogic {
         title: 'SOLICITUD DE PERMISO', code: 'UPES-RH-DA-FOR-16', prefix: 'UPES-RH-PER', filename: 'Solicitud-Permiso',
         goceCheckbox: true,
         sections: [
-          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Unidad en que labora', 'unidad'], ['Fecha de la solicitud', '@fecha']] ] },
-          { bar: 'DETALLES DE LA SOLICITUD', dynamic: true, exclude: ['nombre', 'dui', 'codigo', 'unidad'] }
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Unidad en que labora', 'unidad']], [['Fecha de la solicitud', '@fecha']] ] },
+          { bar: 'DETALLES DE LA SOLICITUD', dynamic: true, exclude: ['nombre', 'dui', 'unidad'] }
         ],
         signatures: ['Firma del trabajador(a)', 'Nombre y firma del jefe inmediato'],
         rh: { label: 'PERMISO OTORGADO', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
@@ -1115,8 +1111,8 @@ class Component extends DCLogic {
         title: 'SOLICITUD DE LICENCIA', code: 'UPES-RH-DA-FOR-LIC', prefix: 'UPES-RH-LIC', filename: 'Solicitud-Licencia',
         goceCheckbox: true,
         sections: [
-          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Unidad en que labora', 'unidad'], ['Fecha de la solicitud', '@fecha']] ] },
-          { bar: 'DETALLES DE LA LICENCIA', dynamic: true, exclude: ['nombre', 'dui', 'codigo', 'unidad'] }
+          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Unidad en que labora', 'unidad']], [['Fecha de la solicitud', '@fecha']] ] },
+          { bar: 'DETALLES DE LA LICENCIA', dynamic: true, exclude: ['nombre', 'dui', 'unidad'] }
         ],
         signatures: ['Firma del trabajador(a)', 'Nombre y firma del jefe inmediato'],
         rh: { label: 'LICENCIA OTORGADA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
@@ -1139,7 +1135,7 @@ class Component extends DCLogic {
       constancia: {
         title: 'SOLICITUD DE CONSTANCIA LABORAL', code: 'UPES-RH-DA-FOR-CON', prefix: 'UPES-RH-CON', filename: 'Solicitud-Constancia',
         summary: [
-          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Código de empleado(a)', 'codigo'], ['Cargo actual', 'cargo'], ['Unidad en que labora', 'unidad'],
+          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Cargo actual', 'cargo'], ['Unidad en que labora', 'unidad'],
           ['Tipo de constancia', 'tipo'], ['Dirigida a', 'dirigida'], ['Motivo / uso', 'motivo'], ['Forma de entrega', 'entrega'], ['Correo de contacto', 'correo']
         ],
         sections: [
@@ -1153,7 +1149,7 @@ class Component extends DCLogic {
       orden: {
         title: 'ORDEN DE DESCUENTO', code: 'UPES-RH-DA-FOR-ORD', prefix: 'UPES-RH-ORD', filename: 'Orden-Descuento',
         summary: [
-          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Código de empleado(a)', 'codigo'], ['Unidad en que labora', 'unidad'],
+          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Unidad en que labora', 'unidad'],
           ['Concepto del descuento', 'concepto'], ['Beneficiario', 'beneficiario'], ['Monto por cuota', 'monto'], ['No. de cuotas', 'cuotas'], ['Inicio del descuento', '@d:inicio'], ['Observaciones', 'comentarios']
         ],
         sections: [
@@ -2056,8 +2052,7 @@ class Component extends DCLogic {
     doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(255, 255, 255); doc.text('No. de documento:', W - M, 10.5, { align: 'right' });
     doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.text(meta.num, W - M, 15, { align: 'right' });
     doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(210, 216, 232);
-    doc.text('Cód. ' + cfg.code, W - M, 20, { align: 'right' });
-    doc.text('Generado: ' + meta.fecha + ' ' + meta.hora, W - M, 24, { align: 'right' });
+    doc.text('Generado: ' + meta.fecha + ' ' + meta.hora, W - M, 20, { align: 'right' });
 
     y = 40;
     const sectionBar = (title) => {
