@@ -151,6 +151,32 @@
     },
 
     /**
+     * Busca una solicitud existente por número de documento.
+     * @param {object} data
+     * @param {string} data.numero_doc  Ej. 'UPES-RH-PER-0001'
+     * @param {string} [data.dui]       DUI del empleado (informativo)
+     * @returns {Promise<{ok:boolean, found:boolean, row:object|null}>}
+     */
+    getFormByNum: function (data) {
+      return doPost('getFormByNum', data);
+    },
+
+    /**
+     * Actualiza el estado / añade nota de modificación a una solicitud.
+     * @param {object} data
+     * @param {string} data.numero_doc    Número del documento a modificar
+     * @param {string} [data.dui]         DUI (informativo)
+     * @param {string} [data.nota]        Descripción de los cambios
+     * @param {string} [data.estado]      Nuevo estado (default: 'solicitud de modificación')
+     * @param {object} [data.answers]     Respuestas actualizadas
+     * @param {string} [data.adjunto_url] URL Drive de nuevo adjunto
+     * @returns {Promise<{ok:boolean, message:string, numero_doc:string}>}
+     */
+    updateForm: function (data) {
+      return doPost('updateForm', data);
+    },
+
+    /**
      * Extrae el base64 de un documento jsPDF para subir a Drive.
      * Usar junto con uploadFile().
      *

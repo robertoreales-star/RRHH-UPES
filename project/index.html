@@ -235,6 +235,7 @@
       <dc-import name="ActionCard" icon="fa-solid fa-file-signature" accent="#1A3A8F" title="Constancias Laborales" text="Solicita tu constancia laboral con un asistente guiado y descárgala en PDF." onClick="{{ openConstancia }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-money-check-dollar" accent="#F5A800" title="Órdenes de Descuentos" text="Genera tu orden de descuento con un asistente guiado y descárgala en PDF." onClick="{{ openOrden }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-id-card-clip" accent="#057a7a" title="Licencias" text="Solicita tu licencia (maternidad, paternidad, duelo, matrimonio o lactancia) y adjunta tu respaldo." onClick="{{ openLicencia }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-pen-to-square" accent="#8a9a2b" title="Modificar Solicitud" text="Solicita una corrección o actualización a una solicitud ya registrada." onClick="{{ openModificar }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-folder-open" accent="#1A3A8F" title="Expediente" text="Completa y actualiza tu ficha de datos de empleado. Privada, solo para ti." href="Expediente%20UPES.dc.html" target="_blank" hint-size="100%,92px"></dc-import>
     </div>
   </section>
@@ -742,7 +743,7 @@
               </sc-for>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <button onClick="{{ confirmPermiso }}" style="flex:1;min-width:170px;background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;padding:13px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-file-arrow-down"></i> Confirmar y generar PDF</button>
+              <button onClick="{{ confirmPermiso }}" style="flex:1;min-width:170px;background:#1A3A8F;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;padding:13px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px" style-hover="background:#0D1B4B"><i class="{{ confirmIcon }}"></i> {{ confirmLabel }}</button>
               <button onClick="{{ correctPermiso }}" style="background:#eef2fb;border:none;color:#45506b;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:13px 20px;border-radius:50px;cursor:pointer" style-hover="background:#e2e8f5">Corregir</button>
             </div>
           </sc-if>
@@ -1072,6 +1073,22 @@ class Component extends DCLogic {
         { id: 'entrega', type: 'options', bot: '¿Cómo prefieres recibir la constancia?', options: ['Física (impresa)', 'Correo electrónico', 'Ambas'] },
         { id: 'correo', type: 'text', bot: 'Indica un correo electrónico de contacto.', placeholder: 'nombre@correo.com' },
         { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+      ]},
+      modificar: { title: 'Modificar Solicitud', secure: false, steps: [
+        { id: 'tipo_sol', type: 'options', sum: 'Tipo de solicitud',
+          bot: '📝 Voy a ayudarte a solicitar una modificación. ¿Qué tipo de solicitud necesitas corregir o actualizar?',
+          options: ['Permiso', 'Licencia', 'Incapacidad médica', 'Constancia laboral', 'Orden de descuento'] },
+        { id: 'numero_doc', type: 'text', sum: 'Número de documento',
+          bot: 'Ingresa el número del documento que aparece en el PDF descargado (ej. UPES-RH-PER-0001).',
+          placeholder: 'Ej. UPES-RH-PER-0001' },
+        { id: 'dui', type: 'text', sum: 'DUI',
+          bot: 'Para verificar tu identidad, ingresa tu Documento Único de Identidad (DUI).',
+          placeholder: 'Ej. 01234567-8' },
+        { id: 'descripcion', type: 'textarea', sum: 'Cambios solicitados',
+          bot: 'Describe con detalle qué información necesitas corregir o actualizar y cuál es el dato correcto.',
+          placeholder: 'Ej. La fecha del permiso debe ser 22/08/2026, no 20/08/2026.' },
+        { id: 'summary', type: 'summary',
+          bot: 'Revisa tu solicitud de modificación. Si todo está correcto, envíala al equipo de RRHH.' }
       ]},
       orden: { title: 'Orden de Descuento', secure: false, steps: [
         { id: 'nombre', type: 'text', bot: '¡Hola! 💲 Te ayudaré a generar tu Orden de Descuento. Al final descargarás el documento oficial en PDF para autorizarlo y entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
@@ -2149,9 +2166,10 @@ class Component extends DCLogic {
 
   async confirmPermiso() {
     if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
-    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad', 'constancia'];
-    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades', constancia: 'constancias' };
+    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad', 'constancia', 'orden'];
+    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades', constancia: 'constancias', orden: 'constancias' };
     const fk = this.state.flow || 'permiso';
+    if (fk === 'modificar') { await this.confirmModificacion(); return; }
     const cfg = this.docConfigs()[fk];
     const api = window.RrhhAPI;
     const cfg_ = window.RRHH_CONFIG || {};
@@ -2194,6 +2212,17 @@ class Component extends DCLogic {
             const up = await api.uploadFile(pdfResult.filename, 'application/pdf', b64, FOLDER_MAP[fk]);
             if (up && up.ok) archivoUrl = up.viewUrl;
           } catch (e2) {}
+          // Upload original attached file (e.g. medical doc, permit evidence)
+          let adjuntoUrl = '';
+          try {
+            const attachedFile = Object.values(this.answers).find((v) => v && typeof v === 'object' && v.dataUrl);
+            if (attachedFile) {
+              const fileB64 = attachedFile.dataUrl.split(',')[1];
+              const fileExt = (attachedFile.name || 'adjunto').split('.').pop().toLowerCase();
+              const upAdj = await api.uploadFile(pdfResult.filename.replace('.pdf', '') + '-adjunto.' + fileExt, attachedFile.type || 'application/pdf', fileB64, FOLDER_MAP[fk]);
+              if (upAdj && upAdj.ok) adjuntoUrl = upAdj.viewUrl;
+            }
+          } catch (e3) {}
           await api.submitForm({
             flow: fk,
             numero_doc: meta.num,
@@ -2201,7 +2230,8 @@ class Component extends DCLogic {
             cargo: this.docAnswers.cargo || '',
             unidad: this.docAnswers.unidad || '',
             answers: this.docAnswers,
-            archivo_url: archivoUrl
+            archivo_url: archivoUrl,
+            adjunto_url: adjuntoUrl
           });
         } catch (e) {}
       })();
@@ -2217,6 +2247,35 @@ class Component extends DCLogic {
   }
 
   correctPermiso() { this.openFlow(this.state.flow || 'permiso'); }
+
+  async confirmModificacion() {
+    const api = window.RrhhAPI;
+    const cfg_ = window.RRHH_CONFIG || {};
+    const hasBackend = api && cfg_.APPS_SCRIPT_URL && cfg_.APPS_SCRIPT_URL.indexOf('REEMPLAZA') < 0;
+    const numeroDoc = this.answers.numero_doc || '';
+    const descripcion = this.answers.descripcion || '';
+    const dui = this.answers.dui || '';
+
+    if (hasBackend && numeroDoc) {
+      try {
+        await api.updateForm({
+          numero_doc: numeroDoc,
+          dui: dui,
+          nota: descripcion,
+          estado: 'solicitud de modificación'
+        });
+      } catch (e) {}
+    }
+
+    this.saveAnswers();
+    this.setState((st) => ({
+      messages: [...st.messages,
+        { from: 'user', text: 'Enviar solicitud de modificación' },
+        { from: 'bot', text: '✅ Tu solicitud de modificación para el documento ' + numeroDoc + ' fue registrada. El equipo de RRHH la revisará y te confirmará los cambios realizados.' }
+      ],
+      current: null, done: true
+    }));
+  }
 
   downloadPermiso() { if (this.docMeta && this.docFlow) this.buildDocPDF(this.docFlow, this.docAnswers || this.answers, this.docMeta); }
 
@@ -2451,11 +2510,14 @@ class Component extends DCLogic {
       openIncapacidad: () => this.openFlow('incapacidad'),
       openConstancia: () => this.openFlow('constancia'),
       openOrden: () => this.openFlow('orden'),
+      openModificar: () => this.openFlow('modificar'),
       openLicencia: () => this.openFlow('licencia'),
       openExpediente: () => this.openFlow('expediente'),
 
       // document flows (summary → confirm → PDF → done)
       showSummary: !!cur && cur.type === 'summary' && !st.permisoDone,
+      confirmLabel: st.flow === 'modificar' ? 'Enviar solicitud de modificación' : 'Confirmar y generar PDF',
+      confirmIcon: st.flow === 'modificar' ? 'fa-solid fa-paper-plane' : 'fa-solid fa-file-arrow-down',
       summaryRows: this.buildSummaryRows(),
       confirmPermiso: () => this.confirmPermiso(),
       correctPermiso: () => this.correctPermiso(),

@@ -87,6 +87,12 @@ function doPost(e) {
       case 'upsertExpediente':
         result = upsertExpediente(payload);
         break;
+      case 'getFormByNum':
+        result = getFormByNum(payload);
+        break;
+      case 'updateForm':
+        result = updateForm(payload);
+        break;
       default:
         result = { ok: false, error: 'Acción POST desconocida: ' + action };
     }

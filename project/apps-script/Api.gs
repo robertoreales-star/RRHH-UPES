@@ -29,6 +29,13 @@ function submitForm(payload) {
     'Ejecuta setupAll() desde el editor de Apps Script primero.'
   );
 
+  var archivoCell = payload.archivo_url || '';
+  if (payload.adjunto_url) {
+    archivoCell = archivoCell
+      ? archivoCell + ' | adjunto: ' + payload.adjunto_url
+      : 'adjunto: ' + payload.adjunto_url;
+  }
+
   sheet.appendRow([
     new Date().toISOString(),       // timestamp
     payload.flow,                   // flow
@@ -37,7 +44,7 @@ function submitForm(payload) {
     payload.cargo           || '',  // cargo
     payload.unidad          || '',  // unidad
     JSON.stringify(payload.answers || {}), // respuestas_json
-    payload.archivo_url     || '',  // archivo_url
+    archivoCell,                    // archivo_url (PDF generado | adjunto original)
     'pendiente',                    // estado
     ''                              // notas (para uso del equipo RH)
   ]);
@@ -199,6 +206,102 @@ function getSheet(params) {
   }
 
   return { ok: true, sheet: params.sheet, rows: rows, total: rows.length };
+}
+
+
+// ── getFormByNum ───────────────────────────────────────────────
+//
+//  Devuelve la fila de Solicitudes que coincida con numero_doc.
+//
+//  payload: { numero_doc: 'UPES-RH-PER-0001', dui?: string }
+//  Retorna: { ok, found, row }  (row incluye answers parseadas)
+//
+function getFormByNum(payload) {
+  if (!payload.numero_doc) throw new Error('Campo requerido: numero_doc');
+
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAMES.SOLICITUDES);
+  if (!sheet) throw new Error('Hoja "' + SHEET_NAMES.SOLICITUDES + '" no encontrada');
+
+  var data    = sheet.getDataRange().getValues();
+  var headers = data[0].map(String);
+
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][2]) === String(payload.numero_doc)) {
+      var row = {};
+      headers.forEach(function (h, j) {
+        var val = data[i][j];
+        row[h] = val instanceof Date ? val.toISOString() : val;
+      });
+      try { row.answers = JSON.parse(row.respuestas_json || '{}'); } catch (e) { row.answers = {}; }
+      return { ok: true, found: true, row: row };
+    }
+  }
+
+  return { ok: true, found: false, row: null };
+}
+
+
+// ── updateForm ─────────────────────────────────────────────────
+//
+//  Añade una nota de modificación y actualiza el estado de una
+//  solicitud existente, identificada por numero_doc.
+//
+//  payload: {
+//    numero_doc:  string
+//    dui?:        string   (informativo, no valida acceso aquí)
+//    nota?:       string   descripción de los cambios solicitados
+//    estado?:     string   nuevo estado (default: 'solicitud de modificación')
+//    answers?:    object   respuestas actualizadas (opcional)
+//    adjunto_url?: string  URL del adjunto si se subió uno nuevo
+//  }
+//
+function updateForm(payload) {
+  if (!payload.numero_doc) throw new Error('Campo requerido: numero_doc');
+
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAMES.SOLICITUDES);
+  if (!sheet) throw new Error('Hoja "' + SHEET_NAMES.SOLICITUDES + '" no encontrada');
+
+  var data   = sheet.getDataRange().getValues();
+  var rowIdx = -1;
+
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][2]) === String(payload.numero_doc)) {
+      rowIdx = i + 1; // 1-indexed
+      break;
+    }
+  }
+
+  if (rowIdx < 0) {
+    return { ok: false, error: 'No se encontró la solicitud: ' + payload.numero_doc };
+  }
+
+  var tz = Session.getScriptTimeZone();
+  var ts = Utilities.formatDate(new Date(), tz, 'dd/MM/yyyy HH:mm');
+
+  // Actualizar estado (columna 9)
+  sheet.getRange(rowIdx, 9).setValue(payload.estado || 'solicitud de modificación');
+
+  // Añadir nota (columna 10) — acumula historial
+  if (payload.nota) {
+    var prev = String(sheet.getRange(rowIdx, 10).getValue() || '');
+    var entry = ts + ': ' + payload.nota + (payload.dui ? ' [DUI: ' + payload.dui + ']' : '');
+    sheet.getRange(rowIdx, 10).setValue(prev ? prev + '\n' + entry : entry);
+  }
+
+  // Actualizar respuestas si se envían (columna 7)
+  if (payload.answers) {
+    sheet.getRange(rowIdx, 7).setValue(JSON.stringify(payload.answers));
+  }
+
+  // Actualizar URL de adjunto si se subió uno nuevo (columna 8)
+  if (payload.adjunto_url) {
+    var prevUrl = String(sheet.getRange(rowIdx, 8).getValue() || '');
+    sheet.getRange(rowIdx, 8).setValue(prevUrl ? prevUrl + ' | ' + payload.adjunto_url : payload.adjunto_url);
+  }
+
+  return { ok: true, message: 'Solicitud actualizada', numero_doc: payload.numero_doc };
 }
 
 
