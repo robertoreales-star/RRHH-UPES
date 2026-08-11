@@ -233,10 +233,8 @@
       <dc-import name="ActionCard" icon="fa-solid fa-calendar-check" accent="#00B4B4" title="Permisos" text="Solicita tu permiso con un asistente guiado y descarga tu solicitud oficial en PDF." onClick="{{ openPermisos }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-notes-medical" accent="#8a9a2b" title="Incapacidades" text="Registra tu incapacidad con un asistente guiado y adjunta el documento médico." onClick="{{ openIncapacidad }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-file-signature" accent="#1A3A8F" title="Constancias Laborales" text="Solicita tu constancia laboral con un asistente guiado y descárgala en PDF." onClick="{{ openConstancia }}" hint-size="100%,92px"></dc-import>
-      <dc-import name="ActionCard" icon="fa-solid fa-money-check-dollar" accent="#F5A800" title="Órdenes de Descuentos" text="Genera tu orden de descuento con un asistente guiado y descárgala en PDF." onClick="{{ openOrden }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-id-card-clip" accent="#057a7a" title="Licencias" text="Solicita tu licencia (maternidad, paternidad, duelo, matrimonio o lactancia) y adjunta tu respaldo." onClick="{{ openLicencia }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-pen-to-square" accent="#8a9a2b" title="Modificar Solicitud" text="Solicita una corrección o actualización a una solicitud ya registrada." onClick="{{ openModificar }}" hint-size="100%,92px"></dc-import>
-      <dc-import name="ActionCard" icon="fa-solid fa-folder-open" accent="#1A3A8F" title="Expediente" text="Completa y actualiza tu ficha de datos de empleado. Privada, solo para ti." href="Expediente%20UPES.dc.html" target="_blank" hint-size="100%,92px"></dc-import>
     </div>
   </section>
   </sc-if>
@@ -985,9 +983,6 @@ class Component extends DCLogic {
         { id: 'doc', type: 'file', sum: 'Documento de respaldo', accept: 'image/*,application/pdf', bot: 'Adjunta el documento que respalda tu licencia (partida de nacimiento, acta de matrimonio, constancia, etc.).', note: 'El documento de respaldo permite tramitar la licencia con goce de sueldo conforme a la normativa.' },
         { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
       ]},
-      expediente: { title: 'Expediente Personal', secure: true, steps: [
-        { id: 'info', type: 'final', bot: '🔒 Tu Expediente Personal estará disponible muy pronto. Será un espacio totalmente privado y confidencial: únicamente tú podrás ingresar, completar y consultar tu expediente — nadie más tendrá acceso. Te avisaremos cuando esté habilitado.' }
-      ]},
       clima: { title: 'Encuesta de Clima Organizacional', secure: true, steps: [
         { id: 'unidad', type: 'text', bot: '¡Hola! Esta encuesta es completamente anónima 🔒. ¿A qué unidad, departamento o facultad perteneces?', placeholder: 'Tu unidad o departamento...' },
         { id: 'ambiente', type: 'scale', bot: 'En una escala del 1 al 5, ¿cómo calificarías el ambiente de trabajo en tu área? (1 = Muy malo, 5 = Excelente)' },
@@ -1077,7 +1072,7 @@ class Component extends DCLogic {
       modificar: { title: 'Modificar Solicitud', secure: false, steps: [
         { id: 'tipo_sol', type: 'options', sum: 'Tipo de solicitud',
           bot: '📝 Voy a ayudarte a solicitar una modificación. ¿Qué tipo de solicitud necesitas corregir o actualizar?',
-          options: ['Permiso', 'Licencia', 'Incapacidad médica', 'Constancia laboral', 'Orden de descuento'] },
+          options: ['Permiso', 'Licencia', 'Incapacidad médica', 'Constancia laboral'] },
         { id: 'numero_doc', type: 'text', sum: 'Número de documento',
           bot: 'Ingresa el número del documento que aparece en el PDF descargado (ej. UPES-RH-PER-0001).',
           placeholder: 'Ej. UPES-RH-PER-0001' },
@@ -1090,18 +1085,6 @@ class Component extends DCLogic {
         { id: 'summary', type: 'summary',
           bot: 'Revisa tu solicitud de modificación. Si todo está correcto, envíala al equipo de RRHH.' }
       ]},
-      orden: { title: 'Orden de Descuento', secure: false, steps: [
-        { id: 'nombre', type: 'text', bot: '¡Hola! 💲 Te ayudaré a generar tu Orden de Descuento. Al final descargarás el documento oficial en PDF para autorizarlo y entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
-        { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
-        { id: 'unidad', type: 'text', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
-        { id: 'concepto', type: 'options', bot: '¿Cuál es el concepto del descuento?', options: ['Préstamo institucional', 'Cuota a cooperativa / asociación', 'Seguro', 'Pensión alimenticia', 'Compra o servicio interno', 'Otro'], otherTrigger: 'Otro', followUp: { id: 'concepto_otro', type: 'text', bot: 'Especifica el concepto del descuento:', placeholder: 'Describe el concepto...' } },
-        { id: 'beneficiario', type: 'text', bot: '¿Quién es el beneficiario del descuento?', placeholder: 'Persona o entidad beneficiaria' },
-        { id: 'monto', type: 'text', bot: '¿Cuál es el monto de cada cuota? (USD)', placeholder: 'Ej. $50.00' },
-        { id: 'cuotas', type: 'text', bot: '¿En cuántas cuotas se aplicará el descuento?', placeholder: 'Ej. 12 cuotas' },
-        { id: 'inicio', type: 'date', bot: '¿A partir de qué fecha (planilla) debe iniciar el descuento?' },
-        { id: 'comentarios', type: 'textarea', bot: 'Por último, agrega cualquier observación o detalle adicional.', note: 'El descuento se aplicará una vez autorizado por el trabajador(a) y validado por RRHH y la Administración Financiera.' },
-        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu orden. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
-      ]}
     };
   }
 
@@ -1163,20 +1146,6 @@ class Component extends DCLogic {
         rh: { label: 'CONSTANCIA EMITIDA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
         note: 'NOTA: La constancia será emitida en un plazo de hasta 3 días hábiles a partir de la recepción de esta solicitud.'
       },
-      orden: {
-        title: 'ORDEN DE DESCUENTO', code: 'UPES-RH-DA-FOR-ORD', prefix: 'UPES-RH-ORD', filename: 'Orden-Descuento',
-        summary: [
-          ['Nombre y apellidos', 'nombre'], ['DUI', 'dui'], ['Unidad en que labora', 'unidad'],
-          ['Concepto del descuento', 'concepto'], ['Beneficiario', 'beneficiario'], ['Monto por cuota', 'monto'], ['No. de cuotas', 'cuotas'], ['Inicio del descuento', '@d:inicio'], ['Observaciones', 'comentarios']
-        ],
-        sections: [
-          { bar: 'DATOS DEL TRABAJADOR(A)', rows: [ [['Nombre y apellidos', 'nombre']], [['Documento Único de Identidad', 'dui'], ['Código de empleado(a)', 'codigo']], [['Unidad en que labora', 'unidad'], ['Fecha de la orden', '@fecha']] ] },
-          { bar: 'DETALLES DEL DESCUENTO', rows: [ [['Concepto del descuento', 'concepto']], [['Beneficiario', 'beneficiario']], [['Monto por cuota (USD)', 'monto'], ['No. de cuotas', 'cuotas'], ['Inicio (planilla)', '@d:inicio']], [['Observaciones', 'comentarios'], null, null, 18] ] }
-        ],
-        signatures: ['Firma del trabajador(a) — Autorizo el descuento', 'Administración Financiera'],
-        rh: { label: 'ORDEN APLICADA', sig: 'Jefatura de Recursos Humanos — Nombre, firma y sello' },
-        note: 'NOTA: Con la firma de este documento, el trabajador(a) autoriza expresamente la aplicación del descuento en planilla en los términos aquí descritos.'
-      }
     };
   }
 
@@ -2166,8 +2135,8 @@ class Component extends DCLogic {
 
   async confirmPermiso() {
     if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
-    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad', 'constancia', 'orden'];
-    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades', constancia: 'constancias', orden: 'constancias' };
+    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad', 'constancia'];
+    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades', constancia: 'constancias' };
     const fk = this.state.flow || 'permiso';
     if (fk === 'modificar') { await this.confirmModificacion(); return; }
     const cfg = this.docConfigs()[fk];
@@ -2509,10 +2478,8 @@ class Component extends DCLogic {
       openPermisos: () => this.openFlow('permiso'),
       openIncapacidad: () => this.openFlow('incapacidad'),
       openConstancia: () => this.openFlow('constancia'),
-      openOrden: () => this.openFlow('orden'),
       openModificar: () => this.openFlow('modificar'),
       openLicencia: () => this.openFlow('licencia'),
-      openExpediente: () => this.openFlow('expediente'),
 
       // document flows (summary → confirm → PDF → done)
       showSummary: !!cur && cur.type === 'summary' && !st.permisoDone,
