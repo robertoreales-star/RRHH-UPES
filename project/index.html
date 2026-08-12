@@ -193,7 +193,7 @@
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px">
         <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.08);display:flex;flex-direction:column">
           <div style="position:relative;width:100%;padding-top:56.25%;background:#0D1B4B">
-            <div ref="{{ setVid0 }}" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            <iframe src="{{ vid0Src }}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onEditVideo0 }}" style="position:absolute;top:10px;right:10px;z-index:4;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(13,27,75,.35)"><i class="fa-solid fa-pen"></i> Cambiar video</button></sc-if>
           </div>
           <div style="padding:18px 20px">
@@ -203,7 +203,7 @@
         </div>
         <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.08);display:flex;flex-direction:column">
           <div style="position:relative;width:100%;padding-top:56.25%;background:#0D1B4B">
-            <div ref="{{ setVid1 }}" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            <iframe src="{{ vid1Src }}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onEditVideo1 }}" style="position:absolute;top:10px;right:10px;z-index:4;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(13,27,75,.35)"><i class="fa-solid fa-pen"></i> Cambiar video</button></sc-if>
           </div>
           <div style="padding:18px 20px">
@@ -213,7 +213,7 @@
         </div>
         <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.08);display:flex;flex-direction:column">
           <div style="position:relative;width:100%;padding-top:56.25%;background:#0D1B4B">
-            <div ref="{{ setVid2 }}" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            <iframe src="{{ vid2Src }}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onEditVideo2 }}" style="position:absolute;top:10px;right:10px;z-index:4;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(13,27,75,.35)"><i class="fa-solid fa-pen"></i> Cambiar video</button></sc-if>
           </div>
           <div style="padding:18px 20px">
@@ -2551,6 +2551,9 @@ class Component extends DCLogic {
       setVid0: (el) => { this.vid0El = el; },
       setVid1: (el) => { this.vid1El = el; },
       setVid2: (el) => { this.vid2El = el; },
+      vid0Src: 'https://www.youtube.com/embed/' + (this.ytVideoId(this.vidSrc('bienestar_vid0', 'gwDZRjdBnRo')) || 'gwDZRjdBnRo') + '?rel=0&modestbranding=1',
+      vid1Src: 'https://www.youtube.com/embed/' + (this.ytVideoId(this.vidSrc('bienestar_vid1', 'UX9Cf36fSOU')) || 'UX9Cf36fSOU') + '?rel=0&modestbranding=1',
+      vid2Src: 'https://www.youtube.com/embed/' + (this.ytVideoId(this.vidSrc('bienestar_vid2', 'CGwsHCiBrPw')) || 'CGwsHCiBrPw') + '?rel=0&modestbranding=1',
       onEditVideo0: () => this.openAsset('video', 'bienestar_vid0', (this.content.videos && this.content.videos.bienestar_vid0) || ''),
       onEditVideo1: () => this.openAsset('video', 'bienestar_vid1', (this.content.videos && this.content.videos.bienestar_vid1) || ''),
       onEditVideo2: () => this.openAsset('video', 'bienestar_vid2', (this.content.videos && this.content.videos.bienestar_vid2) || ''),
