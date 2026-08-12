@@ -144,11 +144,9 @@
         <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0">Construimos un entorno laboral basado en la <strong style="color:#1A3A8F">confianza</strong>, el <strong style="color:#00B4B4">respeto</strong> y la <strong style="color:#F5A800">colaboración</strong>. Tu voz nos ayuda a mejorar — participa en nuestros canales.</p>
       </div>
     </div>
-    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
-      <dc-import name="ActionCard" icon="fa-solid fa-square-poll-vertical" accent="#00B4B4" title="Encuesta de Clima Organizacional" text="Comparte cómo percibes tu ambiente de trabajo en el Sistema de Información Estudiantil (SIE)." href="#PLACEHOLDER_SIE" target="_blank" hint-size="100%,92px"></dc-import>
-      <dc-import name="ActionCard" icon="fa-solid fa-lightbulb" accent="#F5A800" title="Encuesta de Ideas de Mejora" text="¿Tienes una idea para mejorar UPES? Cuéntanos." onClick="{{ openIdeas }}" hint-size="100%,92px"></dc-import>
-      <dc-import name="ActionCard" icon="fa-solid fa-shield-halved" accent="#1A3A8F" title="Reporte de Denuncia" text="Canal seguro, anónimo y confidencial." onClick="{{ openDenuncia }}" hint-size="100%,92px"></dc-import>
-      <dc-import name="ActionCard" icon="fa-solid fa-comment-dots" accent="#057a7a" title="Reporte de Queja" text="Reporta una experiencia y te daremos seguimiento." onClick="{{ openQueja }}" hint-size="100%,92px"></dc-import>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px">
+      <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0 0 24px">Si deseas conocer más sobre el clima organizacional en UPES y participar en nuestras encuestas, visita el Sistema de Información Estudiantil.</p>
+      <a href="#PLACEHOLDER_SIE" target="_blank" style="background:#00B4B4;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 28px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ir al SIE <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
     </div>
   </section>
   </sc-if>
@@ -366,10 +364,8 @@
         <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Vacantes Disponibles</h3>
         <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
         <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0 0 22px">Buscamos talento que impulse el desarrollo institucional y contribuya a la formación de profesionales de alto nivel. Explora las plazas en concurso y postúlate a través del <strong style="color:#1A3A8F">Sistema de Información para Aspirantes (SIA)</strong>.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px">
-          <a href="#vacantes-lista" style="background:#eef2fb;color:#1A3A8F;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ver plazas <i class="fa-solid fa-arrow-down"></i></a>
-          <a href="#PLACEHOLDER_SIA" target="_blank" style="background:#1A3A8F;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ir al SIA <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-        </div>
+        <p style="font-size:16px;line-height:1.7;color:#45506b;margin:18px 0 22px">Si deseas conocer las plazas disponibles y postularte, visita nuestro Sistema de Información para Aspirantes.</p>
+        <a href="#PLACEHOLDER_SIA" target="_blank" style="background:#1A3A8F;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ir al SIA <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
     </div>
 
@@ -438,6 +434,7 @@
       <div style="flex:1;min-width:300px"><img src="assets/PROMOCIONES%20Y%20ASCENSOS.png" alt="Ascensos y promociones UPES" style="width:100%;height:auto;border-radius:18px;box-shadow:0 16px 40px rgba(13,27,75,.16);display:block" /></div>
     </div>
 
+    <sc-if value="{{ showAscensosBlock }}" hint-placeholder-val="{{ true }}">
     <div style="background:#F2F4F7;padding:54px 0">
       <div style="max-width:1200px;margin:0 auto;padding:0 24px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:30px">
@@ -448,6 +445,7 @@
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
             <span style="background:rgba(0,180,180,.13);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:9px 17px;border-radius:50px;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-arrow-trend-up"></i> {{ ascensosCount }} ascensos</span>
             <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddAscensos }}" style="background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onToggleAscensos }}" style="background:#0D1B4B;color:#F5A800;border:1.5px solid #F5A800;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:9px 16px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="background:#1A3A8F"><i class="{{ ascensosToggleIcon }}"></i> Ascensos: {{ ascensosToggleLabel }}</button></sc-if>
           </div>
         </div>
         <div data-dyn="1" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px">
@@ -477,6 +475,7 @@
         </div>
       </div>
     </div>
+    </sc-if>
   </section>
 
   </sc-if>
@@ -1431,7 +1430,7 @@ class Component extends DCLogic {
       const raw = localStorage.getItem('upes_content_v1');
       if (raw) { const p = JSON.parse(raw); if (p && typeof p === 'object') return { texts: p.texts || {}, images: p.images || {}, links: p.links || {}, videos: p.videos || {}, talentosVisible: p.talentosVisible !== undefined ? p.talentosVisible : null }; }
     } catch (e) {}
-    return { texts: {}, images: {}, links: {}, videos: {}, talentosVisible: null };
+    return { texts: {}, images: {}, links: {}, videos: {}, talentosVisible: null, ascensosVisible: null };
   }
 
   ytEmbed(url) {
@@ -1455,6 +1454,13 @@ class Component extends DCLogic {
     const cur = this.content.talentosVisible;
     // Cycles: null (auto) → true (force show) → false (force hide) → null
     this.content.talentosVisible = cur === null ? true : cur === true ? false : null;
+    this.persistContent();
+    this.setState({});
+  }
+
+  toggleAscensosVisible() {
+    const cur = this.content.ascensosVisible;
+    this.content.ascensosVisible = cur === null ? true : cur === true ? false : null;
     this.persistContent();
     this.setState({});
   }
@@ -2401,6 +2407,10 @@ class Component extends DCLogic {
       ascensosCount: st.store.ascensos.length,
       talentosCount: st.store.talentos.length,
       showTalentosBlock: this.content.talentosVisible === false ? false : (st.store.talentos.length > 0 || this.content.talentosVisible === true),
+      showAscensosBlock: this.content.ascensosVisible === false ? false : (st.store.ascensos.length > 0 || this.content.ascensosVisible === true),
+      ascensosToggleLabel: this.content.ascensosVisible === true ? 'Forzado visible — click para ocultar' : this.content.ascensosVisible === false ? 'Forzado oculto — click para auto' : 'Auto (oculto si vacío) — click para forzar visible',
+      ascensosToggleIcon: this.content.ascensosVisible === false ? 'fa-solid fa-eye' : this.content.ascensosVisible === true ? 'fa-solid fa-eye-slash' : 'fa-solid fa-toggle-on',
+      onToggleAscensos: () => this.toggleAscensosVisible(),
       talentosToggleLabel: this.content.talentosVisible === true ? 'Forzado visible — click para ocultar' : this.content.talentosVisible === false ? 'Forzado oculto — click para auto' : 'Auto (oculto si vacío) — click para forzar visible',
       talentosToggleIcon: this.content.talentosVisible === false ? 'fa-solid fa-eye' : this.content.talentosVisible === true ? 'fa-solid fa-eye-slash' : 'fa-solid fa-toggle-on',
       onToggleTalentos: () => this.toggleTalentosVisible(),
