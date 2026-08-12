@@ -145,7 +145,7 @@
       </div>
     </div>
     <div style="max-width:1200px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px">
-      <dc-import name="ActionCard" icon="fa-solid fa-square-poll-vertical" accent="#00B4B4" title="Encuesta de Clima Organizacional" text="Comparte cómo percibes tu ambiente de trabajo. 100% anónima." onClick="{{ openClima }}" hint-size="100%,92px"></dc-import>
+      <dc-import name="ActionCard" icon="fa-solid fa-square-poll-vertical" accent="#00B4B4" title="Encuesta de Clima Organizacional" text="Comparte cómo percibes tu ambiente de trabajo en el Sistema de Información Estudiantil (SIE)." href="#PLACEHOLDER_SIE" target="_blank" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-lightbulb" accent="#F5A800" title="Encuesta de Ideas de Mejora" text="¿Tienes una idea para mejorar UPES? Cuéntanos." onClick="{{ openIdeas }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-shield-halved" accent="#1A3A8F" title="Reporte de Denuncia" text="Canal seguro, anónimo y confidencial." onClick="{{ openDenuncia }}" hint-size="100%,92px"></dc-import>
       <dc-import name="ActionCard" icon="fa-solid fa-comment-dots" accent="#057a7a" title="Reporte de Queja" text="Reporta una experiencia y te daremos seguimiento." onClick="{{ openQueja }}" hint-size="100%,92px"></dc-import>
@@ -365,8 +365,11 @@
       <div style="flex:1;min-width:300px">
         <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(24px,3vw,34px);color:#1C2D5E;margin:0 0 8px">Vacantes Disponibles</h3>
         <div style="width:60px;height:4px;background:#F5A800;border-radius:3px;margin-bottom:18px"></div>
-        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0 0 22px">Buscamos talento que impulse el desarrollo institucional y contribuya a la formación de profesionales de alto nivel. Explora las plazas en concurso y postúlate enviando tu CV.</p>
-        <a href="#vacantes-lista" style="background:#1A3A8F;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ver vacantes disponibles <i class="fa-solid fa-arrow-down"></i></a>
+        <p style="font-size:17px;line-height:1.75;color:#45506b;margin:0 0 22px">Buscamos talento que impulse el desarrollo institucional y contribuya a la formación de profesionales de alto nivel. Explora las plazas en concurso y postúlate a través del <strong style="color:#1A3A8F">Sistema de Información para Aspirantes (SIA)</strong>.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px">
+          <a href="#vacantes-lista" style="background:#eef2fb;color:#1A3A8F;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ver plazas <i class="fa-solid fa-arrow-down"></i></a>
+          <a href="#PLACEHOLDER_SIA" target="_blank" style="background:#1A3A8F;color:#fff;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;padding:14px 26px;border-radius:50px;display:inline-flex;align-items:center;gap:9px">Ir al SIA <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
       </div>
     </div>
 
@@ -418,7 +421,7 @@
               <p style="font-size:13px;font-style:italic;color:#9aa3bd;margin:14px 0 0">Sin requisitos definidos — usa “Editar” para agregarlos.</p>
             </sc-if>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;border-top:1px solid #eef2f8;padding-top:17px">
-              <button onClick="{{ v.onApply }}" style="background:#F5A800;border:none;color:#0D1B4B;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 22px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#ffbe2e"><i class="fa-solid fa-paper-plane"></i> Aplicar — enviar CV</button>
+              <a href="#PLACEHOLDER_SIA" target="_blank" style="background:#F5A800;color:#0D1B4B;text-decoration:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 22px;border-radius:50px;display:inline-flex;align-items:center;gap:8px">Postularme en SIA <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
               <button onClick="{{ v.onEdit }}" style="background:#eef2fb;border:none;color:#1A3A8F;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#e2e8f5"><i class="fa-solid fa-pen"></i> Editar</button>
               <button onClick="{{ v.onDelete }}" style="background:none;border:none;color:#a9b2c8;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13.5px;padding:11px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="color:#d6332b"><i class="fa-solid fa-trash-can"></i> Eliminar</button>
             </div>
