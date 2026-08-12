@@ -1058,7 +1058,7 @@ class Component extends DCLogic {
         { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu registro. Si todo está correcto, genera el comprobante; si necesitas cambiar algo, usa "Corregir".' }
       ]},
       constancia: { title: 'Solicitud de Constancia Laboral', secure: false, steps: [
-        { id: 'nombre', type: 'text', bot: '¡Hola! 📄 Te ayudaré a solicitar tu Constancia Laboral. Al final descargarás el formulario oficial en PDF para entregarlo a RRHH. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'nombre', type: 'text', bot: '¡Hola! 📄 Te ayudaré a solicitar tu Constancia Laboral. Al final tu solicitud quedará registrada en RRHH y te la harán llegar según la forma de entrega que indiques. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
         { id: 'dui', type: 'text', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
         { id: 'cargo', type: 'text', bot: '¿Cuál es tu cargo actual?', placeholder: 'Ej. Asistente Administrativa' },
         { id: 'unidad', type: 'text', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
@@ -1067,7 +1067,7 @@ class Component extends DCLogic {
         { id: 'motivo', type: 'textarea', bot: '¿Cuál es el motivo o uso que le darás a la constancia?' },
         { id: 'entrega', type: 'options', bot: '¿Cómo prefieres recibir la constancia?', options: ['Física (impresa)', 'Correo electrónico', 'Ambas'] },
         { id: 'correo', type: 'text', bot: 'Indica un correo electrónico de contacto.', placeholder: 'nombre@correo.com' },
-        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, envíala al equipo de RRHH; si necesitas cambiar algo, usa "Corregir".' }
       ]},
       modificar: { title: 'Modificar Solicitud', secure: false, steps: [
         { id: 'tipo_sol', type: 'options', sum: 'Tipo de solicitud',
@@ -2135,10 +2135,11 @@ class Component extends DCLogic {
 
   async confirmPermiso() {
     if (!(window.jspdf && window.jspdf.jsPDF)) { window.alert('El generador de PDF aún se está cargando. Espera unos segundos e inténtalo de nuevo.'); return; }
-    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad', 'constancia'];
-    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades', constancia: 'constancias' };
+    const BACKEND_FLOWS = ['permiso', 'licencia', 'incapacidad'];
+    const FOLDER_MAP = { permiso: 'permisos', licencia: 'licencias', incapacidad: 'incapacidades' };
     const fk = this.state.flow || 'permiso';
     if (fk === 'modificar') { await this.confirmModificacion(); return; }
+    if (fk === 'constancia') { await this.confirmConstancia(); return; }
     const cfg = this.docConfigs()[fk];
     const api = window.RrhhAPI;
     const cfg_ = window.RRHH_CONFIG || {};
@@ -2243,6 +2244,40 @@ class Component extends DCLogic {
         { from: 'bot', text: '✅ Tu solicitud de modificación para el documento ' + numeroDoc + ' fue registrada. El equipo de RRHH la revisará y te confirmará los cambios realizados.' }
       ],
       current: null, done: true
+    }));
+  }
+
+  async confirmConstancia() {
+    const api = window.RrhhAPI;
+    const cfg_ = window.RRHH_CONFIG || {};
+    const hasBackend = api && cfg_.APPS_SCRIPT_URL && cfg_.APPS_SCRIPT_URL.indexOf('REEMPLAZA') < 0;
+    const answers = this.resolveAnswers('constancia');
+    let numeroReq = 'CON-' + Date.now().toString().slice(-6);
+
+    if (hasBackend) {
+      try {
+        const ctr = await api.incrementCounter('UPES-RH-CON');
+        if (ctr && ctr.ok) numeroReq = ctr.formatted;
+      } catch (e) {}
+      try {
+        await api.submitForm({
+          flow: 'constancia',
+          numero_doc: numeroReq,
+          nombre_empleado: answers.nombre || '',
+          cargo: answers.cargo || '',
+          unidad: answers.unidad || '',
+          answers: answers
+        });
+      } catch (e) {}
+    }
+
+    this.saveAnswers();
+    this.setState((st) => ({
+      messages: [...st.messages,
+        { from: 'user', text: 'Enviar solicitud de constancia' },
+        { from: 'bot', text: '✅ Tu solicitud de Constancia Laboral (' + numeroReq + ') fue registrada correctamente. El equipo de RRHH la elaborará y te la hará llegar según la forma de entrega que indicaste. ¡Cualquier duda comunícate con RRHH!' }
+      ],
+      current: null, permisoDone: true
     }));
   }
 
@@ -2483,8 +2518,8 @@ class Component extends DCLogic {
 
       // document flows (summary → confirm → PDF → done)
       showSummary: !!cur && cur.type === 'summary' && !st.permisoDone,
-      confirmLabel: st.flow === 'modificar' ? 'Enviar solicitud de modificación' : 'Confirmar y generar PDF',
-      confirmIcon: st.flow === 'modificar' ? 'fa-solid fa-paper-plane' : 'fa-solid fa-file-arrow-down',
+      confirmLabel: st.flow === 'modificar' ? 'Enviar solicitud de modificación' : st.flow === 'constancia' ? 'Enviar solicitud' : 'Confirmar y generar PDF',
+      confirmIcon: st.flow === 'modificar' || st.flow === 'constancia' ? 'fa-solid fa-paper-plane' : 'fa-solid fa-file-arrow-down',
       summaryRows: this.buildSummaryRows(),
       confirmPermiso: () => this.confirmPermiso(),
       correctPermiso: () => this.correctPermiso(),
