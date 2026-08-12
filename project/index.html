@@ -1904,7 +1904,12 @@ class Component extends DCLogic {
     clearTimeout(this._t);
     this._t = setTimeout(() => {
       this.setState((st) => ({ typing: false, current: step, messages: [...st.messages, { from: 'bot', text: step.bot, note: step.note }] }));
-      if (step.type === 'final') { this.saveAnswers(); this.setState({ done: true }); }
+      if (step.type === 'final') {
+        this.saveAnswers();
+        this.setState({ done: true });
+        const fk = this.state.flow;
+        if ((fk === 'condicion' || fk === 'accion') && window.RrhhAPI) { this.submitSso(fk); }
+      }
     }, 480);
   }
 
@@ -2393,6 +2398,24 @@ class Component extends DCLogic {
       ],
       current: null, permisoDone: true
     }));
+  }
+
+  async submitSso(tipo) {
+    const api = window.RrhhAPI;
+    const cfg_ = window.RRHH_CONFIG || {};
+    if (!api || !cfg_.APPS_SCRIPT_URL || cfg_.APPS_SCRIPT_URL.indexOf('REEMPLAZA') >= 0) return;
+    try {
+      const a = this.answers;
+      await api.submitSso({
+        tipo:        tipo,
+        nombre:      a.nombre      || '',
+        area:        a.area        || '',
+        lugar:       a.lugar       || '',
+        descripcion: a.descripcion || '',
+        riesgo:      a.riesgo      || '',
+        answers:     a
+      });
+    } catch (e) {}
   }
 
   downloadPermiso() { if (this.docMeta && this.docFlow) this.buildDocPDF(this.docFlow, this.docAnswers || this.answers, this.docMeta); }

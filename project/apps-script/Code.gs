@@ -6,9 +6,10 @@
 // ── Constantes ─────────────────────────────────────────────────
 
 var SHEET_NAMES = {
-  SOLICITUDES: 'Solicitudes',
-  EXPEDIENTES: 'Expedientes',
-  CONTADORES:  'Contadores'
+  SOLICITUDES:  'Solicitudes',
+  EXPEDIENTES:  'Expedientes',
+  CONTADORES:   'Contadores',
+  REPORTES_SSO: 'Reportes SSO'
 };
 
 var DRIVE_FOLDERS = {
@@ -18,7 +19,13 @@ var DRIVE_FOLDERS = {
   INCAPACIDADES: 'Incapacidades',
   CONSTANCIAS:   'Constancias',
   EXPEDIENTES:   'Expedientes',
-  FOTOS:         'Fotos'
+  FOTOS:         'Fotos',
+  // Documentos institucionales
+  CODIGOS:       'Códigos',
+  POLITICAS:     'Políticas',
+  REGLAMENTOS:   'Reglamentos',
+  MANUALES:      'Manuales',
+  INSTRUCTIVOS:  'Instructivos'
 };
 
 // Claves válidas para incrementCounter
@@ -86,6 +93,9 @@ function doPost(e) {
         break;
       case 'upsertExpediente':
         result = upsertExpediente(payload);
+        break;
+      case 'submitSso':
+        result = submitSso(payload);
         break;
       case 'getFormByNum':
         result = getFormByNum(payload);

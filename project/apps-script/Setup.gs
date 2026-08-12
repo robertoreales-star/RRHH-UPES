@@ -53,7 +53,12 @@ function createDriveFolders_() {
     DRIVE_FOLDERS.INCAPACIDADES,
     DRIVE_FOLDERS.CONSTANCIAS,
     DRIVE_FOLDERS.EXPEDIENTES,
-    DRIVE_FOLDERS.FOTOS
+    DRIVE_FOLDERS.FOTOS,
+    DRIVE_FOLDERS.CODIGOS,
+    DRIVE_FOLDERS.POLITICAS,
+    DRIVE_FOLDERS.REGLAMENTOS,
+    DRIVE_FOLDERS.MANUALES,
+    DRIVE_FOLDERS.INSTRUCTIVOS
   ];
 
   subNames.forEach(function (name) {
@@ -143,6 +148,22 @@ function createSheets_() {
     Logger.log('✓ Hoja "Expedientes" creada');
   } else {
     Logger.log('· Hoja "Expedientes" ya existía');
+  }
+
+  // ── Reportes SSO ──
+  var ssoSheet = getOrCreateSheet_(ss, SHEET_NAMES.REPORTES_SSO);
+  if (ssoSheet.getLastRow() === 0) {
+    var ssoCols = [
+      'timestamp', 'tipo', 'nombre', 'area',
+      'lugar', 'descripcion', 'riesgo', 'detalles_json', 'estado', 'notas'
+    ];
+    ssoSheet.appendRow(ssoCols);
+    styleHeader_(ssoSheet, ssoCols.length);
+    ssoSheet.setFrozenRows(1);
+    ssoSheet.setColumnWidth(8, 380);
+    Logger.log('✓ Hoja "Reportes SSO" creada');
+  } else {
+    Logger.log('· Hoja "Reportes SSO" ya existía');
   }
 
   // ── Contadores ──

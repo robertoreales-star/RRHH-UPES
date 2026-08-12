@@ -305,6 +305,52 @@ function updateForm(payload) {
 }
 
 
+// ── submitSso ──────────────────────────────────────────────────
+//
+//  Registra un reporte de acción o condición insegura en la hoja
+//  "Reportes SSO".
+//
+//  payload: {
+//    tipo:         string   'condicion' | 'accion'
+//    nombre:       string
+//    area:         string
+//    lugar:        string
+//    descripcion:  string
+//    riesgo:       string   Bajo|Medio|Alto|Crítico
+//    answers:      object   respuestas completas del chatbot
+//  }
+//
+function submitSso(payload) {
+  if (!payload.tipo)   throw new Error('Campo requerido: tipo');
+
+  var ss    = getSpreadsheet_();
+  var sheet = ss.getSheetByName(SHEET_NAMES.REPORTES_SSO);
+  if (!sheet) throw new Error(
+    'Hoja "' + SHEET_NAMES.REPORTES_SSO + '" no encontrada. ' +
+    'Ejecuta setupAll() desde el editor de Apps Script primero.'
+  );
+
+  sheet.appendRow([
+    new Date().toISOString(),                   // timestamp
+    payload.tipo,                               // tipo
+    payload.nombre      || '',                  // nombre
+    payload.area        || '',                  // area
+    payload.lugar       || '',                  // lugar
+    payload.descripcion || '',                  // descripcion
+    payload.riesgo      || '',                  // riesgo
+    JSON.stringify(payload.answers || {}),      // detalles_json
+    'pendiente',                                // estado
+    ''                                          // notas
+  ]);
+
+  return {
+    ok:      true,
+    message: 'Reporte SSO registrado correctamente',
+    tipo:    payload.tipo
+  };
+}
+
+
 // ── upsertExpediente ───────────────────────────────────────────
 //
 //  Crea o actualiza el Formato 06 de un empleado.

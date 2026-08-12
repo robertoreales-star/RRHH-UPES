@@ -177,6 +177,23 @@
     },
 
     /**
+     * Registra un reporte de acción o condición insegura en la hoja "Reportes SSO".
+     *
+     * @param {object}  data
+     * @param {string}  data.tipo          'condicion' | 'accion'
+     * @param {string}  data.nombre
+     * @param {string}  data.area
+     * @param {string}  data.lugar
+     * @param {string}  data.descripcion
+     * @param {string}  data.riesgo        Bajo|Medio|Alto|Crítico
+     * @param {object}  data.answers       respuestas completas del chatbot
+     * @returns {Promise<{ok:boolean, message:string, tipo:string}>}
+     */
+    submitSso: function (data) {
+      return doPost('submitSso', data);
+    },
+
+    /**
      * Extrae el base64 de un documento jsPDF para subir a Drive.
      * Usar junto con uploadFile().
      *
