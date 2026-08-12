@@ -211,8 +211,97 @@
             <p style="font-size:13.5px;line-height:1.55;color:#566087;margin:0">Secuencia para todo el cuerpo, ideal para realizar en el puesto de trabajo.</p>
           </div>
         </div>
+        <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(13,27,75,.08);display:flex;flex-direction:column">
+          <div style="position:relative;width:100%;padding-top:56.25%;background:#0D1B4B">
+            <div ref="{{ setVid2 }}" style="position:absolute;inset:0;width:100%;height:100%"></div>
+            <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onEditVideo2 }}" style="position:absolute;top:10px;right:10px;z-index:4;background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:8px 14px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 12px rgba(13,27,75,.35)"><i class="fa-solid fa-pen"></i> Cambiar video</button></sc-if>
+          </div>
+          <div style="padding:18px 20px">
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;color:#1C2D5E;margin:0 0 5px;line-height:1.3">Pausa activa de relajación y respiración</h4>
+            <p style="font-size:13.5px;line-height:1.55;color:#566087;margin:0">Técnicas de respiración consciente para reducir el estrés y mejorar la concentración.</p>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- ── Consejos de bienestar ── -->
+    <div style="background:#F2F4F7;padding:54px 0">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:30px">
+          <span style="width:46px;height:46px;border-radius:13px;background:rgba(0,180,180,.13);color:#00B4B4;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none"><i class="fa-solid fa-heart-pulse"></i></span>
+          <div>
+            <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,28px);color:#1C2D5E;margin:0">Consejos para tu bienestar</h3>
+            <div style="width:54px;height:4px;background:#F5A800;border-radius:3px;margin-top:10px"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px">
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px 20px;box-shadow:0 8px 22px rgba(13,27,75,.06)">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(0,180,180,.12);color:#00B4B4;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px"><i class="fa-solid fa-droplet"></i></div>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1C2D5E;margin:0 0 7px">Hidrátate siempre</h4>
+            <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">Bebe al menos 8 vasos de agua al día. Mantener una buena hidratación mejora la concentración y reduce la fatiga durante la jornada.</p>
+          </div>
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px 20px;box-shadow:0 8px 22px rgba(13,27,75,.06)">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(26,58,143,.1);color:#1A3A8F;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px"><i class="fa-solid fa-chair"></i></div>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1C2D5E;margin:0 0 7px">Cuida tu postura</h4>
+            <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">Ajusta tu silla y pantalla para mantener la espalda recta. Una buena postura previene dolores y mejora tu energía a lo largo del día.</p>
+          </div>
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px 20px;box-shadow:0 8px 22px rgba(13,27,75,.06)">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(245,168,0,.13);color:#b07a00;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px"><i class="fa-solid fa-wind"></i></div>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1C2D5E;margin:0 0 7px">Respira profundo</h4>
+            <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">Tómate 2 minutos cada hora para respirar conscientemente: inhala 4 segundos, sostén 4, exhala 4. Reduce el estrés de forma inmediata.</p>
+          </div>
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px 20px;box-shadow:0 8px 22px rgba(13,27,75,.06)">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(138,154,43,.13);color:#5a6b00;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px"><i class="fa-solid fa-moon"></i></div>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1C2D5E;margin:0 0 7px">Descansa bien</h4>
+            <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">Dormir entre 7 y 8 horas mejora el rendimiento, la memoria y el estado de ánimo. El descanso es parte fundamental de tu productividad.</p>
+          </div>
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px 20px;box-shadow:0 8px 22px rgba(13,27,75,.06)">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(5,122,122,.12);color:#057a7a;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px"><i class="fa-solid fa-apple-whole"></i></div>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1C2D5E;margin:0 0 7px">Alimentación saludable</h4>
+            <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">Incluye frutas, verduras y proteínas en cada comida. Evita saltarte el almuerzo — una nutrición adecuada sostiene tu energía y concentración.</p>
+          </div>
+          <div style="background:#fff;border:1px solid #e6ebf5;border-radius:18px;padding:22px 20px;box-shadow:0 8px 22px rgba(13,27,75,.06)">
+            <div style="width:44px;height:44px;border-radius:13px;background:rgba(13,27,75,.08);color:#0D1B4B;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px"><i class="fa-solid fa-people-group"></i></div>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1C2D5E;margin:0 0 7px">Conecta con tu equipo</h4>
+            <p style="font-size:13.5px;line-height:1.6;color:#566087;margin:0">Las relaciones positivas en el trabajo reducen el estrés y aumentan la satisfacción. Dedica unos minutos al día a conversar con tus compañeros.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Actividades de bienestar ── -->
+    <sc-if value="{{ showActividadesBlock }}" hint-placeholder-val="{{ true }}">
+    <div style="max-width:1200px;margin:0 auto;padding:54px 24px 72px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:30px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="width:46px;height:46px;border-radius:13px;background:rgba(245,168,0,.13);color:#b07a00;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none"><i class="fa-solid fa-calendar-star"></i></span>
+          <div>
+            <h3 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(20px,2.6vw,28px);color:#1C2D5E;margin:0">Actividades de integración</h3>
+            <div style="width:54px;height:4px;background:#F5A800;border-radius:3px;margin-top:10px"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="background:rgba(0,180,180,.13);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:9px 17px;border-radius:50px;display:inline-flex;align-items:center;gap:8px"><i class="fa-solid fa-calendar-check"></i> {{ actividadesCount }} actividades</span>
+          <sc-if value="{{ editMode }}" hint-placeholder-val="{{ false }}"><button onClick="{{ onAddActividades }}" style="background:#1A3A8F;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;cursor:pointer;display:inline-flex;align-items:center;gap:8px" style-hover="background:#0D1B4B"><i class="fa-solid fa-plus"></i> Agregar</button></sc-if>
+        </div>
+      </div>
+      <div data-dyn="1" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px">
+        <sc-for list="{{ actividades }}" as="a" hint-placeholder-count="2">
+          <div style="background:#fff;border:1px solid #e6ebf5;border-left:5px solid #F5A800;border-radius:16px;padding:22px 24px;box-shadow:0 10px 26px rgba(13,27,75,.06);position:relative">
+            <sc-if value="{{ a.editMode }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:12px;right:12px;display:flex;gap:6px"><button onClick="{{ a.onEdit }}" style="background:#eef2fb;border:none;color:#1A3A8F;width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-pen"></i></button><button onClick="{{ a.onDelete }}" style="background:none;border:none;color:#a9b2c8;width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center"><i class="fa-solid fa-trash-can"></i></button></div></sc-if>
+            <h4 style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:17px;color:#1C2D5E;margin:0 0 10px;line-height:1.25;padding-right:80px">{{ a.name }}</h4>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+              <span style="background:rgba(245,168,0,.13);color:#9a6b00;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:5px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:6px"><i class="fa-solid fa-calendar" style="font-size:11px"></i> {{ a.date }}</span>
+              <span style="background:rgba(0,180,180,.1);color:#057a7a;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:5px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:6px"><i class="fa-solid fa-clock" style="font-size:11px"></i> {{ a.hora }}</span>
+              <span style="background:rgba(26,58,143,.08);color:#1A3A8F;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:5px 12px;border-radius:50px;display:inline-flex;align-items:center;gap:6px"><i class="fa-solid fa-location-dot" style="font-size:11px"></i> {{ a.lugar }}</span>
+            </div>
+            <p style="font-size:14px;line-height:1.6;color:#566087;margin:0">{{ a.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
   </section>
   </sc-if>
 
@@ -1231,6 +1320,14 @@ class Component extends DCLogic {
     ];
   }
 
+
+  seedActividades() {
+    return [
+      { id: '1', name: 'Pausas activas grupales', date: 'Todos los viernes', hora: '10:00 a.m.', lugar: 'Área común — Edificio A', desc: 'Sesión grupal de 15 minutos con ejercicios de estiramiento y respiración para reactivar cuerpo y mente.' },
+      { id: '2', name: 'Día de integración RRHH', date: '30 de agosto 2026', hora: '2:00 p.m.', lugar: 'Auditorio principal', desc: 'Tarde de convivencia con dinámicas, música y refrigerio para fortalecer los lazos del equipo institucional.' }
+    ];
+  }
+
   seedCapProximas() {
     return [
       { name: 'Liderazgo y Gestión de Equipos', date: 'Mayo 2026', desc: 'Programa orientado a jefaturas y coordinaciones para fortalecer competencias de liderazgo.', href: '#PLACEHOLDER_ENLACE_LIDERAZGO' },
@@ -1294,6 +1391,13 @@ class Component extends DCLogic {
         { key: 'date', label: 'Fecha', type: 'text', placeholder: 'Ej. Mayo 2026' },
         { key: 'desc', label: 'Descripción breve', type: 'textarea', placeholder: 'Breve descripción del contenido…' },
         { key: 'href', label: 'Enlace relacionado', type: 'text', placeholder: 'https://…' }
+      ] },
+      actividades: { title: 'actividad de bienestar', max: 12, storeKey: 'upes_actividades_v1', seed: () => this.seedActividades(), fields: [
+        { key: 'name', label: 'Nombre de la actividad', type: 'text', required: true, placeholder: 'Ej. Yoga matutino' },
+        { key: 'date', label: 'Fecha', type: 'text', placeholder: 'Ej. Viernes 22 de agosto' },
+        { key: 'hora', label: 'Hora', type: 'text', placeholder: 'Ej. 7:30 a.m.' },
+        { key: 'lugar', label: 'Lugar', type: 'text', placeholder: 'Ej. Cancha principal' },
+        { key: 'desc', label: 'Descripción', type: 'textarea', placeholder: 'Describe la actividad...' }
       ] }
     };
   }
@@ -1696,7 +1800,8 @@ class Component extends DCLogic {
   curVidIds() {
     return [
       this.ytVideoId(this.vidSrc('bienestar_vid0', 'https://www.youtube.com/embed/gwDZRjdBnRo')),
-      this.ytVideoId(this.vidSrc('bienestar_vid1', 'https://www.youtube.com/embed/UX9Cf36fSOU'))
+      this.ytVideoId(this.vidSrc('bienestar_vid1', 'https://www.youtube.com/embed/UX9Cf36fSOU')),
+      this.ytVideoId(this.vidSrc('bienestar_vid2', 'https://www.youtube.com/embed/sTANio_2E0Q'))
     ];
   }
 
@@ -1715,7 +1820,7 @@ class Component extends DCLogic {
     if (typeof window === 'undefined') return;
     const ids = this.curVidIds();
     this.loadYTApi().then(() => {
-      [[this.vid0El, ids[0]], [this.vid1El, ids[1]]].forEach((pair, i) => {
+      [[this.vid0El, ids[0]], [this.vid1El, ids[1]], [this.vid2El, ids[2]]].forEach((pair, i) => {
         const el = pair[0], id = pair[1];
         if (!el || !id) return;
         const key = 'p' + i;
@@ -1761,7 +1866,7 @@ class Component extends DCLogic {
     if (this.chatEl) this.chatEl.scrollTop = this.chatEl.scrollHeight;
     this.applyEditable();
     const sig = this.curVidIds().join('|');
-    if (sig !== this._vidIds && this.vid0El) { this._vidIds = sig; this.mountVideos(); }
+    if (sig !== this._vidIds && (this.vid0El || this.vid2El)) { this._vidIds = sig; this.mountVideos(); }
   }
 
   openFlow(key) {
@@ -2399,12 +2504,16 @@ class Component extends DCLogic {
 
       // Personas — galerías dinámicas editables (persisten en localStorage)
       ascensos: st.store.ascensos.map((p) => withEdit(this.personCard(p, 64), 'ascensos')),
+      actividades: st.store.actividades.map((a) => ({ ...a, onEdit: () => this.colEdit('actividades', a.id), onDelete: () => this.colDelete('actividades', a.id), editMode: st.editMode })),
       talentos: st.store.talentos.map((p) => withEdit(this.personCard(p, 72), 'talentos')),
       cumple: st.store.cumple.map((p) => withEdit(this.personCard(p, 100, true), 'cumple')),
       reconocimientos: st.store.reconocimientos.map((p) => withEdit(this.personCard(p, 72, true), 'reconocimientos')),
       capRecibidas: st.store.capRecibidas.map((c) => withEdit(Object.assign({}, c), 'capRecibidas')),
       capProximas: st.store.capProximas.map((c) => withEdit(Object.assign({}, c), 'capProximas')),
       ascensosCount: st.store.ascensos.length,
+      actividadesCount: st.store.actividades.length,
+      onAddActividades: () => this.colAdd('actividades'),
+      showActividadesBlock: st.store.actividades.length > 0 || st.editMode,
       talentosCount: st.store.talentos.length,
       showTalentosBlock: this.content.talentosVisible === false ? false : (st.store.talentos.length > 0 || this.content.talentosVisible === true),
       showAscensosBlock: this.content.ascensosVisible === false ? false : (st.store.ascensos.length > 0 || this.content.ascensosVisible === true),
@@ -2441,8 +2550,10 @@ class Component extends DCLogic {
       assetTitle: st.assetEdit ? (st.assetEdit.kind === 'image' ? 'Cambiar imagen' : (st.assetEdit.kind === 'video' ? 'Cambiar video' : 'Editar enlace')) : '',
       setVid0: (el) => { this.vid0El = el; },
       setVid1: (el) => { this.vid1El = el; },
+      setVid2: (el) => { this.vid2El = el; },
       onEditVideo0: () => this.openAsset('video', 'bienestar_vid0', (this.content.videos && this.content.videos.bienestar_vid0) || ''),
       onEditVideo1: () => this.openAsset('video', 'bienestar_vid1', (this.content.videos && this.content.videos.bienestar_vid1) || ''),
+      onEditVideo2: () => this.openAsset('video', 'bienestar_vid2', (this.content.videos && this.content.videos.bienestar_vid2) || ''),
       assetDraft: st.assetDraft,
       assetPreviewShow: !!(st.assetEdit && st.assetEdit.kind === 'image' && st.assetDraft),
       assetPreviewStyle: { width: '100%', height: '200px', borderRadius: '14px', border: '1px solid #e6ebf5', backgroundImage: "url('" + (st.assetDraft || '') + "')", backgroundSize: 'cover', backgroundPosition: 'center', marginTop: '16px' },
