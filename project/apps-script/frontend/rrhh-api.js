@@ -194,6 +194,25 @@
     },
 
     /**
+     * Guarda todo el contenido editable del portal en Drive.
+     * Llamar desde el botón "Guardar" del panel admin.
+     * @param {object} content  Objeto con las claves de localStorage { upes_content_v1, ... }
+     * @returns {Promise<{ok:boolean, message:string, savedAt:string}>}
+     */
+    saveContent: function (content) {
+      return doPost('saveContent', { content: content });
+    },
+
+    /**
+     * Recupera el último contenido guardado del portal.
+     * Llamar al cargar la página para mostrar el contenido actualizado.
+     * @returns {Promise<{ok:boolean, found:boolean, savedAt:string, data:object}>}
+     */
+    getContent: function () {
+      return doGet('getContent', {});
+    },
+
+    /**
      * Extrae el base64 de un documento jsPDF para subir a Drive.
      * Usar junto con uploadFile().
      *

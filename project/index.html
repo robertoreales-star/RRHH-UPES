@@ -854,10 +854,8 @@
   <button onClick="{{ editToggle }}" style="{{ editFabStyle }}"><i class="{{ editFabIcon }}"></i> {{ editFabLabel }}</button>
   <sc-if value="{{ isAuthed }}" hint-placeholder-val="{{ false }}">
     <button onClick="{{ onLogout }}" title="Cerrar sesión" style="position:fixed;right:18px;bottom:70px;z-index:950;background:#0D1B4B;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:9px 16px;border-radius:50px;cursor:pointer;box-shadow:0 8px 20px rgba(13,27,75,.3);display:flex;align-items:center;gap:7px"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
-    <button onClick="{{ onExportContent }}" title="Descargar backup del contenido" style="position:fixed;right:18px;bottom:112px;z-index:950;background:#057a7a;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:9px 16px;border-radius:50px;cursor:pointer;box-shadow:0 8px 20px rgba(5,122,122,.35);display:flex;align-items:center;gap:7px"><i class="fa-solid fa-download"></i> Backup</button>
-    <button onClick="{{ onImportContent }}" title="Restaurar backup del contenido" style="position:fixed;right:18px;bottom:154px;z-index:950;background:#8a9a2b;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;padding:9px 16px;border-radius:50px;cursor:pointer;box-shadow:0 8px 20px rgba(138,154,43,.35);display:flex;align-items:center;gap:7px"><i class="fa-solid fa-upload"></i> Restaurar</button>
+    <button onClick="{{ onGuardar }}" title="Guardar contenido para todos los usuarios" style="{{ guardarStyle }}">{{ guardarLabel }}</button>
   </sc-if>
-  <input type="file" id="upes-restore-input" accept=".json" onChange="{{ onRestoreFile }}" style="display:none" />
 
   <sc-if value="{{ loginOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ cancelLogin }}" style="position:fixed;inset:0;z-index:1100;background:rgba(8,15,40,.66);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:14px">
@@ -991,10 +989,12 @@ class Component extends DCLogic {
       vacancies: [],
       vacEditId: null,
       draft: { title: '', description: '', requirements: [] },
-      vacError: ''
+      vacError: '',
+      guardarLoading: false
     };
     this.queue = [];
     this.answers = {};
+    if (typeof window !== 'undefined') setTimeout(() => this.loadFromBackend(), 300);
     this._meta = {};
     this.navItems = [
       { id: 'inicio', label: 'Inicio' },
@@ -1527,51 +1527,59 @@ class Component extends DCLogic {
     this.setState({ authed: false, editMode: false, editor: null }, () => this.applyEditable());
   }
 
-  exportContent() {
-    var keys = [
+  async guardarContent() {
+    if (this.state.guardarLoading) return;
+    const api = window.RrhhAPI;
+    const cfg = window.RRHH_CONFIG || {};
+    if (!api || !cfg.APPS_SCRIPT_URL || cfg.APPS_SCRIPT_URL.indexOf('REEMPLAZA') >= 0) {
+      alert('El backend no está configurado. Agrega la URL del Web App en config.js primero.');
+      return;
+    }
+    this.setState({ guardarLoading: true });
+    const keys = [
       'upes_content_v1', 'upes_ascensos_v1', 'upes_talentos_v1',
       'upes_cumple_v1', 'upes_recon_v1', 'upes_caprec_v1',
       'upes_capprox_v1', 'upes_actividades_v1', 'upes_vacantes_v1'
     ];
-    var backup = { _version: 1, _date: new Date().toISOString() };
-    keys.forEach(function (k) {
-      try { var v = localStorage.getItem(k); if (v) backup[k] = JSON.parse(v); } catch (e) {}
+    const content = {};
+    keys.forEach(k => {
+      try { const v = localStorage.getItem(k); if (v) content[k] = JSON.parse(v); } catch(e) {}
     });
-    var blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = 'upes-backup-' + new Date().toISOString().slice(0, 10) + '.json';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
+    try {
+      const res = await api.saveContent(content);
+      if (res.ok) {
+        alert('✓ Contenido guardado. Los cambios ya son visibles para todos los usuarios.');
+      } else {
+        alert('Error al guardar: ' + (res.error || 'Error desconocido'));
+      }
+    } catch(e) {
+      alert('Error de conexión: ' + e.message);
+    }
+    this.setState({ guardarLoading: false });
   }
 
-  importContent(file) {
-    if (!file) return;
-    var self = this;
-    var reader = new FileReader();
-    reader.onload = function (ev) {
-      try {
-        var backup = JSON.parse(ev.target.result);
-        var keys = [
-          'upes_content_v1', 'upes_ascensos_v1', 'upes_talentos_v1',
-          'upes_cumple_v1', 'upes_recon_v1', 'upes_caprec_v1',
-          'upes_capprox_v1', 'upes_actividades_v1', 'upes_vacantes_v1'
-        ];
-        var restored = 0;
-        keys.forEach(function (k) {
-          if (backup[k] !== undefined) {
-            try { localStorage.setItem(k, JSON.stringify(backup[k])); restored++; } catch (e) {}
-          }
-        });
-        alert('Backup restaurado correctamente (' + restored + ' secciones). La página se recargará.');
-        location.reload();
-      } catch (e) {
-        alert('Error al leer el backup: ' + e.message);
-      }
-    };
-    reader.readAsText(file);
+  async loadFromBackend() {
+    const api = window.RrhhAPI;
+    const cfg = window.RRHH_CONFIG || {};
+    if (!api || !cfg.APPS_SCRIPT_URL || cfg.APPS_SCRIPT_URL.indexOf('REEMPLAZA') >= 0) return;
+    try {
+      const res = await api.getContent();
+      if (!res.ok || !res.found || !res.data) return;
+      const keys = [
+        'upes_content_v1', 'upes_ascensos_v1', 'upes_talentos_v1',
+        'upes_cumple_v1', 'upes_recon_v1', 'upes_caprec_v1',
+        'upes_capprox_v1', 'upes_actividades_v1', 'upes_vacantes_v1'
+      ];
+      keys.forEach(k => {
+        if (res.data[k] !== undefined) {
+          try { localStorage.setItem(k, JSON.stringify(res.data[k])); } catch(e) {}
+        }
+      });
+      this.content = this.loadContent();
+      const store = {};
+      Object.keys(this.collections).forEach(k => { store[k] = this.loadCol(k); });
+      this.setState({ store }, () => this.applyEditable());
+    } catch(e) { /* falla silenciosa, usa localStorage */ }
   }
 
   // ─────────────────────────────────────────────────────────────
@@ -2606,9 +2614,9 @@ class Component extends DCLogic {
       editFabStyle: { position: 'fixed', right: '18px', bottom: '18px', zIndex: 950, background: st.editMode ? '#1F8A5B' : '#F5A800', color: st.editMode ? '#fff' : '#0D1B4B', border: 'none', fontFamily: "'Montserrat',sans-serif", fontWeight: 800, fontSize: '13.5px', padding: '13px 21px', borderRadius: '50px', cursor: 'pointer', boxShadow: '0 12px 30px rgba(13,27,75,.32)', display: 'flex', alignItems: 'center', gap: '9px' },
       isAuthed: st.authed,
       onLogout: () => this.logout(),
-      onExportContent: () => this.exportContent(),
-      onImportContent: () => { var inp = document.getElementById('upes-restore-input'); if (inp) { inp.value = ''; inp.click(); } },
-      onRestoreFile: (e) => { if (e.target.files && e.target.files[0]) this.importContent(e.target.files[0]); },
+      onGuardar: () => this.guardarContent(),
+      guardarLabel: st.guardarLoading ? '⏳ Guardando...' : '💾 Guardar',
+      guardarStyle: { position: 'fixed', right: '18px', bottom: '112px', zIndex: 950, background: st.guardarLoading ? '#7a8a9a' : '#1A3A8F', color: '#fff', border: 'none', fontFamily: "'Montserrat',sans-serif", fontWeight: 700, fontSize: '12px', padding: '9px 16px', borderRadius: '50px', cursor: st.guardarLoading ? 'default' : 'pointer', boxShadow: '0 8px 20px rgba(26,58,143,.35)', display: 'flex', alignItems: 'center', gap: '7px' },
       loginOpen: st.loginOpen,
       loginUser: st.loginUser,
       loginPass: st.loginPass,

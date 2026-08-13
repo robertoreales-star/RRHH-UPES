@@ -405,3 +405,53 @@ function upsertExpediente(payload) {
     return { ok: true, action: 'created', dui: payload.dui };
   }
 }
+
+
+// ── saveContent ────────────────────────────────────────────────
+//
+//  Guarda todo el contenido editable del portal como JSON en Drive.
+//  Llamar desde el botón "Guardar" del panel admin.
+//
+//  payload: { content: object }  — las claves de localStorage serializadas
+//
+function saveContent(payload) {
+  if (!payload.content) throw new Error('Campo requerido: content');
+
+  var props    = PropertiesService.getScriptProperties();
+  var folderId = props.getProperty('FOLDER_ROOT');
+  if (!folderId) throw new Error('Carpeta no configurada. Ejecuta setupAll() primero.');
+
+  var folder   = DriveApp.getFolderById(folderId);
+  var savedAt  = new Date().toISOString();
+  var wrapper  = JSON.stringify({ _savedAt: savedAt, _v: 1, data: payload.content });
+
+  // Eliminar versión anterior
+  var files = folder.getFilesByName('portal-content.json');
+  while (files.hasNext()) { files.next().setTrashed(true); }
+
+  var file = folder.createFile('portal-content.json', wrapper, 'application/json');
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  props.setProperty('CONTENT_FILE_ID', file.getId());
+
+  return { ok: true, message: 'Contenido guardado', savedAt: savedAt };
+}
+
+
+// ── getContent ─────────────────────────────────────────────────
+//
+//  Devuelve el contenido guardado del portal.
+//  Retorna: { ok, found, savedAt, data }
+//
+function getContent() {
+  var props  = PropertiesService.getScriptProperties();
+  var fileId = props.getProperty('CONTENT_FILE_ID');
+  if (!fileId) return { ok: true, found: false };
+
+  try {
+    var file   = DriveApp.getFileById(fileId);
+    var parsed = JSON.parse(file.getBlob().getDataAsString());
+    return { ok: true, found: true, savedAt: parsed._savedAt, data: parsed.data };
+  } catch (e) {
+    return { ok: true, found: false, error: e.message };
+  }
+}

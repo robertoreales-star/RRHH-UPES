@@ -55,6 +55,9 @@ function doGet(e) {
       case 'getSheet':
         result = getSheet(params);
         break;
+      case 'getContent':
+        result = getContent();
+        break;
       case 'ping':
         result = {
           ok:      true,
@@ -108,6 +111,9 @@ function doPost(e) {
         break;
       case 'updateForm':
         result = updateForm(payload);
+        break;
+      case 'saveContent':
+        result = saveContent(payload);
         break;
       default:
         result = { ok: false, error: 'Acción POST desconocida: ' + action };
