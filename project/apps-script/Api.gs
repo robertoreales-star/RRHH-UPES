@@ -49,41 +49,6 @@ function submitForm(payload) {
     ''                              // notas
   ]);
 
-  // Flujo de aprobación por email (solo para permisos)
-  if (payload.flow === 'permiso') {
-    var answers      = payload.answers || {};
-    var correoEmp    = String(answers.correo_empleado || '').trim();
-    var correoJefe   = String(answers.correo_jefe     || '').trim();
-    var token        = Utilities.getUuid();
-    var newRowIdx    = sheet.getLastRow();
-
-    setColValue_(sheet, newRowIdx, 'correo_empleado', correoEmp);
-    setColValue_(sheet, newRowIdx, 'correo_jefe',     correoJefe);
-    setColValue_(sheet, newRowIdx, 'token',           token);
-    SpreadsheetApp.flush();
-
-    if (correoJefe) {
-      try {
-        var scriptUrl = getScriptUrl_();
-        if (!scriptUrl) throw new Error('URL del script vacía — ejecuta configurarEmails() en el editor');
-        var rowData   = {
-          numero_doc:      payload.numero_doc        || '',
-          nombre_empleado: payload.nombre_empleado   || '',
-          cargo:           payload.cargo             || '',
-          unidad:          payload.unidad            || ''
-        };
-        sendApprovalEmail_(scriptUrl, rowData, answers, token);
-        setColValue_(sheet, newRowIdx, 'notas', 'Email enviado al jefe: ' + correoJefe);
-      } catch (mailErr) {
-        Logger.log('⚠ Error al enviar email: ' + mailErr.message);
-        // Registra el error en la hoja para que RRHH lo vea
-        setColValue_(sheet, newRowIdx, 'notas', '⚠ Email no enviado: ' + mailErr.message);
-      }
-    } else {
-      setColValue_(sheet, newRowIdx, 'notas', '⚠ Sin correo de jefe — email no enviado');
-    }
-  }
-
   return {
     ok:         true,
     message:    'Solicitud registrada correctamente',
