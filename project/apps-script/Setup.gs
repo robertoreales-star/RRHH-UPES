@@ -3,6 +3,103 @@
 //  Configuración inicial (ejecutar UNA SOLA VEZ)
 // ════════════════════════════════════════════════════════════════
 
+// ════════════════════════════════════════════════════════════════
+//  FUNCIONES DE DIAGNÓSTICO Y CONFIGURACIÓN DE EMAILS
+//  Ejecutar desde el editor de Apps Script
+// ════════════════════════════════════════════════════════════════
+
+/**
+ * PASO 1 (obligatorio al agregar Approval.gs por primera vez):
+ * Ejecutar para autorizar el envío de emails y guardar la URL del Web App.
+ * Abre el diálogo de permisos de Google si aún no se han concedido.
+ */
+function configurarEmails() {
+  Logger.log('══ Configurando sistema de emails ══');
+
+  // 1. Guardar URL del Web App en Properties
+  try {
+    var url = ScriptApp.getService().getUrl();
+    if (url) {
+      PropertiesService.getScriptProperties().setProperty('SCRIPT_URL', url);
+      Logger.log('✓ URL del Web App guardada: ' + url);
+    } else {
+      Logger.log('⚠ URL vacía. Asegúrate de haber implementado el script como Web App primero.');
+    }
+  } catch (e) {
+    Logger.log('⚠ No se pudo obtener la URL: ' + e.message);
+  }
+
+  // 2. Enviar email de prueba (esto autoriza MailApp si aún no está autorizado)
+  try {
+    var dest = Session.getActiveUser().getEmail();
+    MailApp.sendEmail({
+      to:       dest,
+      subject:  '[UPES-RRHH] ✅ Sistema de emails configurado',
+      htmlBody: '<p>El sistema de correos de <strong>RRHH UPES</strong> está funcionando correctamente.</p>' +
+                '<p>A partir de ahora los permisos autorizados enviarán notificación al jefe inmediato.</p>'
+    });
+    Logger.log('✓ Email de prueba enviado a: ' + dest);
+    Logger.log('✓ MailApp autorizado correctamente');
+  } catch (e) {
+    Logger.log('✗ Error al enviar email: ' + e.message);
+  }
+
+  Logger.log('══ Listo. Ahora despliega una Nueva Versión del Web App. ══');
+}
+
+/**
+ * PASO 2: Diagnóstico completo — ejecutar para verificar que todo esté en orden.
+ */
+function diagnosticar() {
+  Logger.log('══════════════════════════════════════════');
+  Logger.log('  Diagnóstico RRHH UPES');
+  Logger.log('══════════════════════════════════════════');
+
+  // Spreadsheet
+  try {
+    var ss = getSpreadsheet_();
+    Logger.log('✓ Spreadsheet conectado: ' + ss.getUrl());
+  } catch (e) {
+    Logger.log('✗ Spreadsheet: ' + e.message);
+  }
+
+  // URL del Web App
+  try {
+    var url = ScriptApp.getService().getUrl();
+    Logger.log((url ? '✓' : '⚠') + ' Script URL actual: ' + (url || 'VACÍA'));
+    var stored = PropertiesService.getScriptProperties().getProperty('SCRIPT_URL') || '(no guardada — ejecuta configurarEmails())';
+    Logger.log('  URL en Properties: ' + stored);
+  } catch (e) {
+    Logger.log('⚠ Script URL: ' + e.message);
+  }
+
+  // MailApp
+  try {
+    var quota = MailApp.getRemainingDailyQuota();
+    Logger.log('✓ MailApp autorizado — cuota disponible hoy: ' + quota + ' emails');
+  } catch (e) {
+    Logger.log('✗ MailApp NO autorizado: ejecuta configurarEmails() para autorizar');
+  }
+
+  // Columnas de aprobación en Solicitudes
+  try {
+    var sheet = getSpreadsheet_().getSheetByName(SHEET_NAMES.SOLICITUDES);
+    var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
+    var needed = ['correo_empleado', 'correo_jefe', 'token', 'respuesta_jefe'];
+    needed.forEach(function (n) {
+      Logger.log((headers.indexOf(n) >= 0 ? '✓' : '✗') + ' Columna "' + n + '"');
+    });
+  } catch (e) {
+    Logger.log('⚠ No se pudieron verificar columnas: ' + e.message);
+  }
+
+  Logger.log('══════════════════════════════════════════');
+}
+
+// ════════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN PRINCIPAL
+// ════════════════════════════════════════════════════════════════
+
 /**
  * Punto de entrada. Ejecutar desde: Ejecutar > setupAll
  * Crea la carpeta RRHH-UPES en Drive, el Spreadsheet dentro de ella

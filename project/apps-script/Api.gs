@@ -65,6 +65,7 @@ function submitForm(payload) {
     if (correoJefe) {
       try {
         var scriptUrl = getScriptUrl_();
+        if (!scriptUrl) throw new Error('URL del script vacía — ejecuta configurarEmails() en el editor');
         var rowData   = {
           numero_doc:      payload.numero_doc        || '',
           nombre_empleado: payload.nombre_empleado   || '',
@@ -72,9 +73,14 @@ function submitForm(payload) {
           unidad:          payload.unidad            || ''
         };
         sendApprovalEmail_(scriptUrl, rowData, answers, token);
+        setColValue_(sheet, newRowIdx, 'notas', 'Email enviado al jefe: ' + correoJefe);
       } catch (mailErr) {
-        Logger.log('⚠ Error al enviar email de aprobación: ' + mailErr.message);
+        Logger.log('⚠ Error al enviar email: ' + mailErr.message);
+        // Registra el error en la hoja para que RRHH lo vea
+        setColValue_(sheet, newRowIdx, 'notas', '⚠ Email no enviado: ' + mailErr.message);
       }
+    } else {
+      setColValue_(sheet, newRowIdx, 'notas', '⚠ Sin correo de jefe — email no enviado');
     }
   }
 
