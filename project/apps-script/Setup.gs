@@ -13,10 +13,11 @@ function setupAll() {
   Logger.log('  RRHH UPES — Configuración inicial');
   Logger.log('══════════════════════════════════════════');
 
-  createDriveFolders_();   // 1. Carpeta raíz + subcarpetas
-  createSpreadsheet_();    // 2. Spreadsheet dentro de la carpeta raíz
-  createSheets_();         // 3. Hojas dentro del Spreadsheet
-  initCounters_();         // 4. Filas de contadores
+  createDriveFolders_();      // 1. Carpeta raíz + subcarpetas
+  createSpreadsheet_();       // 2. Spreadsheet dentro de la carpeta raíz
+  createSheets_();            // 3. Hojas dentro del Spreadsheet
+  initCounters_();            // 4. Filas de contadores
+  addApprovalColumns_();      // 5. Columnas extra para flujo de autorización
   printSummary_();
 
   Logger.log('');
@@ -223,6 +224,36 @@ function printSummary_() {
         '  ' + key.padEnd(24) + ' → ' +
         'https://drive.google.com/drive/folders/' + all[key]
       );
+    }
+  });
+}
+
+// ── Columnas de aprobación ─────────────────────────────────────
+
+function addApprovalColumns_() {
+  var ss    = getSpreadsheet_();
+  var sheet = ss.getSheetByName(SHEET_NAMES.SOLICITUDES);
+  if (!sheet) { Logger.log('· Hoja Solicitudes no encontrada — omitiendo columnas de aprobación'); return; }
+
+  var needed   = ['correo_empleado', 'correo_jefe', 'token', 'respuesta_jefe', 'goce',
+                   'observaciones_jefe', 'fecha_resp_jefe', 'respuesta_rrhh',
+                   'observaciones_rrhh', 'fecha_resp_rrhh'];
+  var lastCol  = sheet.getLastColumn();
+  var existing = sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(String);
+
+  needed.forEach(function (name) {
+    if (existing.indexOf(name) < 0) {
+      lastCol++;
+      sheet.getRange(1, lastCol)
+        .setValue(name)
+        .setFontWeight('bold')
+        .setBackground('#1A3A8F')
+        .setFontColor('#ffffff')
+        .setHorizontalAlignment('center');
+      existing.push(name);
+      Logger.log('✓ Columna agregada a Solicitudes: ' + name);
+    } else {
+      Logger.log('· Columna ya existe: ' + name);
     }
   });
 }

@@ -1011,7 +1011,7 @@ class Component extends DCLogic {
     const fin = (bot) => ({ id: 'final', type: 'final', bot });
     return {
       permiso: { title: 'Solicitud de Permiso', secure: false, steps: [
-        { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 📄 Te ayudaré a completar tu Solicitud de Permiso oficial. Al final podrás descargarla en PDF para enviarla a tu jefe inmediato. Para comenzar, ¿cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
+        { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 📄 Te ayudaré a completar tu Solicitud de Permiso. Al finalizar se generará el PDF, se guardará en RRHH y se enviará automáticamente a tu jefe inmediato para su autorización. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },
         { id: 'dui', type: 'text', sum: 'DUI', bot: '¿Cuál es tu Documento Único de Identidad (DUI)?', placeholder: 'Ej. 01234567-8' },
         { id: 'unidad', type: 'text', sum: 'Unidad en que labora', bot: '¿En qué unidad o departamento laboras?', placeholder: 'Unidad en que labora' },
         { id: 'tipo', type: 'options', sum: 'Tipo de permiso', bot: '¿Qué tipo de permiso necesitas? Cada uno tiene condiciones distintas según el Reglamento Interno.', options: ['Trámite personal', 'Salud', 'Cumplimiento legal', 'Emergencia', 'Reposición de tiempo', 'Cambio temporal de horario', 'Estudio', 'Misión institucional'], branch: {
@@ -1061,7 +1061,9 @@ class Component extends DCLogic {
             { id: 'mi_descripcion', type: 'textarea', sum: 'Descripción de la misión', bot: 'Describe la misión institucional.', note: 'Llena este formato cuando no puedas presentarte a realizar tus marcaciones. Si la misión es dentro del horario laboral, basta con notificar por correo.' }
           ]
         } },
-        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento; si necesitas cambiar algo, usa "Corregir".' }
+        { id: 'correo_empleado', type: 'text', sum: 'Tu correo institucional', bot: 'Ya casi terminamos. ¿Cuál es tu correo institucional? Te llegará confirmación cuando tu jefe responda.', placeholder: 'tu.nombre@upes.edu.sv' },
+        { id: 'correo_jefe', type: 'text', sum: 'Correo del jefe inmediato', bot: '¿Cuál es el correo institucional de tu jefe inmediato? A él le llegará la solicitud para autorización.', placeholder: 'jefe@upes.edu.sv' },
+        { id: 'summary', type: 'summary', bot: 'Revisa el resumen de tu solicitud. Si todo está correcto, genera el documento y se enviará automáticamente a tu jefe para autorización.' }
       ]},
       licencia: { title: 'Solicitud de Licencia', secure: false, steps: [
         { id: 'nombre', type: 'text', sum: 'Nombre y apellidos', bot: '¡Hola! 🗂️ Te ayudaré a completar tu Solicitud de Licencia. Al final podrás descargarla en PDF y adjuntar tu documento de respaldo. ¿Cuál es tu nombre y apellidos completos?', placeholder: 'Nombre y apellidos' },

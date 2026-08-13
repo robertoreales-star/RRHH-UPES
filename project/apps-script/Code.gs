@@ -42,8 +42,14 @@ var COUNTER_CODES = [
 function doGet(e) {
   var params = e.parameter || {};
   var action = params.action || '';
-  var result;
 
+  // Acciones que devuelven páginas HTML (no JSON)
+  if (action === 'approveForm')     return approveFormPage(params);
+  if (action === 'processApproval') return processApprovalPage(params);
+  if (action === 'rrhhAction')      return rrhhActionPage(params);
+  if (action === 'processRrhh')     return processRrhhPage(params);
+
+  var result;
   try {
     switch (action) {
       case 'getSheet':

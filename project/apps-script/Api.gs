@@ -46,8 +46,37 @@ function submitForm(payload) {
     JSON.stringify(payload.answers || {}), // respuestas_json
     archivoCell,                    // archivo_url (PDF generado | adjunto original)
     'pendiente',                    // estado
-    ''                              // notas (para uso del equipo RH)
+    ''                              // notas
   ]);
+
+  // Flujo de aprobación por email (solo para permisos)
+  if (payload.flow === 'permiso') {
+    var answers      = payload.answers || {};
+    var correoEmp    = String(answers.correo_empleado || '').trim();
+    var correoJefe   = String(answers.correo_jefe     || '').trim();
+    var token        = Utilities.getUuid();
+    var newRowIdx    = sheet.getLastRow();
+
+    setColValue_(sheet, newRowIdx, 'correo_empleado', correoEmp);
+    setColValue_(sheet, newRowIdx, 'correo_jefe',     correoJefe);
+    setColValue_(sheet, newRowIdx, 'token',           token);
+    SpreadsheetApp.flush();
+
+    if (correoJefe) {
+      try {
+        var scriptUrl = getScriptUrl_();
+        var rowData   = {
+          numero_doc:      payload.numero_doc        || '',
+          nombre_empleado: payload.nombre_empleado   || '',
+          cargo:           payload.cargo             || '',
+          unidad:          payload.unidad            || ''
+        };
+        sendApprovalEmail_(scriptUrl, rowData, answers, token);
+      } catch (mailErr) {
+        Logger.log('⚠ Error al enviar email de aprobación: ' + mailErr.message);
+      }
+    }
+  }
 
   return {
     ok:         true,
